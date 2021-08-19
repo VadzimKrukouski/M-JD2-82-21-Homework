@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "DataPersonServlet", urlPatterns = "/person")
+@WebServlet(name = "DataPersonServlet", urlPatterns = "/")
 public class DataPersonServlet extends HttpServlet {
     private static final String FIRST_NAME_PARAM_NAME = "firstName";
     private static final String LAST_NAME_PARAM_NAME = "lastName";
@@ -32,8 +32,8 @@ public class DataPersonServlet extends HttpServlet {
 
         Person person = handler.get(req);
 
-        writer.write("FirstName: " + person.getFirstName());
-        writer.write("LastName: " + person.getLastName());
+        writer.write("FirstName: " + person.getFirstName() + " ");
+        writer.write("LastName: " + person.getLastName() + " ");
         writer.write("Age: " + person.getAge());
 
 
