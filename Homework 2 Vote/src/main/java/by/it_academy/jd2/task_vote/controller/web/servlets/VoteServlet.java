@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "VoteServlet", urlPatterns = "/vote")
+@WebServlet(name = "VoteServlet", urlPatterns = "/")
 public class VoteServlet extends HttpServlet {
 
     private final VoteService service;
