@@ -2,6 +2,7 @@ package by.it_academy.jd2.task_messenger.controller.web.servlets;
 
 import by.it_academy.jd2.task_messenger.model.User;
 import by.it_academy.jd2.task_messenger.view.SignUpHandle;
+import by.it_academy.jd2.task_messenger.view.api.ISignUpHandle;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,12 @@ import java.io.IOException;
 
 @WebServlet(name = "ServletSignUp", urlPatterns = "/signUp")
 public class ServletSignUp extends HttpServlet {
+    private final ISignUpHandle signUpHandle;
+
+    public ServletSignUp() {
+        this.signUpHandle = SignUpHandle.getInstance();
+    }
+
     private static final String LOGIN_PARAM = "login";
     private static final String PASSWORD_PARAM = "password";
     private static final String FIO_PARAM = "fio";
@@ -32,7 +39,6 @@ public class ServletSignUp extends HttpServlet {
         user.setBirthday(req.getParameter(BIRTHDAY_PARAM));
 
         //регистрируем пользователя в приложении
-        SignUpHandle signUpHandle = SignUpHandle.getInstance();
         signUpHandle.registrationUser(req, resp, user);
     }
 }

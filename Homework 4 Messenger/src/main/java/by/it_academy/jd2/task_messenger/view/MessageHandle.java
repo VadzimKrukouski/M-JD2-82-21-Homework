@@ -1,7 +1,9 @@
 package by.it_academy.jd2.task_messenger.view;
 
 import by.it_academy.jd2.task_messenger.model.User;
-import by.it_academy.jd2.task_messenger.model.UsersStorage;
+import by.it_academy.jd2.task_messenger.storage.UsersStorage;
+import by.it_academy.jd2.task_messenger.storage.api.IUsersStorage;
+import by.it_academy.jd2.task_messenger.view.api.IMessageHandle;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,19 +12,25 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-public class MessageHandle {
+public class MessageHandle implements IMessageHandle {
+    private static final MessageHandle instance = new MessageHandle();
+
+    public static MessageHandle getInstance() {
+        return instance;
+    }
+
+    private final IUsersStorage usersStorage;
+
+    public MessageHandle() {
+        this.usersStorage = UsersStorage.getInstance();
+    }
 
 
-    public void sendMessage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void sendMessage(HttpServletRequest req, HttpServletResponse resp, String from, String recipient, String text) throws ServletException, IOException {
 
-        //получаем данные от кого, кому и что отправляем
-        String from = (String) req.getSession().getAttribute("login");
-        String recipient = req.getParameter("recipient");
-        String text = req.getParameter("text");
+        Date date = new Date();
 
         //в хранилище юзеров находим получателя сообщения
-        UsersStorage usersStorage = new UsersStorage();
-        Date date = new Date();
         User addresses = usersStorage.getUser(recipient);
 
         //если адрессат существует, успешно отправляем сообщение и добавляем сообщение к адрессату
@@ -38,11 +46,8 @@ public class MessageHandle {
         }
     }
 
-    public void showMessage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void showMessage(HttpServletRequest req, HttpServletResponse resp, String login) throws ServletException, IOException {
 
-        //получаем юзера из аттрибута сессии
-        String login = (String) req.getSession().getAttribute("login");
-        UsersStorage usersStorage = new UsersStorage();
         User user = usersStorage.getUser(login);
 
         //из юзера получаем все его сообщения

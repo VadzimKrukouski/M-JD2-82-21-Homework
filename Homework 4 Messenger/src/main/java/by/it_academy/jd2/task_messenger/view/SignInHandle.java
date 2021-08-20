@@ -1,7 +1,9 @@
 package by.it_academy.jd2.task_messenger.view;
 
 import by.it_academy.jd2.task_messenger.model.User;
-import by.it_academy.jd2.task_messenger.model.UsersStorage;
+import by.it_academy.jd2.task_messenger.storage.UsersStorage;
+import by.it_academy.jd2.task_messenger.storage.api.IUsersStorage;
+import by.it_academy.jd2.task_messenger.view.api.ISignInHandle;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,10 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class SignInHandle {
+public class SignInHandle implements ISignInHandle {
     private static final SignInHandle instance = new SignInHandle();
+    private final IUsersStorage usersStorage;
 
     private SignInHandle() {
+        this.usersStorage = UsersStorage.getInstance();
     }
 
     public static SignInHandle getInstance() {
@@ -20,13 +24,9 @@ public class SignInHandle {
     }
 
 
-    public void userVerification(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //получаем логин и пароль из параметров введённых на сайте
-        String login = req.getParameter("login");
-        String passwordSite = req.getParameter("password");
+    public void userVerification(HttpServletRequest req, HttpServletResponse resp, String login, String passwordSite) throws ServletException, IOException {
 
         //по полученному логину получаем юзера из хранилища юзеров
-        UsersStorage usersStorage = new UsersStorage();
         User user = usersStorage.getUser(login);
         HttpSession session = req.getSession();
 
