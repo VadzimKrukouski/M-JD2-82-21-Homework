@@ -8,7 +8,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Printer implements IPrinter {
+    private static final Printer instance = new Printer();
+
     private final VoteService service;
+
+    public static Printer getInstance() {
+        return instance;
+    }
 
     public Printer (){
         this.service = VoteService.getInstance();

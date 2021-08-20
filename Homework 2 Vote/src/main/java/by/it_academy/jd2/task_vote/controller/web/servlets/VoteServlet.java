@@ -2,6 +2,8 @@ package by.it_academy.jd2.task_vote.controller.web.servlets;
 
 import by.it_academy.jd2.task_vote.view.Printer;
 import by.it_academy.jd2.task_vote.view.VoteService;
+import by.it_academy.jd2.task_vote.view.api.IPrinter;
+import by.it_academy.jd2.task_vote.view.api.IVoteService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,10 +16,12 @@ import java.io.PrintWriter;
 @WebServlet(name = "VoteServlet", urlPatterns = "/")
 public class VoteServlet extends HttpServlet {
 
-    private final VoteService service;
+    private final IVoteService service;
+    private final IPrinter printer;
 
     public VoteServlet() {
         this.service = VoteService.getInstance();
+        this.printer = Printer.getInstance();
     }
 
 
@@ -41,8 +45,6 @@ public class VoteServlet extends HttpServlet {
         this.service.addVoteArtist(artist);
         this.service.addVoteGenre(genres);
         this.service.addVoteAbout(about);
-
-        Printer printer = new Printer();
 
         printer.printerVoteArtist(writer);
         printer.printerVoteGenre(writer);
