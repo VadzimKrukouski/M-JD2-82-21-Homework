@@ -21,8 +21,6 @@ public class DataPersonServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        resp.setContentType("text/html; charset=UTF-8");
-//        req.setCharacterEncoding("utf-8");
 
         PrintWriter writer = resp.getWriter();
 
@@ -41,8 +39,6 @@ public class DataPersonServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        resp.setContentType("text/html; charset=UTF-8");
-//        req.setCharacterEncoding("utf-8");
 
         String firstNameValue = req.getParameter(FIRST_NAME_PARAM_NAME);
         String lastNameValue = req.getParameter(LAST_NAME_PARAM_NAME);
@@ -63,9 +59,6 @@ public class DataPersonServlet extends HttpServlet {
         String header = req.getHeader(HEADER_PARAM_NAME);
         StorageType storageType = StorageType.valueOfIgnoreCase(header);
         HandleRequest handler = storageType.getHandler();
-//        StorageType header = StorageType.valueOfIgnoreCase(req.getHeader(HEADER_PARAM_NAME));
-//
-//        HandleRequest handler = header.getHandler();
 
         if (handler == null) {
             throw new IllegalArgumentException("Не передан тип сохранения");
