@@ -23,20 +23,20 @@ public class VoteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html; charset=UTF-8");
         req.getRequestDispatcher("views/vote.jsp").forward(req,resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html; charset=UTF-8");
-        req.setCharacterEncoding("utf-8");
         PrintWriter writer = resp.getWriter();
-
 
         String artist = req.getParameter("artist");
         String[] genres = req.getParameterValues("genre");
         String about = req.getParameter("about");
+
+        if (genres.length<3){
+            throw new IllegalArgumentException("Количество жанров меньше трёх");
+        }
 
         this.service.addVoteArtist(artist);
         this.service.addVoteGenre(genres);
