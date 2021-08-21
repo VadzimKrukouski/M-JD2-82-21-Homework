@@ -11,7 +11,7 @@ import java.io.IOException;
 public class SecurityFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        //создание фильтра
     }
 
     @Override
@@ -20,8 +20,8 @@ public class SecurityFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         String contextPath = req.getContextPath();
         HttpSession session = req.getSession();
-        if ((session!=null)&& (session.getAttribute("user") !=null)){
-            chain.doFilter(request,response);
+        if ((session != null) && (session.getAttribute("user") != null)) {
+            chain.doFilter(request, response);
         } else {
             resp.sendRedirect(contextPath + "/signIn");
         }
@@ -30,6 +30,6 @@ public class SecurityFilter implements Filter {
 
     @Override
     public void destroy() {
-
+        //уничтожение фильтра
     }
 }
