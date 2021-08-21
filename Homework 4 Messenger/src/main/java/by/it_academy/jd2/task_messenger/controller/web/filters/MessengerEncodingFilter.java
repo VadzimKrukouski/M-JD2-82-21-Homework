@@ -26,6 +26,6 @@ public class MessengerEncodingFilter implements Filter {
 
     @Override
     public void destroy() {
-
+        // уничтожение фильтра
     }
 }
