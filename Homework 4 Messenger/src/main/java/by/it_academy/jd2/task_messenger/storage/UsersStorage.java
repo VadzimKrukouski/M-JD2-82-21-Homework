@@ -18,15 +18,13 @@ public class UsersStorage implements IUsersStorage {
 
     private final Map<String, User> USERS = new HashMap<>();
 
+    public Map<String, User> getUSERSMap() {
+        return USERS;
+    }
 
-    public boolean addUser(User user) {
+    public void addUser(User user) {
         String login = user.getLogin();
-        if (USERS.containsKey(login)) {
-            return false;
-        } else {
             USERS.put(login, user);
-            return true;
-        }
     }
 
     public User getUser(String login){

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Map;
 
 public class SignUpHandle implements ISignUpHandle {
 
@@ -28,7 +29,10 @@ public class SignUpHandle implements ISignUpHandle {
     public void registrationUser(HttpServletRequest req, HttpServletResponse resp, User user) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        if (usersStorage.addUser(user)) {
+        Map<String, User> usersMap = usersStorage.getUSERSMap();
+
+        if (!usersMap.containsKey(user.getLogin())) {
+            usersStorage.addUser(user);
             session.setAttribute("user", user);
             session.setAttribute("login", user.getLogin());
             req.setAttribute("user", user);
