@@ -19,13 +19,13 @@ public class MessengerEncodingFilter implements Filter {
         if (null==request.getCharacterEncoding()){
             request.setCharacterEncoding(encoding);
         }
-        response.setContentType("text/html; charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=" + encoding);
+        request.setCharacterEncoding(encoding);
         chain.doFilter(request, response);
     }
 
     @Override
     public void destroy() {
-
+        //уничтожение фильтра
     }
 }
