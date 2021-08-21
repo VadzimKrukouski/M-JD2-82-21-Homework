@@ -38,12 +38,10 @@ public class MessageHandle implements IMessageHandle {
             String message = "От кого: " + from + " " + "Сообщение: " + text + " " + "Время отправления: " + date.toString();
             addresses.addMessage(message);
             req.setAttribute("infoOk", "Сообщение отправлено");
-            req.getRequestDispatcher("views/message.jsp").forward(req, resp);
-        }
-        if (addresses == null) {
+        }else {
             req.setAttribute("infoErr", "Получатель не найден");
-            req.getRequestDispatcher("views/message.jsp").forward(req, resp);
         }
+        req.getRequestDispatcher("views/message.jsp").forward(req, resp);
     }
 
     public void showMessage(HttpServletRequest req, HttpServletResponse resp, String login) throws ServletException, IOException {
