@@ -1,4 +1,4 @@
-package by.it_academy.jd2.task_messenger.model;
+package by.it_academy.jd2.task_messenger_load_save.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,9 @@
-package by.it_academy.jd2.task_messenger.storage;
+package by.it_academy.jd2.task_messenger_load_save.storage;
 
-import by.it_academy.jd2.task_messenger.model.User;
-import by.it_academy.jd2.task_messenger.storage.api.IUsersStorage;
+import by.it_academy.jd2.task_messenger_load_save.model.User;
+import by.it_academy.jd2.task_messenger_load_save.storage.api.IUsersStorage;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,5 +32,10 @@ public class UsersStorage implements IUsersStorage {
 
     public User getUser(String login){
         return USERS.get(login);
+    }
+
+    @Override
+    public Collection<User> getAll() {
+        return this.USERS.values();
     }
 }

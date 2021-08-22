@@ -1,6 +1,6 @@
-package by.it_academy.jd2.task_messenger.storage.api;
+package by.it_academy.jd2.task_messenger_load_save.storage.api;
 
-import by.it_academy.jd2.task_messenger.model.Message;
+import by.it_academy.jd2.task_messenger_load_save.model.Message;
 
 import java.util.List;
 

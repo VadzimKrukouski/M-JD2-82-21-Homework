@@ -1,4 +1,4 @@
-package by.it_academy.jd2.task_messenger.controller.web.servlets;
+package by.it_academy.jd2.task_messenger_load_save.controller.web.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

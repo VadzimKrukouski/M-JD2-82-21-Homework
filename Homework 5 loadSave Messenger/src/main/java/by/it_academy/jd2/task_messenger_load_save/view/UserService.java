@@ -1,27 +1,28 @@
-package by.it_academy.jd2.task_messenger.view;
+package by.it_academy.jd2.task_messenger_load_save.view;
 
-import by.it_academy.jd2.task_messenger.model.User;
-import by.it_academy.jd2.task_messenger.storage.UsersStorage;
-import by.it_academy.jd2.task_messenger.storage.api.IUsersStorage;
-import by.it_academy.jd2.task_messenger.view.api.ISignUpHandle;
+import by.it_academy.jd2.task_messenger_load_save.model.User;
+import by.it_academy.jd2.task_messenger_load_save.storage.UsersStorage;
+import by.it_academy.jd2.task_messenger_load_save.storage.api.IUsersStorage;
+import by.it_academy.jd2.task_messenger_load_save.view.api.IUserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Collection;
 
-public class SignUpHandle implements ISignUpHandle {
+public class UserService implements IUserService {
 
 
-    private static final SignUpHandle instance = new SignUpHandle();
+    private static final UserService instance = new UserService();
     private final IUsersStorage usersStorage;
 
-    private SignUpHandle() {
+    private UserService() {
         this.usersStorage=UsersStorage.getInstance();
     }
 
-    public static SignUpHandle getInstance() {
+    public static UserService getInstance() {
         return instance;
     }
 
@@ -37,6 +38,16 @@ public class SignUpHandle implements ISignUpHandle {
             req.setAttribute("info", "Такой пользователь уже существует");
             req.getRequestDispatcher("views/signUp.jsp").forward(req, resp);
         }
+    }
+
+    @Override
+    public User get(String login) {
+        return usersStorage.getUser(login);
+    }
+
+    @Override
+    public Collection<User> getAllUsers() {
+        return null;
     }
 }
 

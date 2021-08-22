@@ -1,7 +1,7 @@
-package by.it_academy.jd2.task_messenger.controller.web.servlets;
+package by.it_academy.jd2.task_messenger_load_save.controller.web.servlets;
 
-import by.it_academy.jd2.task_messenger.view.SignInHandle;
-import by.it_academy.jd2.task_messenger.view.api.ISignInHandle;
+import by.it_academy.jd2.task_messenger_load_save.view.SignInService;
+import by.it_academy.jd2.task_messenger_load_save.view.api.ISignInService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,10 +12,10 @@ import java.io.IOException;
 
 @WebServlet(name = "ServletSignIn", urlPatterns = "/signIn")
 public class ServletSignIn extends HttpServlet {
-    private final ISignInHandle signInHandle;
+    private final ISignInService signInService;
 
     public ServletSignIn() {
-        this.signInHandle = SignInHandle.getInstance();
+        this.signInService = SignInService.getInstance();
     }
 
     @Override
@@ -30,6 +30,6 @@ public class ServletSignIn extends HttpServlet {
         String passwordSite = req.getParameter("password");
 
         //проводим верификацию юзера
-        signInHandle.userVerification(req, resp, login, passwordSite);
+        signInService.userVerification(req, resp, login, passwordSite);
     }
 }

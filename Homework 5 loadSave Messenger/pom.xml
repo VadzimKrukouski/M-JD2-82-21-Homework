@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>by.it-academy.jd2</groupId>
-    <artifactId>Messenger v.2</artifactId>
+    <artifactId>MessengerNew</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>Messenger v.2</name>
-	<description>SignIn, SignUp, Send message, View message</description>
+    <name>MessengerNew</name>
+	<description>Load and Save User/message in file</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

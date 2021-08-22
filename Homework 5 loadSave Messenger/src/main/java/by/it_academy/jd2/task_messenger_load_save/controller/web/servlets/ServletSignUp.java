@@ -1,8 +1,8 @@
-package by.it_academy.jd2.task_messenger.controller.web.servlets;
+package by.it_academy.jd2.task_messenger_load_save.controller.web.servlets;
 
-import by.it_academy.jd2.task_messenger.model.User;
-import by.it_academy.jd2.task_messenger.view.SignUpHandle;
-import by.it_academy.jd2.task_messenger.view.api.ISignUpHandle;
+import by.it_academy.jd2.task_messenger_load_save.model.User;
+import by.it_academy.jd2.task_messenger_load_save.view.UserService;
+import by.it_academy.jd2.task_messenger_load_save.view.api.IUserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,10 +13,10 @@ import java.io.IOException;
 
 @WebServlet(name = "ServletSignUp", urlPatterns = "/signUp")
 public class ServletSignUp extends HttpServlet {
-    private final ISignUpHandle signUpHandle;
+    private final IUserService signUpHandle;
 
     public ServletSignUp() {
-        this.signUpHandle = SignUpHandle.getInstance();
+        this.signUpHandle = UserService.getInstance();
     }
 
     private static final String LOGIN_PARAM = "login";

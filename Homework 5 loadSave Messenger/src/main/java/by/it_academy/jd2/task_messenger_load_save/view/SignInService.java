@@ -1,9 +1,8 @@
-package by.it_academy.jd2.task_messenger.view;
+package by.it_academy.jd2.task_messenger_load_save.view;
 
-import by.it_academy.jd2.task_messenger.model.User;
-import by.it_academy.jd2.task_messenger.storage.UsersStorage;
-import by.it_academy.jd2.task_messenger.storage.api.IUsersStorage;
-import by.it_academy.jd2.task_messenger.view.api.ISignInHandle;
+import by.it_academy.jd2.task_messenger_load_save.model.User;
+import by.it_academy.jd2.task_messenger_load_save.view.api.ISignInService;
+import by.it_academy.jd2.task_messenger_load_save.view.api.IUserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,15 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class SignInHandle implements ISignInHandle {
-    private static final SignInHandle instance = new SignInHandle();
-    private final IUsersStorage usersStorage;
+public class SignInService implements ISignInService {
+    private static final SignInService instance = new SignInService();
+    private final IUserService userService;
 
-    private SignInHandle() {
-        this.usersStorage = UsersStorage.getInstance();
+    private SignInService() {
+        this.userService = UserService.getInstance();
     }
 
-    public static SignInHandle getInstance() {
+    public static SignInService getInstance() {
         return instance;
     }
 
@@ -27,7 +26,7 @@ public class SignInHandle implements ISignInHandle {
     public void userVerification(HttpServletRequest req, HttpServletResponse resp, String login, String passwordSite) throws ServletException, IOException {
 
         //по полученному логину получаем юзера из хранилища юзеров
-        User user = usersStorage.getUser(login);
+        User user = userService.get(login);
         HttpSession session = req.getSession();
 
         //если юзер существует, сравниваем пароли
