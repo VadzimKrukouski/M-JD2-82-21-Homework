@@ -13,10 +13,10 @@ import java.io.IOException;
 
 @WebServlet(name = "ServletSignUp", urlPatterns = "/signUp")
 public class ServletSignUp extends HttpServlet {
-    private final IUserService signUpHandle;
+    private final IUserService userService;
 
     public ServletSignUp() {
-        this.signUpHandle = UserService.getInstance();
+        this.userService = UserService.getInstance();
     }
 
     private static final String LOGIN_PARAM = "login";
@@ -39,7 +39,7 @@ public class ServletSignUp extends HttpServlet {
         user.setBirthday(req.getParameter(BIRTHDAY_PARAM));
 
         //регистрируем пользователя в приложении
-        signUpHandle.registrationUser(req, resp, user);
+        userService.registrationUser(req, resp, user);
     }
 }
 

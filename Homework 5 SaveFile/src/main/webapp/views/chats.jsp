@@ -7,9 +7,9 @@
 </head>
 <body>
 <h3> Ваши сообщения </h3>
-<% List<String> message = (List<String>) request.getAttribute("messages");
-for (String m : message) {
-            out.println(m);
+<% List<Message> message = (List<Message>) request.getAttribute("messages");
+for (Message message : messages) {
+            out.println(message);
         }
 %>
 

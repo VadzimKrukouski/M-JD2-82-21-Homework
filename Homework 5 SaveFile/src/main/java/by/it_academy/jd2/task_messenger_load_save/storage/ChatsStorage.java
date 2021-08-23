@@ -19,7 +19,7 @@ public class ChatsStorage implements IChatsStorage {
 
     @Override
     public List<Message> get(String login) {
-        return chats.get(login);
+        return this.chats.get(login);
     }
 
     @Override

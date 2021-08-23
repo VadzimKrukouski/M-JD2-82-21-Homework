@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Date;
 
 public class UserService implements IUserService {
 
@@ -30,6 +31,7 @@ public class UserService implements IUserService {
         HttpSession session = req.getSession();
 
         if (usersStorage.addUser(user)) {
+            user.setRegistration(new Date());
             session.setAttribute("user", user);
             session.setAttribute("login", user.getLogin());
             req.setAttribute("user", user);
@@ -47,7 +49,7 @@ public class UserService implements IUserService {
 
     @Override
     public Collection<User> getAllUsers() {
-        return null;
+        return this.usersStorage.getAll();
     }
 }
 
