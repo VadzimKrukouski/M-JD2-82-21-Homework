@@ -28,9 +28,6 @@ public class ServletChats extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
 
         List<Message> messages = this.chatsStorage.get(user.getLogin());
-        for (Message message : messages) {
-            
-        }
         req.setAttribute("messages", messages);
         req.getRequestDispatcher("views/chats.jsp").forward(req, resp);
 
