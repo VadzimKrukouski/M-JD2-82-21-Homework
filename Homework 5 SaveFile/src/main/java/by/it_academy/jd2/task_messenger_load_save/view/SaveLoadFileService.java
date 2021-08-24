@@ -102,14 +102,10 @@ public class SaveLoadFileService implements ISaveLoadFileService {
                     message.setText(partsString[4]);
                     this.chatsStorage.addMessage(partsString[1], message);
                 }
-
+                line=reader.readLine();
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
 

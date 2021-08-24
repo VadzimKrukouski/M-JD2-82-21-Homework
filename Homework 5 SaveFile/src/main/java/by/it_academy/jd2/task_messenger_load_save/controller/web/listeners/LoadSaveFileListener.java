@@ -2,16 +2,17 @@ package by.it_academy.jd2.task_messenger_load_save.controller.web.listeners;
 
 import by.it_academy.jd2.task_messenger_load_save.storage.AboutStorage;
 import by.it_academy.jd2.task_messenger_load_save.view.SaveLoadFileService;
+import by.it_academy.jd2.task_messenger_load_save.view.api.ISaveLoadFileService;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.util.Date;
 
 public class LoadSaveFileListener implements ServletContextListener {
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         AboutStorage aboutStorage = AboutStorage.getInstance();
-        SaveLoadFileService saveLoadFile = SaveLoadFileService.getInstance();
         Date date = new Date();
         aboutStorage.setAbout(date);
 
@@ -20,18 +21,28 @@ public class LoadSaveFileListener implements ServletContextListener {
         if (storage.equals("file")){
             aboutStorage.setStorageOption(storage);
             aboutStorage.setPathToFile(path);
-            saveLoadFile.loadFromFile();
         } else {
             aboutStorage.setStorageOption("system");
         }
+        saveOrLoad(storage, "load");
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        SaveLoadFileService saveLoadFile = SaveLoadFileService.getInstance();
         String storage = sce.getServletContext().getInitParameter("storage");
+        saveOrLoad(storage, "save");
+    }
+
+    private void saveOrLoad(String storage, String string){
+        ISaveLoadFileService saveLoadFile = SaveLoadFileService.getInstance();
         if (storage.equals("file")){
-            saveLoadFile.saveToFile();
+            if (string.equals("save")){
+                saveLoadFile.saveToFile();
+            }
+            if (string.equals("load")){
+                saveLoadFile.loadFromFile();
+            }
         }
+
     }
 }
