@@ -24,8 +24,8 @@ public class ServletAbout extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
         Date date = aboutStorage.getAbout();
-        String storageOption = aboutStorage.getSrorageOption();
-        writer.write("Дата запуска приложения: " + date.toString());
-        writer.write("Вариант сохранения информации: " + storageOption);
+        String storageOption = aboutStorage.getStorageOption();
+        writer.write("<p>" + "Дата запуска приложения: " + date.toString() + "</p>");
+        writer.write("<p>" + "Вариант сохранения информации: " + storageOption + "<p>");
     }
 }

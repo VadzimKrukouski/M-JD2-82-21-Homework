@@ -6,5 +6,7 @@ public interface IAboutStorage {
     void setAbout(Date date);
     Date getAbout();
     void setStorageOption(String string);
-    String getSrorageOption();
+    String getStorageOption();
+    void setPathToFile(String path);
+    String getPathFile();
 }

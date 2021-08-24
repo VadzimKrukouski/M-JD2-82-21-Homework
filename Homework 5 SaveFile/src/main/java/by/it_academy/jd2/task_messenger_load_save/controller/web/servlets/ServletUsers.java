@@ -28,7 +28,7 @@ public class ServletUsers extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         Collection<User> allUsers = this.userService.getAllUsers();
         for (User user : allUsers) {
-            writer.write((user.toString()));
+            writer.write("<p>" + (user.toString()) + "<p>");
         }
     }
 }

@@ -13,6 +13,17 @@ public class AboutStorage implements IAboutStorage {
 
     private Date date;
     private String string;
+    private String path;
+
+    @Override
+    public void setPathToFile(String path) {
+        this.path=path;
+    }
+
+    @Override
+    public String getPathFile() {
+        return this.path;
+    }
 
     @Override
     public void setAbout(Date date) {
@@ -25,7 +36,7 @@ public class AboutStorage implements IAboutStorage {
     }
 
     @Override
-    public String getSrorageOption() {
+    public String getStorageOption() {
         return this.string;
     }
 
