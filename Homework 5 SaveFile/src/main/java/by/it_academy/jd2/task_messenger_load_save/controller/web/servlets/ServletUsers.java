@@ -1,6 +1,8 @@
 package by.it_academy.jd2.task_messenger_load_save.controller.web.servlets;
 
+
 import by.it_academy.jd2.task_messenger_load_save.model.User;
+import by.it_academy.jd2.task_messenger_load_save.view.UserService;
 import by.it_academy.jd2.task_messenger_load_save.view.api.IUserService;
 
 import javax.servlet.ServletException;
@@ -12,13 +14,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
 
-@WebServlet(name = "ServletUsers", urlPatterns = "/users")
+@WebServlet (name = "ServletUsers", urlPatterns = "/users")
 public class ServletUsers extends HttpServlet {
 
-private final IUserService userService;
+    private final IUserService userService;
 
-    public ServletUsers(IUserService userService) {
-        this.userService = userService;
+    public ServletUsers() {
+        this.userService = UserService.getInstance();
     }
 
     @Override

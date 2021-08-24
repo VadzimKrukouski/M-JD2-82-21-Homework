@@ -24,33 +24,14 @@ public class MessageService implements IMessageService {
     }
 
     @Override
-    public void addMessage(String recipient, Message textMessage) throws ServletException, IOException {
-        this.chatsStorage.addMessage(recipient,textMessage);
+    public void addMessage(String recipient, Message message) {
+        this.chatsStorage.addMessage(recipient,message);
     }
 
     @Override
     public List<Message> get(User currentUser) {
         return this.chatsStorage.get(currentUser.getLogin());
     }
-//
-//    public void addMessage(HttpServletRequest req, HttpServletResponse resp, String from, String recipient, String text) throws ServletException, IOException {
-//
-//        Date date = new Date();
-//
-//        //в хранилище юзеров находим получателя сообщения
-//        User addresses = usersStorage.getUser(recipient);
-//
-//        //если адрессат существует, успешно отправляем сообщение и добавляем сообщение к адрессату
-//        if (addresses != null) {
-//            String message = "От кого: " + from + " " + "Сообщение: " + text + " " + "Время отправления: " + date.toString();
-//            addresses.addMessage(message);
-//            req.setAttribute("infoOk", "Сообщение отправлено");
-//            req.getRequestDispatcher("views/message.jsp").forward(req, resp);
-//        }
-//        if (addresses == null) {
-//            req.setAttribute("infoErr", "Получатель не найден");
-//            req.getRequestDispatcher("views/message.jsp").forward(req, resp);
-//        }
-//    }
+
 
 }

@@ -8,6 +8,8 @@
 
 <p><input type="button" onclick="location.href='chats';" value="Просмотреть сообщения"</p>
 <p><input type="button" onclick="location.href='message';" value="Отправить сообщение"</p>
+<p><input type="button" onclick="location.href='users';" value="Посмотреть всех пользователей"</p>
+<p><input type="button" onclick="location.href='about';" value="Информация о приложении"</p>
 <p><input type="button" onclick="location.href='logout';" value="Выйти"</p>
 </body>
 </html>
