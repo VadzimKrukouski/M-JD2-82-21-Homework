@@ -7,7 +7,7 @@ public class User {
     private String password;
     private String fio;
     private String birthday;
-    private Date registration;
+    private String registration;
 
     public String getLogin() {
         return login;
@@ -41,11 +41,11 @@ public class User {
         this.birthday = birthday;
     }
 
-    public Date getRegistration() {
+    public String getRegistration() {
         return registration;
     }
 
-    public void setRegistration(Date registration) {
+    public void setRegistration(String registration) {
         this.registration = registration;
     }
 

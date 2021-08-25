@@ -11,11 +11,7 @@ import by.it_academy.jd2.task_messenger_load_save.storage.api.IUsersStorage;
 import by.it_academy.jd2.task_messenger_load_save.view.api.ISaveLoadFileService;
 
 import java.io.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 public class SaveLoadFileService implements ISaveLoadFileService {
@@ -54,7 +50,7 @@ public class SaveLoadFileService implements ISaveLoadFileService {
                 writer.append(",");
                 writer.append(user.getBirthday());
                 writer.append(",");
-                writer.append(user.getRegistration().toString());
+                writer.append(user.getRegistration());
                 writer.append(newLine);
                 List<Message> messages = chatsStorage.get(user.getLogin());
                 for (Message message : messages) {
@@ -87,25 +83,25 @@ public class SaveLoadFileService implements ISaveLoadFileService {
                     user.setPassword(partsString[2]);
                     user.setFio(partsString[3]);
                     user.setBirthday(partsString[4]);
-                    DateFormat format = new SimpleDateFormat("d MMMM yyyy");
-                    Date date = format.parse(partsString[5]);
-                    user.setRegistration(date);
+//                    DateFormat format = new SimpleDateFormat("d MMMM yyyy");
+//                    Date date = format.parse(partsString[5]);
+                    user.setRegistration(partsString[5]);
                     this.usersStorage.addUser(user);
 
                 }
                 if (partsString[0].equals("M")) {
                     Message message = new Message();
                     message.setFrom(partsString[2]);
-                    DateFormat format = new SimpleDateFormat("d MMMM yyyy");
-                    Date date = format.parse(partsString[3]);
-                    message.setDate(date);
+//                    DateFormat format = new SimpleDateFormat("d MMMM yyyy");
+//                    Date date = format.parse(partsString[3]);
+                    message.setDate(partsString[3]);
                     message.setText(partsString[4]);
                     this.chatsStorage.addMessage(partsString[1], message);
                 }
                 line=reader.readLine();
             }
 
-        } catch (IOException | ParseException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

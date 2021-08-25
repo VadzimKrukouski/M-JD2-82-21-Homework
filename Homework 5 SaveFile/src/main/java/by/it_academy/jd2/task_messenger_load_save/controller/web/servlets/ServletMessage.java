@@ -34,7 +34,7 @@ public class ServletMessage extends HttpServlet {
 
         Message message = new Message();
         message.setFrom(from);
-        message.setDate(new Date());
+        message.setDate(new Date().toString());
         message.setText(text);
 
         try {

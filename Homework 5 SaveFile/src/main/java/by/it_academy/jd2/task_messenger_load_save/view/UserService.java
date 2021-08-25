@@ -30,8 +30,13 @@ public class UserService implements IUserService {
     public void registrationUser(HttpServletRequest req, HttpServletResponse resp, User user) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
+        if(user.getLogin().isEmpty() || user.getPassword().isEmpty() || user.getFio().isEmpty() || user.getBirthday().isEmpty()){
+            req.setAttribute("info", "Вы не заполнили все поля!");
+            req.getRequestDispatcher("views/signUp.jsp").forward(req, resp);
+        }
+
         if (usersStorage.addUser(user)) {
-            user.setRegistration(new Date());
+            user.setRegistration(new Date().toString());
             session.setAttribute("user", user);
             session.setAttribute("login", user.getLogin());
             req.setAttribute("user", user);

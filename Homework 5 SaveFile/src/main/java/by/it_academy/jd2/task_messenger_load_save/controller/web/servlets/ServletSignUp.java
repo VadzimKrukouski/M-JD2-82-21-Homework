@@ -38,6 +38,8 @@ public class ServletSignUp extends HttpServlet {
         user.setFio(req.getParameter(FIO_PARAM));
         user.setBirthday(req.getParameter(BIRTHDAY_PARAM));
 
+
+
         //регистрируем пользователя в приложении
         userService.registrationUser(req, resp, user);
     }
