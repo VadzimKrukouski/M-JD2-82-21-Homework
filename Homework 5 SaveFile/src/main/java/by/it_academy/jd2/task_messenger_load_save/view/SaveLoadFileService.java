@@ -60,7 +60,7 @@ public class SaveLoadFileService implements ISaveLoadFileService {
                     writer.append(",");
                     writer.append(message.getFrom());
                     writer.append(",");
-                    writer.append(message.getDate().toString());
+                    writer.append(message.getDate());
                     writer.append(",");
                     writer.append(message.getText());
                     writer.append(newLine);
@@ -83,8 +83,6 @@ public class SaveLoadFileService implements ISaveLoadFileService {
                     user.setPassword(partsString[2]);
                     user.setFio(partsString[3]);
                     user.setBirthday(partsString[4]);
-//                    DateFormat format = new SimpleDateFormat("d MMMM yyyy");
-//                    Date date = format.parse(partsString[5]);
                     user.setRegistration(partsString[5]);
                     this.usersStorage.addUser(user);
 
@@ -92,8 +90,6 @@ public class SaveLoadFileService implements ISaveLoadFileService {
                 if (partsString[0].equals("M")) {
                     Message message = new Message();
                     message.setFrom(partsString[2]);
-//                    DateFormat format = new SimpleDateFormat("d MMMM yyyy");
-//                    Date date = format.parse(partsString[3]);
                     message.setDate(partsString[3]);
                     message.setText(partsString[4]);
                     this.chatsStorage.addMessage(partsString[1], message);

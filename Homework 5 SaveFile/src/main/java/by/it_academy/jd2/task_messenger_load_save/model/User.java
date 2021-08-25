@@ -1,7 +1,5 @@
 package by.it_academy.jd2.task_messenger_load_save.model;
 
-import java.util.Date;
-
 public class User {
     private String login;
     private String password;
