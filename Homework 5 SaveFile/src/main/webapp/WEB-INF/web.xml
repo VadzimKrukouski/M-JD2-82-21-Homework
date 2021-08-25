@@ -43,7 +43,7 @@
     </context-param>
     <context-param>
         <param-name>path</param-name>
-        <param-value>D:\Java\text.txt</param-value>
+        <param-value>C:\Users\User\text.txt</param-value>
     </context-param>
 
 

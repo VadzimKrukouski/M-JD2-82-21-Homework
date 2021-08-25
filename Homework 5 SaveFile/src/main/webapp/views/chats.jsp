@@ -7,15 +7,15 @@
 <body>
 <h3> Ваши сообщения </h3>
 <span style='color: red;'>${infoErr}</p>
+
 <c:forEach items="${requestScope.messages}"
                			var="message">
                    <tr>
-                       <td width="20%">${message.from}</td>
-                       <td width="20%"><fmt:formatDate pattern="dd.MM.yyyy HH:mm:ss" value="${message.date}" /></td>
-                       <td width="60%">${message.text}</td>
+                       <td>${message.from}</td>
+                       <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm:ss" value="${message.date}" /></td>
+                       <td>${message.text}</td>
                    </tr>
-               </c:forEach>
-
+</c:forEach>
 
 <p><input type="button" onclick="location.href='profile';" value="Вернуться в профиль"</p>
 </body>
