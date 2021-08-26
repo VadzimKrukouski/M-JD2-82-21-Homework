@@ -27,8 +27,9 @@ public class ServletChats extends HttpServlet {
         //получаем юзера из аттрибута сессии
         User user = (User) req.getSession().getAttribute("user");
 
-//по логину юзера получаем список его сообщений
+        //по логину юзера получаем список его сообщений
         List<Message> messages = this.chatsStorage.get(user.getLogin());
+
         if (messages==null){
             req.setAttribute("infoErr", "У вас ещё нет сообщений");
         }else {

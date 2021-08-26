@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>
@@ -12,7 +13,7 @@
                			var="message">
                    <tr>
                        <td>${message.from}</td>
-                       <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm:ss" value="${message.date}" /></td>
+                       <td>${message.date}</td>
                        <td>${message.text}</td>
                    </tr>
 </c:forEach>
