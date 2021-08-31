@@ -1,6 +1,7 @@
 package by.it_academy.jd2.task_messenger_load_save.view;
 
 import by.it_academy.jd2.task_messenger_load_save.model.User;
+import by.it_academy.jd2.task_messenger_load_save.storage.UserStorageFactory;
 import by.it_academy.jd2.task_messenger_load_save.view.api.ISignInService;
 import by.it_academy.jd2.task_messenger_load_save.view.api.IUserService;
 
@@ -12,10 +13,8 @@ import java.io.IOException;
 
 public class SignInService implements ISignInService {
     private static final SignInService instance = new SignInService();
-    private final IUserService userService;
 
     private SignInService() {
-        this.userService = UserService.getInstance();
     }
 
     public static SignInService getInstance() {
@@ -23,28 +22,21 @@ public class SignInService implements ISignInService {
     }
 
 
-    public void userVerification(HttpServletRequest req, HttpServletResponse resp, String login, String passwordSite) throws ServletException, IOException {
+    public User userVerification(String login, String passwordSite) {
 
         //по полученному логину получаем юзера из хранилища юзеров
-        User user = userService.get(login);
-        HttpSession session = req.getSession();
+        User user = UserStorageFactory.getInstance().getUser(login);
 
         //если юзер существует, сравниваем пароли
-        if (user!=null) {
+        if (user != null) {
             String passwordServer = user.getPassword();
-            if(passwordServer.equals(passwordSite)){
-                session.setAttribute("user", user);
-                session.setAttribute("login", login);
-                req.setAttribute("user", user);
-                req.getRequestDispatcher("views/profile.jsp").forward(req,resp);
+            if (passwordServer.equals(passwordSite)) {
+                return user;
             } else {
-                req.setAttribute("infoPassword", "Неверный пароль");
-                req.getRequestDispatcher("views/signIn.jsp").forward(req,resp);
+                throw new IllegalArgumentException("Неправильный пароль");
             }
-
         } else {
-            req.setAttribute("infoLogin", "Неверное имя");
-            req.getRequestDispatcher("views/signIn.jsp").forward(req,resp);
+            return null;
         }
     }
 }

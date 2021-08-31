@@ -1,6 +1,7 @@
 package by.it_academy.jd2.task_messenger_load_save.controller.web.servlets;
 
 import by.it_academy.jd2.task_messenger_load_save.model.User;
+import by.it_academy.jd2.task_messenger_load_save.view.SignUpService;
 import by.it_academy.jd2.task_messenger_load_save.view.UserService;
 import by.it_academy.jd2.task_messenger_load_save.view.api.IUserService;
 
@@ -9,7 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Date;
 
 @WebServlet(name = "ServletSignUp", urlPatterns = "/signUp")
 public class ServletSignUp extends HttpServlet {
@@ -39,9 +42,29 @@ public class ServletSignUp extends HttpServlet {
         user.setBirthday(req.getParameter(BIRTHDAY_PARAM));
 
 
+        if (user.getLogin().isEmpty() ||
+                user.getPassword().isEmpty() ||
+                user.getFio().isEmpty() ||
+                user.getBirthday().isEmpty()) {
+            req.setAttribute("info", "Вы не заполнили все поля!");
+            req.getRequestDispatcher("views/signUp.jsp").forward(req, resp);
+        } else {
+            //регистрируем пользователя в приложении
+            boolean resultRegistration = SignUpService.getInstance().registrationUser(user);
+            HttpSession session = req.getSession();
+            if (resultRegistration) {
+                user.setRegistration(new Date().toString());
+                session.setAttribute("user", user);
+                session.setAttribute("login", user.getLogin());
+                req.setAttribute("user", user);
+                req.getRequestDispatcher("views/profile.jsp").forward(req, resp);
+            } else {
+                req.setAttribute("info", "Такой пользователь уже существует");
+                req.getRequestDispatcher("views/signUp.jsp").forward(req, resp);
+            }
+        }
 
-        //регистрируем пользователя в приложении
-        userService.registrationUser(req, resp, user);
+//        userService.registrationUser(req, resp, user);
     }
 }
 
