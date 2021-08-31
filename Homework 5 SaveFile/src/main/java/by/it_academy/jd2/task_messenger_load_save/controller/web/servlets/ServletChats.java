@@ -2,8 +2,8 @@ package by.it_academy.jd2.task_messenger_load_save.controller.web.servlets;
 
 import by.it_academy.jd2.task_messenger_load_save.model.Message;
 import by.it_academy.jd2.task_messenger_load_save.model.User;
-import by.it_academy.jd2.task_messenger_load_save.storage.MemoryChatsStorage;
-import by.it_academy.jd2.task_messenger_load_save.storage.api.IChatsStorage;
+import by.it_academy.jd2.task_messenger_load_save.view.ChatsViewService;
+import by.it_academy.jd2.task_messenger_load_save.view.api.IChatsViewService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,10 +15,10 @@ import java.util.List;
 
 @WebServlet(name = "ServletChats", urlPatterns = "/chats")
 public class ServletChats extends HttpServlet {
-    private final IChatsStorage chatsStorage;
+    private final IChatsViewService chatsViewService;
 
     public ServletChats() {
-        this.chatsStorage = MemoryChatsStorage.getInstance();
+        this.chatsViewService = ChatsViewService.getInstance();
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ServletChats extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
 
         //по логину юзера получаем список его сообщений
-        List<Message> messages = this.chatsStorage.get(user.getLogin());
+        List<Message> messages = this.chatsViewService.getMessages(user.getLogin());
 
         if (messages==null){
             req.setAttribute("infoErr", "У вас ещё нет сообщений");

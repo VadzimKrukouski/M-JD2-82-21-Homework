@@ -1,8 +1,8 @@
 package by.it_academy.jd2.task_messenger_load_save.controller.web.servlets;
 
 import by.it_academy.jd2.task_messenger_load_save.model.Message;
-import by.it_academy.jd2.task_messenger_load_save.view.MessageService;
-import by.it_academy.jd2.task_messenger_load_save.view.api.IMessageService;
+import by.it_academy.jd2.task_messenger_load_save.view.MessageSendService;
+import by.it_academy.jd2.task_messenger_load_save.view.api.IMessageSendService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,10 +14,10 @@ import java.util.Date;
 
 @WebServlet(name = "ServletMessage", urlPatterns = "/message")
 public class ServletMessage extends HttpServlet {
-    private final IMessageService messageService;
+    private final IMessageSendService messageSendService;
 
     public ServletMessage() {
-        this.messageService = MessageService.getInstance();
+        this.messageSendService = MessageSendService.getInstance();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ServletMessage extends HttpServlet {
         message.setText(text);
 
         try {
-            this.messageService.addMessage(recipient,message);
+            this.messageSendService.addMessage(recipient,message);
             req.setAttribute("infoOk", "Сообщение отправлено");
             req.getRequestDispatcher("views/message.jsp").forward(req, resp);
 

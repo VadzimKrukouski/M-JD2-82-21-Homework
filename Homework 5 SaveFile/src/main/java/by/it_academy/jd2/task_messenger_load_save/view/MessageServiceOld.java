@@ -8,16 +8,16 @@ import by.it_academy.jd2.task_messenger_load_save.view.api.IMessageService;
 
 import java.util.List;
 
-public class MessageService implements IMessageService {
-    private static final MessageService instance = new MessageService();
+public class MessageServiceOld implements IMessageService {
+    private static final MessageServiceOld instance = new MessageServiceOld();
 
-    public static MessageService getInstance() {
+    public static MessageServiceOld getInstance() {
         return instance;
     }
 
     private final IChatsStorage chatsStorage;
 
-    public MessageService() {
+    public MessageServiceOld() {
         this.chatsStorage = MemoryChatsStorage.getInstance();
     }
 
