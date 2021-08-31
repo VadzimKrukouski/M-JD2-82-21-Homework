@@ -39,11 +39,11 @@
 
     <context-param>
         <param-name>storage</param-name>
-        <param-value>file</param-value>
+        <param-value>FILE</param-value>
     </context-param>
     <context-param>
         <param-name>path</param-name>
-        <param-value>C:\Users\User\text.txt</param-value>
+        <param-value>D:\Tomcat\text.txt</param-value>
     </context-param>
 
 
