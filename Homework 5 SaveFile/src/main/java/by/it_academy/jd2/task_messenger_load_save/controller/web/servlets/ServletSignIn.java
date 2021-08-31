@@ -32,20 +32,26 @@ public class ServletSignIn extends HttpServlet {
         String passwordSite = req.getParameter("password");
 
         //проводим верификацию юзера
-        User user = signInService.userVerification(login, passwordSite);
+        User user = signInService.userVerification(login);
         if (user == null) {
             req.setAttribute("infoLogin", "Неверное имя");
             req.getRequestDispatcher("views/signIn.jsp").forward(req, resp);
         } else {
-            HttpSession session = req.getSession();
-            session.setAttribute("user", user);
-            session.setAttribute("login", login);
-            req.setAttribute("user", user);
-            req.getRequestDispatcher("views/profile.jsp").forward(req, resp);
+            String passwordServer = user.getPassword();
+            if (passwordServer.equals(passwordSite)) {
+                HttpSession session = req.getSession();
+                session.setAttribute("user", user);
+                session.setAttribute("login", login);
+                req.setAttribute("user", user);
+                req.getRequestDispatcher("views/profile.jsp").forward(req, resp);
+            } else {
+                req.setAttribute("infoPassword", "Неверный пароль");
+                req.getRequestDispatcher("views/signIn.jsp").forward(req, resp);
+            }
         }
-
-//        req.setAttribute("infoPassword", "Неверный пароль");
-//        req.getRequestDispatcher("views/signIn.jsp").forward(req, resp);
-
     }
 }
+
+
+
+

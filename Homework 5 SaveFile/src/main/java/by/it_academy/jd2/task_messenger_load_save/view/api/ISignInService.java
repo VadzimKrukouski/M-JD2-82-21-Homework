@@ -8,5 +8,5 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface ISignInService {
-    User userVerification(String login, String password);
+    User userVerification(String login);
 }

@@ -22,19 +22,14 @@ public class SignInService implements ISignInService {
     }
 
 
-    public User userVerification(String login, String passwordSite) {
+    public User userVerification(String login) {
 
         //по полученному логину получаем юзера из хранилища юзеров
         User user = UserStorageFactory.getInstance().getUser(login);
 
         //если юзер существует, сравниваем пароли
         if (user != null) {
-            String passwordServer = user.getPassword();
-            if (passwordServer.equals(passwordSite)) {
-                return user;
-            } else {
-                throw new IllegalArgumentException("Неправильный пароль");
-            }
+           return user;
         } else {
             return null;
         }

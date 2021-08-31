@@ -2,8 +2,7 @@ package by.it_academy.jd2.task_messenger_load_save.controller.web.servlets;
 
 import by.it_academy.jd2.task_messenger_load_save.model.User;
 import by.it_academy.jd2.task_messenger_load_save.view.SignUpService;
-import by.it_academy.jd2.task_messenger_load_save.view.UserService;
-import by.it_academy.jd2.task_messenger_load_save.view.api.IUserService;
+import by.it_academy.jd2.task_messenger_load_save.view.api.ISignUpService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,16 +15,16 @@ import java.util.Date;
 
 @WebServlet(name = "ServletSignUp", urlPatterns = "/signUp")
 public class ServletSignUp extends HttpServlet {
-    private final IUserService userService;
-
-    public ServletSignUp() {
-        this.userService = UserService.getInstance();
-    }
+    private final ISignUpService signUpService;
 
     private static final String LOGIN_PARAM = "login";
     private static final String PASSWORD_PARAM = "password";
     private static final String FIO_PARAM = "fio";
     private static final String BIRTHDAY_PARAM = "birthday";
+
+    public ServletSignUp() {
+        this.signUpService = SignUpService.getInstance();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -50,7 +49,7 @@ public class ServletSignUp extends HttpServlet {
             req.getRequestDispatcher("views/signUp.jsp").forward(req, resp);
         } else {
             //регистрируем пользователя в приложении
-            boolean resultRegistration = SignUpService.getInstance().registrationUser(user);
+            boolean resultRegistration = signUpService.registrationUser(user);
             HttpSession session = req.getSession();
             if (resultRegistration) {
                 user.setRegistration(new Date().toString());
@@ -63,8 +62,6 @@ public class ServletSignUp extends HttpServlet {
                 req.getRequestDispatcher("views/signUp.jsp").forward(req, resp);
             }
         }
-
-//        userService.registrationUser(req, resp, user);
     }
 }
 
