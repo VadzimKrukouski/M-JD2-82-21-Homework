@@ -2,7 +2,7 @@ package by.it_academy.jd2.task_messenger_load_save.controller.web.servlets;
 
 import by.it_academy.jd2.task_messenger_load_save.model.Message;
 import by.it_academy.jd2.task_messenger_load_save.model.User;
-import by.it_academy.jd2.task_messenger_load_save.storage.ChatsStorage;
+import by.it_academy.jd2.task_messenger_load_save.storage.MemoryChatsStorage;
 import by.it_academy.jd2.task_messenger_load_save.storage.api.IChatsStorage;
 
 import javax.servlet.ServletException;
@@ -18,7 +18,7 @@ public class ServletChats extends HttpServlet {
     private final IChatsStorage chatsStorage;
 
     public ServletChats() {
-        this.chatsStorage = ChatsStorage.getInstance();
+        this.chatsStorage = MemoryChatsStorage.getInstance();
     }
 
     @Override

@@ -7,13 +7,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UsersStorage implements IUsersStorage {
-    private static final UsersStorage instance = new UsersStorage();
+public class MemoryUsersStorage implements IUsersStorage {
+    private static final MemoryUsersStorage instance = new MemoryUsersStorage();
 
-    private UsersStorage() {
+    private MemoryUsersStorage() {
     }
 
-    public static UsersStorage getInstance() {
+    public static MemoryUsersStorage getInstance() {
         return instance;
     }
 

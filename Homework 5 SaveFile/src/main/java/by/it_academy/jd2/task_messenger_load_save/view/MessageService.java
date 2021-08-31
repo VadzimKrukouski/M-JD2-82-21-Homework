@@ -2,12 +2,10 @@ package by.it_academy.jd2.task_messenger_load_save.view;
 
 import by.it_academy.jd2.task_messenger_load_save.model.Message;
 import by.it_academy.jd2.task_messenger_load_save.model.User;
-import by.it_academy.jd2.task_messenger_load_save.storage.ChatsStorage;
+import by.it_academy.jd2.task_messenger_load_save.storage.MemoryChatsStorage;
 import by.it_academy.jd2.task_messenger_load_save.storage.api.IChatsStorage;
 import by.it_academy.jd2.task_messenger_load_save.view.api.IMessageService;
 
-import javax.servlet.ServletException;
-import java.io.IOException;
 import java.util.List;
 
 public class MessageService implements IMessageService {
@@ -20,7 +18,7 @@ public class MessageService implements IMessageService {
     private final IChatsStorage chatsStorage;
 
     public MessageService() {
-        this.chatsStorage = ChatsStorage.getInstance();
+        this.chatsStorage = MemoryChatsStorage.getInstance();
     }
 
     @Override

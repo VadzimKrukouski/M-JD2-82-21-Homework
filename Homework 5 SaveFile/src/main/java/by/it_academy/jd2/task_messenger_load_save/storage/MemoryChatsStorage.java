@@ -8,10 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ChatsStorage implements IChatsStorage {
-    private static final ChatsStorage instance = new ChatsStorage();
+public class MemoryChatsStorage implements IChatsStorage {
+    private static final MemoryChatsStorage instance = new MemoryChatsStorage();
 
-    public static ChatsStorage getInstance() {
+    public static MemoryChatsStorage getInstance() {
         return instance;
     }
 

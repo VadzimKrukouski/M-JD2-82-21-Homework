@@ -3,8 +3,8 @@ package by.it_academy.jd2.task_messenger_load_save.view;
 import by.it_academy.jd2.task_messenger_load_save.model.Message;
 import by.it_academy.jd2.task_messenger_load_save.model.User;
 import by.it_academy.jd2.task_messenger_load_save.storage.AboutStorage;
-import by.it_academy.jd2.task_messenger_load_save.storage.ChatsStorage;
-import by.it_academy.jd2.task_messenger_load_save.storage.UsersStorage;
+import by.it_academy.jd2.task_messenger_load_save.storage.MemoryChatsStorage;
+import by.it_academy.jd2.task_messenger_load_save.storage.MemoryUsersStorage;
 import by.it_academy.jd2.task_messenger_load_save.storage.api.IAboutStorage;
 import by.it_academy.jd2.task_messenger_load_save.storage.api.IChatsStorage;
 import by.it_academy.jd2.task_messenger_load_save.storage.api.IUsersStorage;
@@ -22,8 +22,8 @@ public class SaveLoadFileService implements ISaveLoadFileService {
     private final File file;
 
     private SaveLoadFileService() {
-        this.usersStorage = UsersStorage.getInstance();
-        this.chatsStorage = ChatsStorage.getInstance();
+        this.usersStorage = MemoryUsersStorage.getInstance();
+        this.chatsStorage = MemoryChatsStorage.getInstance();
         IAboutStorage aboutStorage = AboutStorage.getInstance();
         String path = aboutStorage.getPathFile();
         this.file = new File(path);

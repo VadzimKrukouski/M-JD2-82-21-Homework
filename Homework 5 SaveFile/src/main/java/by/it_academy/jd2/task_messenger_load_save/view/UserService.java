@@ -1,7 +1,7 @@
 package by.it_academy.jd2.task_messenger_load_save.view;
 
 import by.it_academy.jd2.task_messenger_load_save.model.User;
-import by.it_academy.jd2.task_messenger_load_save.storage.UsersStorage;
+import by.it_academy.jd2.task_messenger_load_save.storage.MemoryUsersStorage;
 import by.it_academy.jd2.task_messenger_load_save.storage.api.IUsersStorage;
 import by.it_academy.jd2.task_messenger_load_save.view.api.IUserService;
 
@@ -20,7 +20,7 @@ public class UserService implements IUserService {
     private final IUsersStorage usersStorage;
 
     private UserService() {
-        this.usersStorage=UsersStorage.getInstance();
+        this.usersStorage= MemoryUsersStorage.getInstance();
     }
 
     public static UserService getInstance() {
