@@ -13,17 +13,17 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
 
-public class UserService implements IUserService {
+public class UserServiceOld implements IUserService {
 
 
-    private static final UserService instance = new UserService();
+    private static final UserServiceOld instance = new UserServiceOld();
     private final IUsersStorage usersStorage;
 
-    private UserService() {
+    private UserServiceOld() {
         this.usersStorage= MemoryUsersStorage.getInstance();
     }
 
-    public static UserService getInstance() {
+    public static UserServiceOld getInstance() {
         return instance;
     }
 

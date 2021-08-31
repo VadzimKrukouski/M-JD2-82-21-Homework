@@ -17,13 +17,13 @@ import java.util.List;
 public class SaveLoadFileService implements ISaveLoadFileService {
     private static final SaveLoadFileService instance = new SaveLoadFileService();
 
-    private final IUsersStorage usersStorage;
-    private final IChatsStorage chatsStorage;
+    private final IUsersStorage FileUsersStorage;
+    private final IChatsStorage FileChatsStorage;
     private final File file;
 
     private SaveLoadFileService() {
-        this.usersStorage = MemoryUsersStorage.getInstance();
-        this.chatsStorage = MemoryChatsStorage.getInstance();
+        this.FileUsersStorage = MemoryUsersStorage.getInstance();
+        this.FileChatsStorage = MemoryChatsStorage.getInstance();
         IAboutStorage aboutStorage = AboutStorage.getInstance();
         String path = aboutStorage.getPathFile();
         this.file = new File(path);
@@ -38,7 +38,7 @@ public class SaveLoadFileService implements ISaveLoadFileService {
     public void saveToFile() {
         try (FileWriter writer = new FileWriter(file)) {
             String newLine = System.getProperty("line.separator");
-            Collection<User> allUsers = usersStorage.getAll();
+            Collection<User> allUsers = FileUsersStorage.getAll();
             for (User user : allUsers) {
                 writer.append("U");
                 writer.append(",");
@@ -52,7 +52,7 @@ public class SaveLoadFileService implements ISaveLoadFileService {
                 writer.append(",");
                 writer.append(user.getRegistration());
                 writer.append(newLine);
-                List<Message> messages = chatsStorage.get(user.getLogin());
+                List<Message> messages = FileChatsStorage.get(user.getLogin());
                 for (Message message : messages) {
                     writer.append("M");
                     writer.append(",");
@@ -84,7 +84,7 @@ public class SaveLoadFileService implements ISaveLoadFileService {
                     user.setFio(partsString[3]);
                     user.setBirthday(partsString[4]);
                     user.setRegistration(partsString[5]);
-                    this.usersStorage.addUser(user);
+                    this.FileUsersStorage.addUser(user);
 
                 }
                 if (partsString[0].equals("M")) {
@@ -92,7 +92,7 @@ public class SaveLoadFileService implements ISaveLoadFileService {
                     message.setFrom(partsString[2]);
                     message.setDate(partsString[3]);
                     message.setText(partsString[4]);
-                    this.chatsStorage.addMessage(partsString[1], message);
+                    this.FileChatsStorage.addMessage(partsString[1], message);
                 }
                 line=reader.readLine();
             }

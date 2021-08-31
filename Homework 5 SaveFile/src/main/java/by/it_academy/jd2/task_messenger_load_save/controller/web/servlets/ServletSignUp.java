@@ -40,7 +40,7 @@ public class ServletSignUp extends HttpServlet {
         user.setFio(req.getParameter(FIO_PARAM));
         user.setBirthday(req.getParameter(BIRTHDAY_PARAM));
 
-
+        //проверяем заполнены ли все поля
         if (user.getLogin().isEmpty() ||
                 user.getPassword().isEmpty() ||
                 user.getFio().isEmpty() ||

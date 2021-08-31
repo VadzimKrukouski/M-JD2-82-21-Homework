@@ -2,8 +2,8 @@ package by.it_academy.jd2.task_messenger_load_save.controller.web.servlets;
 
 
 import by.it_academy.jd2.task_messenger_load_save.model.User;
-import by.it_academy.jd2.task_messenger_load_save.view.UserService;
-import by.it_academy.jd2.task_messenger_load_save.view.api.IUserService;
+import by.it_academy.jd2.task_messenger_load_save.view.UsersViewService;
+import by.it_academy.jd2.task_messenger_load_save.view.api.IUsersViewService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,16 +17,16 @@ import java.util.Collection;
 @WebServlet (name = "ServletUsers", urlPatterns = "/users")
 public class ServletUsers extends HttpServlet {
 
-    private final IUserService userService;
+    private final IUsersViewService usersViewService;
 
     public ServletUsers() {
-        this.userService = UserService.getInstance();
+        this.usersViewService = UsersViewService.getInstance();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
-        Collection<User> allUsers = this.userService.getAllUsers();
+        Collection<User> allUsers = this.usersViewService.getAllUsers();
         for (User user : allUsers) {
             writer.write("<p>" + (user.toString()) + "<p>");
         }
