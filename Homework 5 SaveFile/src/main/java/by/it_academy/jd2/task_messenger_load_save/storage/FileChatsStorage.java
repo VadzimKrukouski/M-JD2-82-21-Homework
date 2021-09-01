@@ -29,8 +29,7 @@ public class FileChatsStorage implements IChatsStorage {
 //        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 //            String line = reader.readLine();
 //            while (line != null) {
-        try {
-            Stream<String> lines = Files.lines(Path.of(path));
+        try (Stream<String> lines = Files.lines(Path.of(path))) {
             List<String> strings = lines.collect(Collectors.toList());
             for (String string : strings) {
                 String[] partsString = string.split(",");

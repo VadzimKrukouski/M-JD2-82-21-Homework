@@ -58,8 +58,7 @@ public class FileUsersStorage implements IUsersStorage {
 //                String line = reader.readLine();
 //                Stream<String> lines = line.lines();
 //                List<String> strings = lines.collect(Collectors.toList());
-            try {
-                Stream<String> lines = Files.lines(Path.of(path));
+            try (Stream<String> lines = Files.lines(Path.of(path))) {
                 List<String> strings = lines.collect(Collectors.toList());
                 for (String string : strings) {
 
@@ -90,8 +89,7 @@ public class FileUsersStorage implements IUsersStorage {
 //            List<String> strings = lines.collect(Collectors.toList());
         if (Files.exists(Path.of(path))) {
 
-            try {
-                Stream<String> lines = Files.lines(Path.of(path));
+            try (Stream<String> lines = Files.lines(Path.of(path))) {
                 List<String> strings = lines.collect(Collectors.toList());
                 for (String string : strings) {
 //                while (line != null) {

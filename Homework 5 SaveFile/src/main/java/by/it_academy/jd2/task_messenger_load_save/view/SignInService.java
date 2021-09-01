@@ -3,13 +3,6 @@ package by.it_academy.jd2.task_messenger_load_save.view;
 import by.it_academy.jd2.task_messenger_load_save.model.User;
 import by.it_academy.jd2.task_messenger_load_save.storage.UserStorageFactory;
 import by.it_academy.jd2.task_messenger_load_save.view.api.ISignInService;
-import by.it_academy.jd2.task_messenger_load_save.view.api.IUserService;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 public class SignInService implements ISignInService {
     private static final SignInService instance = new SignInService();
