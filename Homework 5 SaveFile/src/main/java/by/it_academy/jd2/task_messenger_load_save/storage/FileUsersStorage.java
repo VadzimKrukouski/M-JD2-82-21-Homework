@@ -27,9 +27,11 @@ public class FileUsersStorage implements IUsersStorage {
     @Override
     public boolean addUser(User user) {
         String login = user.getLogin();
-        try (FileWriter writer = new FileWriter(file)) {
+        try (FileWriter writer = new FileWriter(file, true)) {
             String newLine = System.getProperty("line.separator");
             if (getUser(login) == null) {
+                writer.append("User");
+                writer.append(",");
                 writer.append(user.getLogin());
                 writer.append(",");
                 writer.append(user.getPassword());
@@ -63,16 +65,15 @@ public class FileUsersStorage implements IUsersStorage {
 
 //            while (line != null) {
                     String[] partsString = string.split(",");
-                    if (login.equals(partsString[0])) {
-                        user.setLogin(partsString[0]);
-                        user.setPassword(partsString[1]);
-                        user.setFio(partsString[2]);
-                        user.setBirthday(partsString[3]);
-                        user.setRegistration(partsString[4]);
+                    if (login.equals(partsString[1])) {
+                        user.setLogin(partsString[1]);
+                        user.setPassword(partsString[2]);
+                        user.setFio(partsString[3]);
+                        user.setBirthday(partsString[4]);
+                        user.setRegistration(partsString[5]);
                         return user;
                     }
                 }
-
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
@@ -95,18 +96,19 @@ public class FileUsersStorage implements IUsersStorage {
                 for (String string : strings) {
 //                while (line != null) {
                     String[] partsString = string.split(",");
-                    User user = new User();
-                    user.setLogin(partsString[0]);
-                    user.setFio(partsString[2]);
-                    user.setBirthday(partsString[3]);
-                    user.setRegistration(partsString[4]);
-                    users.add(user);
+                    if (partsString[0].equals("User")) {
+                        User user = new User();
+                        user.setLogin(partsString[1]);
+                        user.setFio(partsString[3]);
+                        user.setBirthday(partsString[4]);
+                        user.setRegistration(partsString[5]);
+                        users.add(user);
+                    }
                 }
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
         }
-
         return users;
     }
 }
