@@ -10,7 +10,7 @@ import java.io.IOException;
 @WebFilter(urlPatterns = {"/chats", "/message"})
 public class SecurityFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 
@@ -25,7 +25,6 @@ public class SecurityFilter implements Filter {
         } else {
             resp.sendRedirect(contextPath + "/signIn");
         }
-
     }
 
     @Override

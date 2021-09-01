@@ -39,6 +39,7 @@ public class ServletSignUp extends HttpServlet {
         user.setPassword(req.getParameter(PASSWORD_PARAM));
         user.setFio(req.getParameter(FIO_PARAM));
         user.setBirthday(req.getParameter(BIRTHDAY_PARAM));
+        user.setRegistration(new Date().toString());
 
         //проверяем заполнены ли все поля
         if (user.getLogin().isEmpty() ||
@@ -52,7 +53,6 @@ public class ServletSignUp extends HttpServlet {
             boolean resultRegistration = signUpService.registrationUser(user);
             HttpSession session = req.getSession();
             if (resultRegistration) {
-                user.setRegistration(new Date().toString());
                 session.setAttribute("user", user);
                 session.setAttribute("login", user.getLogin());
                 req.setAttribute("user", user);

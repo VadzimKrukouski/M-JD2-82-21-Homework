@@ -33,12 +33,14 @@ public class FileChatsStorage implements IChatsStorage {
             List<String> strings = lines.collect(Collectors.toList());
             for (String string : strings) {
                 String[] partsString = string.split(",");
-                if (login.equals(partsString[1])) {
-                    Message message = new Message();
-                    message.setFrom(partsString[2]);
-                    message.setDate(partsString[3]);
-                    message.setText(partsString[4]);
-                    messages.add(message);
+                if (partsString[0].equals("Message")) {
+                    if (login.equals(partsString[1])) {
+                        Message message = new Message();
+                        message.setFrom(partsString[2]);
+                        message.setDate(partsString[3]);
+                        message.setText(partsString[4]);
+                        messages.add(message);
+                    }
                 }
             }
         } catch (IOException exception) {
