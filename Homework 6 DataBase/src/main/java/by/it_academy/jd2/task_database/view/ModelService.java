@@ -1,4 +1,4 @@
-package jd2.task_database.service;
+package jd2.task_database.view;
 
 import java.sql.*;
 

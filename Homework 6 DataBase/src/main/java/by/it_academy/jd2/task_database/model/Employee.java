@@ -1,6 +1,6 @@
 package jd2.task_database.model;
 
-public class Model {
+public class Employee {
     private String name;
     private String  salary;
 
