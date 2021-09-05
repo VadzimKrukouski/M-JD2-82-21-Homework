@@ -15,4 +15,9 @@ public class EmployeeService implements IEmployeeService {
     public long addEmployee(Employee employee) {
         return EmployeesStorage.getInstance().addEmployee(employee);
     }
+
+    @Override
+    public Employee getEmployee(Long id) {
+        return EmployeesStorage.getInstance().getEmployee(id);
+    }
 }

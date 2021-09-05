@@ -26,7 +26,7 @@ public class ServletAddEmployee extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("login");
+        String name = req.getParameter("name");
         double salary = Double.parseDouble((req.getParameter("salary")));
 
         Employee employee = new Employee();
@@ -34,8 +34,12 @@ public class ServletAddEmployee extends HttpServlet {
         employee.setSalary(salary);
 
         long id = employeeService.addEmployee(employee);
+        if (id>0){
+            req.setAttribute("id", id);
+            req.setAttribute("info", "Сотрудник добавлен");
+        }
 
         req.getRequestDispatcher("views/addEmployee.jsp").forward(req,resp);
-        req.setAttribute("info", "Сотрудник добавлен");
+
     }
 }

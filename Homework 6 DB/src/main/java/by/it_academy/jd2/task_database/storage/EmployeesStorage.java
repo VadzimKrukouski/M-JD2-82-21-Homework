@@ -26,14 +26,20 @@ public class EmployeesStorage implements IEmployeeStorage {
 //            ) {
         try (PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO application.employers(\n" +
                 "\tname, salary)\n" +
-                "\tVALUES (?, ?);")
+                "\tVALUES (?, ?);", Statement.RETURN_GENERATED_KEYS)
         ) {
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setDouble(2, employee.getSalary());
 
             preparedStatement.executeUpdate();
-            return 1;
 
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            ) {
+                while (generatedKeys.next()) {
+                    return generatedKeys.getLong(1);
+                }
+            }
+            return -1;
         }
 //                try (ResultSet resultSet = statement.executeQuery("SELECT id,name,salary FROM application.employers ORDER BY id ASC ");){
 //                    System.out.printf("id\tName\tSalary\n");
@@ -49,6 +55,27 @@ public class EmployeesStorage implements IEmployeeStorage {
         catch (SQLException e) {
             throw new IllegalStateException("Ошибка работы с базой данных", e);
         }
+    }
+
+    @Override
+    public Employee getEmployee(Long id) {
+        try (Statement statement = con.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery("SELECT * FROM application.employers WHERE id=" + id);) {
+                while (resultSet.next()) {
+                    Employee employee = new Employee();
+                    long currentId = resultSet.getLong(1);
+                    String name = resultSet.getString(2);
+                    double salary = resultSet.getDouble(3);
+
+                    employee.setName(name);
+                    employee.setSalary(salary);
+                    return employee;
+                }
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Ошибка работы с базой данных", e);
+        }
+        return null;
     }
 }
 

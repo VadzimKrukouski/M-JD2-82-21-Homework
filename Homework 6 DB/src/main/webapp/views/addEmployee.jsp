@@ -12,7 +12,7 @@
 </head>
 <body>
 <h3>Заполните данные</h3>
-<span style='color: red;'>${info}</p>
+<span style='color: green;'>${info}</p>
 <form action="addEmployee" method="POST">
 <table>
 <tbody>
