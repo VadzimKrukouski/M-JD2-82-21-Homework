@@ -17,7 +17,7 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public Employee getEmployee(Long id) {
+    public Employee getEmployee(long id) {
         return EmployeesStorage.getInstance().getEmployee(id);
     }
 }

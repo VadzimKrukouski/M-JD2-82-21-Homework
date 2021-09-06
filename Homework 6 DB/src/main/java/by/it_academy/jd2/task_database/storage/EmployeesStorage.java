@@ -58,7 +58,7 @@ public class EmployeesStorage implements IEmployeeStorage {
     }
 
     @Override
-    public Employee getEmployee(Long id) {
+    public Employee getEmployee(long id) {
         try (Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery("SELECT * FROM application.employers WHERE id=" + id);) {
                 while (resultSet.next()) {
