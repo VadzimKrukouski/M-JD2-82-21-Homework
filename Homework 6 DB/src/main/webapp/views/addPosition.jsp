@@ -8,24 +8,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
 <head>
-    <title>Добавление отдела</title>
+    <title>Добавление должности</title>
 </head>
 <body>
-<h3>Добавьте отдел</h3>
+<h3>Добавьте должность</h3>
 <span style='color: green;'>${info}${id}</p>
 <span style='color: red;'>${infoErr}</p>
-<form action="addDepartment" method="POST">
+<form action="addPosition" method="POST">
 <table>
 <tbody>
 
 <tr>
-<td>Наименование отдела</td>
-<td>
-<input type="text" name="name">
-</td>
-</tr>
-<tr>
-<td>Наименование родительского отдела</td>
+<td>Наименование должности</td>
 <td>
 <input type="text" name="name">
 </td>

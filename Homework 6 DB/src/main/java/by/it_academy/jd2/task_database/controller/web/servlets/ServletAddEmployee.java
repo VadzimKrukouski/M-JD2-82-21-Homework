@@ -36,7 +36,7 @@ public class ServletAddEmployee extends HttpServlet {
         long id = employeeService.addEmployee(employee);
         if (id>0){
             req.setAttribute("id", id);
-            req.setAttribute("info", "Сотрудник добавлен");
+            req.setAttribute("info", "Сотрудник успешно добавлен с id=");
         } else {
             req.setAttribute("infoErr", "Сотрудник не добавлен");
         }

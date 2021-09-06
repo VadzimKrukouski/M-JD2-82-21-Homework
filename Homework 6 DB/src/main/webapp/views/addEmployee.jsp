@@ -12,7 +12,7 @@
 </head>
 <body>
 <h3>Заполните данные</h3>
-<span style='color: green;'>${info}</p>
+<span style='color: green;'>${info}${id}</p>
 <span style='color: red;'>${infoErr}</p>
 <form action="addEmployee" method="POST">
 <table>
@@ -36,6 +36,7 @@
 <p>
  <input type="submit" value="Отправить данные">
  </p>
+  <p><input type="button" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"</p>
 </form>
 </body>
 </html>

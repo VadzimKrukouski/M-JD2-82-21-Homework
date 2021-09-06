@@ -32,6 +32,7 @@
 <p>
  <input type="submit" value="Получить сотрудника">
  </p>
+   <p><input type="button" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"</p>
 </form>
 </body>
 </html>

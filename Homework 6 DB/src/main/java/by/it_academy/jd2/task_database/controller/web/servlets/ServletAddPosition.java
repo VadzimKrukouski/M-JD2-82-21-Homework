@@ -34,7 +34,7 @@ public class ServletAddPosition extends HttpServlet {
 
         if (id>0){
             req.setAttribute("id", id);
-            req.setAttribute("info", "Должность добавлена");
+            req.setAttribute("info", "Должность успешно добавлена с id=");
         } else {
             req.setAttribute("infoErr", "Должность не добавлена");
         }

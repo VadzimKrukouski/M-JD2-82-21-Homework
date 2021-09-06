@@ -36,7 +36,7 @@ public class ServletAddDepartment extends HttpServlet {
         long id = departmentService.addDepartment(department);
         if (id>0){
             req.setAttribute("id", id);
-            req.setAttribute("info", "Отдел добавлен");
+            req.setAttribute("info", "Отдел успешно добавлен с id=");
         } else {
             req.setAttribute("info", "Отдел не добавлен");
         }
