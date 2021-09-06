@@ -24,7 +24,8 @@ public class EmployeesStorage implements IEmployeeStorage {
 //            try (
 //                 Statement statement = con.createStatement();
 //            ) {
-        try (PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO application.employers(\n" +
+        try (PreparedStatement preparedStatement = con.prepareStatement(
+                "INSERT INTO application.employers(\n" +
                 "\tname, salary)\n" +
                 "\tVALUES (?, ?);", Statement.RETURN_GENERATED_KEYS)
         ) {
@@ -60,7 +61,10 @@ public class EmployeesStorage implements IEmployeeStorage {
     @Override
     public Employee getEmployee(long id) {
         try (Statement statement = con.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery("SELECT * FROM application.employers WHERE id=" + id);) {
+            try (ResultSet resultSet = statement.executeQuery(
+                    "SELECT * " +
+                            "FROM application.employers " +
+                            "WHERE id=" + id);) {
                 while (resultSet.next()) {
                     Employee employee = new Employee();
                     long currentId = resultSet.getLong(1);

@@ -12,19 +12,20 @@
 </head>
 <body>
 <h3>Заполните данные</h3>
-<span style='color: red;'>${info}</p>
-<form action="signUp" method="POST">
+<span style='color: green;'>${info}</p>
+<span style='color: red;'>${infoErr}</p>
+<form action="addDepartment" method="POST">
 <table>
 <tbody>
 
 <tr>
-<td>Имя сотрудника:</td>
+<td>Наименование отдела</td>
 <td>
-<input type="text" name="login">
+<input type="text" name="name">
 </td>
 </tr>
 <tr>
-<td>Зарплата:</td>
+<td></td>
 <td>
 <input type="number" name="salary" value="0">
 </td>

@@ -13,6 +13,7 @@
 <body>
 <h3>Заполните данные</h3>
 <span style='color: green;'>${info}</p>
+<span style='color: red;'>${infoErr}</p>
 <form action="addEmployee" method="POST">
 <table>
 <tbody>

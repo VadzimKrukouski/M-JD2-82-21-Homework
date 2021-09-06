@@ -37,9 +37,9 @@ public class ServletAddEmployee extends HttpServlet {
         if (id>0){
             req.setAttribute("id", id);
             req.setAttribute("info", "Сотрудник добавлен");
+        } else {
+            req.setAttribute("infoErr", "Сотрудник не добавлен");
         }
-
         req.getRequestDispatcher("views/addEmployee.jsp").forward(req,resp);
-
     }
 }

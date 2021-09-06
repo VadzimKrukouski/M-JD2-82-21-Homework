@@ -1,4 +1,4 @@
-package jd2.task_database.model;
+package by.it_academy.jd2.task_database.model;
 
 public class Employee {
     private String name;

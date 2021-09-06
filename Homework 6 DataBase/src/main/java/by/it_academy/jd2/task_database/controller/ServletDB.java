@@ -1,7 +1,7 @@
-package jd2.task_database.controller;
+package by.it_academy.jd2.task_database.controller;
 
 
-import jd2.task_database.view.ModelService;
+import by.it_academy.jd2.task_database.view.ModelService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
