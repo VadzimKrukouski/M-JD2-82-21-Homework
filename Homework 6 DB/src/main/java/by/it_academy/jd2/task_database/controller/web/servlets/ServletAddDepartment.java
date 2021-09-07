@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 
 @WebServlet(name = "ServletAddDepartment", urlPatterns = "/addDepartment")
 public class ServletAddDepartment extends HttpServlet {
@@ -25,19 +26,27 @@ public class ServletAddDepartment extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
-        long parentDepartmentId = Long.parseLong(req.getParameter("parentName"));
-
-        Department parentDepartment = departmentService.getDepartment(parentDepartmentId);
-
         Department department = new Department();
-        department.setName(name);
-        department.setParentDepartment(parentDepartment);
+
+        String name = req.getParameter("name");
+        if (req.getParameter("parentName")==null){
+            department.setName(name);
+        } else {
+            long parentDepartmentId = Long.parseLong(req.getParameter("parentName"));
+            Department parentDepartment = departmentService.getDepartment(parentDepartmentId);
+            department.setName(name);
+            department.setParentDepartment(parentDepartment);
+        }
 
         long id = departmentService.addDepartment(department);
+
+        Collection<Department> allDepartments = departmentService.getAllDepartments();
+        req.setAttribute("allDepartments", allDepartments);
+
         if (id>0){
             req.setAttribute("id", id);
             req.setAttribute("info", "Отдел успешно добавлен с id=");
+
         } else {
             req.setAttribute("info", "Отдел не добавлен");
         }

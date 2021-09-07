@@ -7,5 +7,5 @@ import java.util.Collection;
 public interface IPositionService {
     long addPosition(Position position);
     Position getPosition(long id);
-    Collection<Position> getAllCollections();
+    Collection<Position> getAllPositions();
 }

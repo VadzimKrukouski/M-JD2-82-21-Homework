@@ -24,7 +24,7 @@ public class PositionService implements IPositionService {
     }
 
     @Override
-    public Collection<Position> getAllCollections() {
+    public Collection<Position> getAllPositions() {
         return PositionStorage.getInstance().getAllPositions();
     }
 }

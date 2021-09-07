@@ -23,37 +23,54 @@ public class DepartmentStorage implements IDepartmentStorage {
 
     @Override
     public long addDepartment(Department department) {
-        try (PreparedStatement preparedStatement = con.prepareStatement(
-                "INSERT INTO application.departments(\n" +
-                        "\tname, parentDepartment)\n" +
-                        "\tVALUES (?, ?);", Statement.RETURN_GENERATED_KEYS)
-        ) {
-            preparedStatement.setString(1, department.getName());
-            preparedStatement.setLong(2, department.getParentDepartment().getId());
+        if (department.getParentDepartment() == null) {
+            try (PreparedStatement preparedStatement = con.prepareStatement(
+                    "INSERT INTO application.departments(\n" +
+                            "\tname)\n" +
+                            "\tVALUES (?);", Statement.RETURN_GENERATED_KEYS)) {
+                preparedStatement.setString(1, department.getName());
 
-            preparedStatement.executeUpdate();
+                preparedStatement.executeUpdate();
 
-            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()
-            ) {
-                while (generatedKeys.next()) {
-                    return generatedKeys.getLong(1);
+                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()
+                ) {
+                    if (generatedKeys.next()) {
+                        return generatedKeys.getLong(1);
+                    }
                 }
+            } catch (SQLException e) {
+                throw new IllegalStateException("Ошибка работы с базой данных", e);
             }
-            return -1;
+        } else {
+            try (PreparedStatement preparedStatement = con.prepareStatement(
+                    "INSERT INTO application.departments(\n" +
+                            "\tname, parentDepartment)\n" +
+                            "\tVALUES (?, ?);", Statement.RETURN_GENERATED_KEYS)
+            ) {
+                preparedStatement.setString(1, department.getName());
+                preparedStatement.setLong(2, department.getParentDepartment().getId());
 
-        } catch (SQLException e) {
-            throw new IllegalStateException("Ошибка работы с базой данных", e);
+                preparedStatement.executeUpdate();
+
+                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()
+                ) {
+                    if (generatedKeys.next()) {
+                        return generatedKeys.getLong(1);
+                    }
+                }
+
+            } catch (SQLException e) {
+                throw new IllegalStateException("Ошибка работы с базой данных", e);
+            }
         }
+        return -1;
     }
 
     @Override
     public Department getDepartment(long id) {
         try (Statement statement = con.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(
-                    "SELECT * " +
-                            "FROM application.departments" +
-                            "WHERE id=" + id);) {
-                while (resultSet.next()) {
+            try (ResultSet resultSet = statement.executeQuery("SELECT * FROM application.departments WHERE id=" + id);) {
+                if (resultSet.next()) {
                     Department department = new Department();
                     long currentId = resultSet.getLong(1);
                     String name = resultSet.getString(2);
@@ -72,6 +89,37 @@ public class DepartmentStorage implements IDepartmentStorage {
         }
         return null;
     }
+//        String sql = "SELECT * FROM application.departments WHERE id = " + id;
+//        Statement statement = null;
+//        try {
+//            statement = con.createStatement();
+//            ResultSet resultSet = statement.executeQuery(sql);
+//            if (resultSet.next()) {
+//                Department department = new Department();
+//                long currentId = resultSet.getLong(1);
+//                String name = resultSet.getString(2);
+//                long parentDepartmentId = resultSet.getLong(3);
+//                Department parentDepartment = getDepartment(parentDepartmentId);
+//
+//                department.setId(currentId);
+//                department.setName(name);
+//                department.setParentDepartment(parentDepartment);
+//
+//                return department;
+//            }
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        } finally {
+//            if (statement != null) {
+//                try {
+//                    statement.close();
+//                } catch (SQLException throwables) {
+//                    throw new RuntimeException();
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
     @Override
     public Collection<Department> getAllDepartments() {

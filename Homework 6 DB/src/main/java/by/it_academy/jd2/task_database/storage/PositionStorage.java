@@ -34,7 +34,7 @@ public class PositionStorage implements IPositionStorage {
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()
             ) {
-                while (generatedKeys.next()) {
+                if (generatedKeys.next()) {
                     return generatedKeys.getLong(1);
                 }
             }
@@ -53,7 +53,7 @@ public class PositionStorage implements IPositionStorage {
                     "SELECT *" +
                             "FROM application.positions" +
                             "WHERE id=" + id);) {
-                while (resultSet.next()) {
+                if (resultSet.next()) {
                     Position position = new Position();
                     long currentId = resultSet.getLong(1);
                     String name = resultSet.getString(2);

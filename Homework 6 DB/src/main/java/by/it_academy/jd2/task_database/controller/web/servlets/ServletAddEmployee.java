@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 
 @WebServlet (name = "ServletAddEmployee", urlPatterns = "/addEmployee")
 public class ServletAddEmployee extends HttpServlet {
@@ -31,6 +32,10 @@ public class ServletAddEmployee extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Collection<Department> allDepartments = departmentService.getAllDepartments();
+        Collection<Position> allPositions = positionService.getAllPositions();
+        req.setAttribute("allDepartments", allDepartments);
+        req.setAttribute("allPositions", allPositions);
         req.getRequestDispatcher("views/addEmployee.jsp").forward(req,resp);
     }
 
