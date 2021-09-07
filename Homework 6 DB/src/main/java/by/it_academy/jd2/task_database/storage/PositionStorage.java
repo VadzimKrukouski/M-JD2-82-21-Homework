@@ -5,6 +5,9 @@ import by.it_academy.jd2.task_database.storage.api.IPositionStorage;
 import by.it_academy.jd2.task_database.view.DataBaseConnection;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class PositionStorage implements IPositionStorage {
     private static final PositionStorage instance = new PositionStorage();
@@ -45,12 +48,12 @@ public class PositionStorage implements IPositionStorage {
 
     @Override
     public Position getPosition(long id) {
-        try (Statement statement = con.createStatement()){
+        try (Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(
                     "SELECT *" +
                             "FROM application.positions" +
-                            "WHERE id=" + id);){
-                while (resultSet.next()){
+                            "WHERE id=" + id);) {
+                while (resultSet.next()) {
                     Position position = new Position();
                     long currentId = resultSet.getLong(1);
                     String name = resultSet.getString(2);
@@ -65,5 +68,29 @@ public class PositionStorage implements IPositionStorage {
             throw new IllegalStateException("Ошибка работы с базой данных", e);
         }
         return null;
+    }
+
+    @Override
+    public Collection<Position> getAllPositions() {
+        List<Position> positionList = new ArrayList<>();
+        try (Statement statement = con.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(
+                    "SELECT * " +
+                            "FROM application.positions");) {
+                while (resultSet.next()){
+                    Position position = new Position();
+                    long currentId = resultSet.getLong(1);
+                    String name = resultSet.getString(2);
+
+                    position.setId(currentId);
+                    position.setName(name);
+
+                    positionList.add(position);
+                }
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Ошибка работы с базой данных", e);
+        }
+        return positionList;
     }
 }

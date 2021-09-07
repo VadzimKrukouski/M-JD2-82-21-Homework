@@ -94,7 +94,6 @@ public class DepartmentStorage implements IDepartmentStorage {
                     departmentList.add(department);
                 }
             }
-
         } catch (SQLException e) {
             throw new IllegalStateException("Ошибка работы с базой данных", e);
         }
