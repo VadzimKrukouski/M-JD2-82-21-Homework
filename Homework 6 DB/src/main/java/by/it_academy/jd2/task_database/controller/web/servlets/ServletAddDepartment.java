@@ -27,6 +27,7 @@ public class ServletAddDepartment extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         long parentDepartmentId = Long.parseLong(req.getParameter("parentName"));
+
         Department parentDepartment = departmentService.getDepartment(parentDepartmentId);
 
         Department department = new Department();

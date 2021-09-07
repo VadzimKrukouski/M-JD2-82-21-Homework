@@ -4,6 +4,8 @@ import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.storage.DepartmentStorage;
 import by.it_academy.jd2.task_database.view.api.IDepartmentService;
 
+import java.util.Collection;
+
 public class DepartmentService implements IDepartmentService {
     private static final DepartmentService instance = new DepartmentService();
 
@@ -19,5 +21,10 @@ public class DepartmentService implements IDepartmentService {
     @Override
     public Department getDepartment(long id) {
         return DepartmentStorage.getInstance().getDepartment(id);
+    }
+
+    @Override
+    public Collection<Department> getAllDepartments() {
+        return DepartmentStorage.getInstance().getAllDepartments();
     }
 }
