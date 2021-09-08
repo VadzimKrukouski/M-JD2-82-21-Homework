@@ -26,17 +26,19 @@ public class EmployeesStorage implements IEmployeeStorage {
 //            ) {
         try (PreparedStatement preparedStatement = con.prepareStatement(
                 "INSERT INTO application.employers(\n" +
-                "\tname, salary)\n" +
-                "\tVALUES (?, ?);", Statement.RETURN_GENERATED_KEYS)
+                        "\tname, salary, position, department)\n" +
+                        "\tVALUES (?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS)
         ) {
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setDouble(2, employee.getSalary());
+            preparedStatement.setLong(3, employee.getPosition().getId());
+            preparedStatement.setLong(4, employee.getDepartment().getId());
 
             preparedStatement.executeUpdate();
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             ) {
-                while (generatedKeys.next()) {
+                if (generatedKeys.next()) {
                     return generatedKeys.getLong(1);
                 }
             }
@@ -65,12 +67,13 @@ public class EmployeesStorage implements IEmployeeStorage {
                     "SELECT * " +
                             "FROM application.employers " +
                             "WHERE id=" + id);) {
-                while (resultSet.next()) {
+                if (resultSet.next()) {
                     Employee employee = new Employee();
                     long currentId = resultSet.getLong(1);
                     String name = resultSet.getString(2);
                     double salary = resultSet.getDouble(3);
 
+                    employee.setId(currentId);
                     employee.setName(name);
                     employee.setSalary(salary);
                     return employee;

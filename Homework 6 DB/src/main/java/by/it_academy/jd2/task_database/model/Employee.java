@@ -1,11 +1,19 @@
 package by.it_academy.jd2.task_database.model;
 
 public class Employee {
+    private long id;
     private String name;
     private Double  salary;
     private Department department;
     private Position position;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
