@@ -9,6 +9,7 @@ import by.it_academy.jd2.task_database.view.PositionService;
 import by.it_academy.jd2.task_database.view.api.IDepartmentService;
 import by.it_academy.jd2.task_database.view.api.IEmployeeService;
 import by.it_academy.jd2.task_database.view.api.IPositionService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,6 +24,7 @@ public class ServletAddEmployee extends HttpServlet {
     private final IEmployeeService employeeService;
     private final IDepartmentService departmentService;
     private final IPositionService positionService;
+    private ObjectMapper mapper = new ObjectMapper();
 
     public ServletAddEmployee() {
         this.employeeService = EmployeeService.getInstance();
@@ -42,19 +44,19 @@ public class ServletAddEmployee extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
-        double salary = Double.parseDouble((req.getParameter("salary")));
-        long departmentId = Long.parseLong(req.getParameter("department"));
-        long positionId = Long.parseLong(req.getParameter("position"));
+//        String name = req.getParameter("name");
+//        double salary = Double.parseDouble((req.getParameter("salary")));
+//        long departmentId = Long.parseLong(req.getParameter("department"));
+//        long positionId = Long.parseLong(req.getParameter("position"));
 
-        Department department = departmentService.getDepartment(departmentId);
-        Position position = positionService.getPosition(positionId);
+//        Department department = departmentService.getDepartment(departmentId);
+//        Position position = positionService.getPosition(positionId);
 
-        Employee employee = new Employee();
-        employee.setName(name);
-        employee.setSalary(salary);
-        employee.setDepartment(department);
-        employee.setPosition(position);
+        Employee employee = mapper.readValue(req.getInputStream(), Employee.class);
+//        employee.setName(name);
+//        employee.setSalary(salary);
+//        employee.setDepartment(department);
+//        employee.setPosition(position);
 
         long id = employeeService.addEmployee(employee);
 

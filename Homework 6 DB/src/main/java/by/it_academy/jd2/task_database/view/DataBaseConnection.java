@@ -11,7 +11,7 @@ public class DataBaseConnection {
             con = DriverManager.getConnection(
                     "jdbc:postgresql://localhost:5432/crm",
                     "postgres",
-                    "9876543210");
+                    "123456789");
 
         } catch (SQLException | ClassNotFoundException e) {
             throw new IllegalStateException("Ошибка работы с базой данных", e);

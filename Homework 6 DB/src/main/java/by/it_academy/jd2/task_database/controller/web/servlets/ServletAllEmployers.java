@@ -24,7 +24,7 @@ public class ServletAllEmployers extends HttpServlet {
         Collection<Employee> allEmployers = employeeService.getAllEmployers();
 
         req.setAttribute("allEmployers", allEmployers);
-        req.getRequestDispatcher("views/allEmployers.jsp");
+        req.getRequestDispatcher("views/allEmployers.jsp").forward(req,resp);
     }
 
     @Override

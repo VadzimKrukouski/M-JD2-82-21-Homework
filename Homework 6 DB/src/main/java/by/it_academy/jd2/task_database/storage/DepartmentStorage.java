@@ -3,6 +3,8 @@ package by.it_academy.jd2.task_database.storage;
 import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.storage.api.IDepartmentStorage;
 import by.it_academy.jd2.task_database.view.DataBaseConnection;
+import by.it_academy.jd2.task_database.view.DataBaseConnectionCPDS;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,10 +13,10 @@ import java.util.List;
 
 public class DepartmentStorage implements IDepartmentStorage {
     private static final DepartmentStorage instance = new DepartmentStorage();
-    private final Connection con;
+    private final ComboPooledDataSource cpds;
 
     public DepartmentStorage() {
-        this.con = DataBaseConnection.getConnection();
+        this.cpds = DataBaseConnectionCPDS.getInstance().getConnection();
     }
 
     public static DepartmentStorage getInstance() {
@@ -24,7 +26,8 @@ public class DepartmentStorage implements IDepartmentStorage {
     @Override
     public long addDepartment(Department department) {
         if (department.getParentDepartment() == null) {
-            try (PreparedStatement preparedStatement = con.prepareStatement(
+            try (Connection con = cpds.getConnection();
+                    PreparedStatement preparedStatement = con.prepareStatement(
                     "INSERT INTO application.departments(\n" +
                             "\tname)\n" +
                             "\tVALUES (?);", Statement.RETURN_GENERATED_KEYS)) {
@@ -42,7 +45,8 @@ public class DepartmentStorage implements IDepartmentStorage {
                 throw new IllegalStateException("Ошибка работы с базой данных", e);
             }
         } else {
-            try (PreparedStatement preparedStatement = con.prepareStatement(
+            try (Connection con = cpds.getConnection();
+                    PreparedStatement preparedStatement = con.prepareStatement(
                     "INSERT INTO application.departments(\n" +
                             "\tname, parentDepartment)\n" +
                             "\tVALUES (?, ?);", Statement.RETURN_GENERATED_KEYS)
@@ -68,7 +72,8 @@ public class DepartmentStorage implements IDepartmentStorage {
 
     @Override
     public Department getDepartment(long id) {
-        try (Statement statement = con.createStatement()) {
+        try (Connection con = cpds.getConnection();
+                Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery("SELECT * FROM application.departments WHERE id=" + id)) {
                 if (resultSet.next()) {
                     Department department = new Department();
@@ -94,7 +99,8 @@ public class DepartmentStorage implements IDepartmentStorage {
     @Override
     public Collection<Department> getAllDepartments() {
         List<Department> departmentList = new ArrayList<>();
-        try (Statement statement = con.createStatement()) {
+        try (Connection con = cpds.getConnection();
+                Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(
                     "SELECT * FROM application.departments")) {
                 while (resultSet.next()) {

@@ -7,6 +7,10 @@
 </head>
 <body>
 <h3> Все сотрудники </h3>
+<table border="1">
+    <tr>
+        <tbody>
+
 
 <c:forEach items="${requestScope.allEmployers}"
                			var="employers">
@@ -15,6 +19,9 @@
                        <td><a href="getEmployee?id=${employers.id}">${employers.name}</a></td>
                    </tr>
 </c:forEach>
+        </tbody>
+    </tr>
+</table>
 
    <p><input type="button" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"</p>
 </body>

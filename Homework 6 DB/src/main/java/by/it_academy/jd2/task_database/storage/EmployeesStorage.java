@@ -5,6 +5,8 @@ import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.model.Position;
 import by.it_academy.jd2.task_database.storage.api.IEmployeeStorage;
 import by.it_academy.jd2.task_database.view.DataBaseConnection;
+import by.it_academy.jd2.task_database.view.DataBaseConnectionCPDS;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,10 +15,10 @@ import java.util.List;
 
 public class EmployeesStorage implements IEmployeeStorage {
     private static final EmployeesStorage instance = new EmployeesStorage();
-    private final Connection con;
+    private final ComboPooledDataSource cpds;
 
     private EmployeesStorage() {
-        this.con = DataBaseConnection.getConnection();
+        this.cpds = DataBaseConnectionCPDS.getInstance().getConnection();
     }
 
     public static EmployeesStorage getInstance() {
@@ -25,7 +27,8 @@ public class EmployeesStorage implements IEmployeeStorage {
 
     @Override
     public long addEmployee(Employee employee) {
-        try (PreparedStatement preparedStatement = con.prepareStatement(
+        try (Connection con = cpds.getConnection();
+                PreparedStatement preparedStatement = con.prepareStatement(
                 "INSERT INTO application.employers(\n" +
                         "\tname, salary, position, department)\n" +
                         "\tVALUES (?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS)
@@ -59,7 +62,8 @@ public class EmployeesStorage implements IEmployeeStorage {
                 "JOIN application.departments\n" +
                 "ON employers.department=departments.id\n" +
                 "WHERE employers.id=";
-        try (Statement statement = con.createStatement()) {
+        try (Connection con = cpds.getConnection();
+                Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(sql + id)) {
                 if (resultSet.next()) {
                     Employee employee = new Employee();
@@ -99,7 +103,8 @@ public class EmployeesStorage implements IEmployeeStorage {
                 "                    ON employers.position=positions.id\n" +
                 "                    JOIN application.departments\n" +
                 "                    ON employers.department=departments.id";
-        try (Statement statement = con.createStatement()) {
+        try (Connection con = cpds.getConnection();
+                Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(sql)) {
                 while (resultSet.next()) {
                     Employee employee = new Employee();

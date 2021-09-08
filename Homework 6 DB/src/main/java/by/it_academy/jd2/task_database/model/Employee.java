@@ -7,6 +7,9 @@ public class Employee {
     private Department department;
     private Position position;
 
+    public Employee() {
+    }
+
     public long getId() {
         return id;
     }
