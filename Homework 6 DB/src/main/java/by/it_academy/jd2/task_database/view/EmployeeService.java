@@ -4,6 +4,8 @@ import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.storage.EmployeesStorage;
 import by.it_academy.jd2.task_database.view.api.IEmployeeService;
 
+import java.util.Collection;
+
 public class EmployeeService implements IEmployeeService {
     private static final EmployeeService instance = new EmployeeService();
 
@@ -19,5 +21,10 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public Employee getEmployee(long id) {
         return EmployeesStorage.getInstance().getEmployee(id);
+    }
+
+    @Override
+    public Collection<Employee> getAllEmployers() {
+        return EmployeesStorage.getInstance().getAllEmployers();
     }
 }

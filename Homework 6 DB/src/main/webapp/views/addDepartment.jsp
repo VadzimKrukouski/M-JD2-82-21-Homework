@@ -30,8 +30,8 @@
 
 <p>Наименование родительского отдела</p>
   <p>
-    <select size="6" name="parentName">
-        <option disabled>Parent department</option>
+    <select name="parentName">
+        <option disabled>Родительский отдел</option>
                <c:forEach items="${allDepartments}" var="department">
                    <option value="${department.id}">${department.name}</option>
                </c:forEach>

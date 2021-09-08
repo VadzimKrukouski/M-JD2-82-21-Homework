@@ -67,19 +67,29 @@ public class EmployeesStorage implements IEmployeeStorage {
 
     @Override
     public Employee getEmployee(long id) {
+        String sql = "SELECT employers.id, employers.name, employers.salary, positions.name, departments.name \n" +
+                "FROM application.employers \n" +
+                "\n" +
+                "JOIN application.positions\n" +
+                "ON employers.position=positions.id\n" +
+                "JOIN application.departments\n" +
+                "ON employers.department=departments.id\n" +
+                "WHERE employers.id=";
         try (Statement statement = con.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(
-                    "SELECT * FROM application.employers WHERE id=" + id);) {
+            try (ResultSet resultSet = statement.executeQuery(sql + id);) {
                 if (resultSet.next()) {
                     Employee employee = new Employee();
                     long currentId = resultSet.getLong(1);
                     String name = resultSet.getString(2);
                     double salary = resultSet.getDouble(3);
-                    long positionId = resultSet.getLong(4);
-                    long departmentId = resultSet.getLong(5);
+                    Position position = (Position) resultSet.getObject(4);
+                    Department department = (Department) resultSet.getObject(5);
 
-                    Position position = PositionStorage.getInstance().getPosition(positionId);
-                    Department department = DepartmentStorage.getInstance().getDepartment(departmentId);
+//                    long positionId = resultSet.getLong(4);
+//                    long departmentId = resultSet.getLong(5);
+
+//                    Position position = PositionStorage.getInstance().getPosition(positionId);
+//                    Department department = DepartmentStorage.getInstance().getDepartment(departmentId);
 
 
                     employee.setId(currentId);

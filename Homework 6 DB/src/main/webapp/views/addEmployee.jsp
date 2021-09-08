@@ -23,16 +23,16 @@
 Зарплата: <input type="number" name="salary" value="0">
 <p>
      <br>
-       <select size="5" name="position">
-               <option disabled>Choose department</option>
+       <select name="position">
+               <option disabled>Выберите должность</option>
                       <c:forEach items="${allPositions}" var="position">
                           <option value="${position.id}">${position.name}</option>
                       </c:forEach>
                   </select>
 
 
-        <select size="5" name="department">
-        <option disabled>Choose department</option>
+        <select name="department">
+        <option disabled>Выберите отдел</option>
                <c:forEach items="${allDepartments}" var="department">
                    <option value="${department.id}">${department.name}</option>
                </c:forEach>
