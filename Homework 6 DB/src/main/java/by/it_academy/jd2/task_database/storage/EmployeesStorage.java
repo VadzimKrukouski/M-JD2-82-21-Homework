@@ -82,15 +82,20 @@ public class EmployeesStorage implements IEmployeeStorage {
                     long currentId = resultSet.getLong(1);
                     String name = resultSet.getString(2);
                     double salary = resultSet.getDouble(3);
-                    Position position = (Position) resultSet.getObject(4);
-                    Department department = (Department) resultSet.getObject(5);
+
+                    Position position = new Position();
+                    String namePosition = resultSet.getString(4);
+                    position.setName(namePosition);
+
+                    Department department = new Department();
+                    String nameDepartment = resultSet.getString(5);
+                    department.setName(nameDepartment);
 
 //                    long positionId = resultSet.getLong(4);
 //                    long departmentId = resultSet.getLong(5);
 
 //                    Position position = PositionStorage.getInstance().getPosition(positionId);
 //                    Department department = DepartmentStorage.getInstance().getDepartment(departmentId);
-
 
                     employee.setId(currentId);
                     employee.setName(name);
@@ -122,8 +127,14 @@ public class EmployeesStorage implements IEmployeeStorage {
                     long currentId = resultSet.getLong(1);
                     String name = resultSet.getString(2);
                     double salary = resultSet.getDouble(3);
-                    Position position = (Position) resultSet.getObject(4);
-                    Department department = (Department) resultSet.getObject(5);
+
+                    Position position = new Position();
+                    String namePosition = resultSet.getString(4);
+                    position.setName(namePosition);
+
+                    Department department = new Department();
+                    String nameDepartment = resultSet.getString(5);
+                    department.setName(nameDepartment);
 
                     employee.setId(currentId);
                     employee.setName(name);

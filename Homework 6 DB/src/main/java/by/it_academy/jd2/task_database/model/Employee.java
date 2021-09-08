@@ -61,8 +61,8 @@ public class Employee {
         return "Employee{" +
                 "name='" + name + '\'' +
                 ", salary=" + salary +
-                ", department=" + department +
-                ", position=" + position +
+                ", department=" + this.department.getName() +
+                ", position=" + this.position.getName() +
                 '}';
     }
 }
