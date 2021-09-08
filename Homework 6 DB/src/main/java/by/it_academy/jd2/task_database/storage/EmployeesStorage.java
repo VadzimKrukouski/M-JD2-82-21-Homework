@@ -7,6 +7,9 @@ import by.it_academy.jd2.task_database.storage.api.IEmployeeStorage;
 import by.it_academy.jd2.task_database.view.DataBaseConnection;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class EmployeesStorage implements IEmployeeStorage {
     private static final EmployeesStorage instance = new EmployeesStorage();
@@ -91,6 +94,40 @@ public class EmployeesStorage implements IEmployeeStorage {
             throw new IllegalStateException("Ошибка работы с базой данных", e);
         }
         return null;
+    }
+
+    @Override
+    public Collection<Employee> getAllEmployers() {
+        List<Employee> employeeList = new ArrayList<>();
+        String sql = "SELECT employers.id, employers.name, employers.salary, positions.name, departments.name\n" +
+                "                    FROM application.employers\n" +
+                "                    JOIN application.positions\n" +
+                "                    ON employers.position=positions.id\n" +
+                "                    JOIN application.departments\n" +
+                "                    ON employers.department=departments.id";
+        try (Statement statement = con.createStatement()){
+            try (ResultSet resultSet = statement.executeQuery(sql)){
+                while (resultSet.next()){
+                    Employee employee = new Employee();
+                    long currentId = resultSet.getLong(1);
+                    String name = resultSet.getString(2);
+                    double salary = resultSet.getDouble(3);
+                    Position position = (Position) resultSet.getObject(4);
+                    Department department = (Department) resultSet.getObject(5);
+
+                    employee.setId(currentId);
+                    employee.setName(name);
+                    employee.setSalary(salary);
+                    employee.setPosition(position);
+                    employee.setDepartment(department);
+
+                    employeeList.add(employee);
+                }
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Ошибка работы с базой данных", e);
+        }
+        return employeeList;
     }
 }
 
