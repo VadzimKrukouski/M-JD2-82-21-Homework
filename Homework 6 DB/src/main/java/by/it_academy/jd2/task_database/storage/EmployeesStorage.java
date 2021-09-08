@@ -1,6 +1,8 @@
 package by.it_academy.jd2.task_database.storage;
 
+import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.model.Employee;
+import by.it_academy.jd2.task_database.model.Position;
 import by.it_academy.jd2.task_database.storage.api.IEmployeeStorage;
 import by.it_academy.jd2.task_database.view.DataBaseConnection;
 
@@ -64,18 +66,24 @@ public class EmployeesStorage implements IEmployeeStorage {
     public Employee getEmployee(long id) {
         try (Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(
-                    "SELECT * " +
-                            "FROM application.employers " +
-                            "WHERE id=" + id);) {
+                    "SELECT * FROM application.employers WHERE id=" + id);) {
                 if (resultSet.next()) {
                     Employee employee = new Employee();
                     long currentId = resultSet.getLong(1);
                     String name = resultSet.getString(2);
                     double salary = resultSet.getDouble(3);
+                    long positionId = resultSet.getLong(4);
+                    long departmentId = resultSet.getLong(5);
+
+                    Position position = PositionStorage.getInstance().getPosition(positionId);
+                    Department department = DepartmentStorage.getInstance().getDepartment(departmentId);
+
 
                     employee.setId(currentId);
                     employee.setName(name);
                     employee.setSalary(salary);
+                    employee.setPosition(position);
+                    employee.setDepartment(department);
                     return employee;
                 }
             }

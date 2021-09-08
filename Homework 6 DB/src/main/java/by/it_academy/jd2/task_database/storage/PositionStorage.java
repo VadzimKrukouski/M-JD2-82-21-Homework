@@ -50,9 +50,7 @@ public class PositionStorage implements IPositionStorage {
     public Position getPosition(long id) {
         try (Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(
-                    "SELECT *" +
-                            "FROM application.positions" +
-                            "WHERE id=" + id);) {
+                    "SELECT * FROM application.positions WHERE id=" + id);) {
                 if (resultSet.next()) {
                     Position position = new Position();
                     long currentId = resultSet.getLong(1);
@@ -75,8 +73,7 @@ public class PositionStorage implements IPositionStorage {
         List<Position> positionList = new ArrayList<>();
         try (Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(
-                    "SELECT * " +
-                            "FROM application.positions");) {
+                    "SELECT * FROM application.positions");) {
                 while (resultSet.next()){
                     Position position = new Position();
                     long currentId = resultSet.getLong(1);

@@ -26,7 +26,7 @@ public class ServletGetEmployee extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        Employee employee = employeeService.getEmployee(Long.valueOf(id));
+        Employee employee = employeeService.getEmployee(Long.parseLong(id));
 
         if (employee != null) {
             req.setAttribute("employee", employee.toString());

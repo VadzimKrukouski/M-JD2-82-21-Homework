@@ -126,8 +126,7 @@ public class DepartmentStorage implements IDepartmentStorage {
         List<Department> departmentList = new ArrayList<>();
         try (Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(
-                    "SELECT * " +
-                            "FROM application.departments");) {
+                    "SELECT * FROM application.departments");) {
                 while (resultSet.next()) {
                     Department department = new Department();
                     long currentId = resultSet.getLong(1);
