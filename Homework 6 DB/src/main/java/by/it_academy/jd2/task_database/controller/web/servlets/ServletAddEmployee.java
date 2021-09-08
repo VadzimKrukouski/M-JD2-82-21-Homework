@@ -34,6 +34,7 @@ public class ServletAddEmployee extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Collection<Department> allDepartments = departmentService.getAllDepartments();
         Collection<Position> allPositions = positionService.getAllPositions();
+
         req.setAttribute("allDepartments", allDepartments);
         req.setAttribute("allPositions", allPositions);
         req.getRequestDispatcher("views/addEmployee.jsp").forward(req,resp);
@@ -56,6 +57,7 @@ public class ServletAddEmployee extends HttpServlet {
         employee.setPosition(position);
 
         long id = employeeService.addEmployee(employee);
+
         if (id>0){
             req.setAttribute("id", id);
             req.setAttribute("info", "Сотрудник успешно добавлен с id=");

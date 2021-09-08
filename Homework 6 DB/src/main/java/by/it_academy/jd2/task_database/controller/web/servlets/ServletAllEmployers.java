@@ -26,4 +26,9 @@ public class ServletAllEmployers extends HttpServlet {
         req.setAttribute("allEmployers", allEmployers);
         req.getRequestDispatcher("views/allEmployers.jsp");
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
 }

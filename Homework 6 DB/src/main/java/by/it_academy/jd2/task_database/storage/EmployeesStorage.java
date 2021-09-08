@@ -25,10 +25,6 @@ public class EmployeesStorage implements IEmployeeStorage {
 
     @Override
     public long addEmployee(Employee employee) {
-
-//            try (
-//                 Statement statement = con.createStatement();
-//            ) {
         try (PreparedStatement preparedStatement = con.prepareStatement(
                 "INSERT INTO application.employers(\n" +
                         "\tname, salary, position, department)\n" +
@@ -41,26 +37,14 @@ public class EmployeesStorage implements IEmployeeStorage {
 
             preparedStatement.executeUpdate();
 
-            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()
             ) {
                 if (generatedKeys.next()) {
                     return generatedKeys.getLong(1);
                 }
             }
             return -1;
-        }
-//                try (ResultSet resultSet = statement.executeQuery("SELECT id,name,salary FROM application.employers ORDER BY id ASC ");){
-//                    System.out.printf("id\tName\tSalary\n");
-//                    while ((resultSet.next())) {
-//                        System.out.printf("%d\t%s\t%,.2f\n",
-//                                resultSet.getLong(1),
-//                                resultSet.getString(2),
-//                                resultSet.getDouble(3));
-//                    }
-//
-//
-//                }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new IllegalStateException("Ошибка работы с базой данных", e);
         }
     }
@@ -76,9 +60,10 @@ public class EmployeesStorage implements IEmployeeStorage {
                 "ON employers.department=departments.id\n" +
                 "WHERE employers.id=";
         try (Statement statement = con.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(sql + id);) {
+            try (ResultSet resultSet = statement.executeQuery(sql + id)) {
                 if (resultSet.next()) {
                     Employee employee = new Employee();
+
                     long currentId = resultSet.getLong(1);
                     String name = resultSet.getString(2);
                     double salary = resultSet.getDouble(3);
@@ -90,12 +75,6 @@ public class EmployeesStorage implements IEmployeeStorage {
                     Department department = new Department();
                     String nameDepartment = resultSet.getString(5);
                     department.setName(nameDepartment);
-
-//                    long positionId = resultSet.getLong(4);
-//                    long departmentId = resultSet.getLong(5);
-
-//                    Position position = PositionStorage.getInstance().getPosition(positionId);
-//                    Department department = DepartmentStorage.getInstance().getDepartment(departmentId);
 
                     employee.setId(currentId);
                     employee.setName(name);
@@ -120,10 +99,11 @@ public class EmployeesStorage implements IEmployeeStorage {
                 "                    ON employers.position=positions.id\n" +
                 "                    JOIN application.departments\n" +
                 "                    ON employers.department=departments.id";
-        try (Statement statement = con.createStatement()){
-            try (ResultSet resultSet = statement.executeQuery(sql)){
-                while (resultSet.next()){
+        try (Statement statement = con.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(sql)) {
+                while (resultSet.next()) {
                     Employee employee = new Employee();
+
                     long currentId = resultSet.getLong(1);
                     String name = resultSet.getString(2);
                     double salary = resultSet.getDouble(3);

@@ -69,9 +69,10 @@ public class DepartmentStorage implements IDepartmentStorage {
     @Override
     public Department getDepartment(long id) {
         try (Statement statement = con.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery("SELECT * FROM application.departments WHERE id=" + id);) {
+            try (ResultSet resultSet = statement.executeQuery("SELECT * FROM application.departments WHERE id=" + id)) {
                 if (resultSet.next()) {
                     Department department = new Department();
+
                     long currentId = resultSet.getLong(1);
                     String name = resultSet.getString(2);
                     long parentDepartmentId = resultSet.getLong(3);
@@ -89,46 +90,16 @@ public class DepartmentStorage implements IDepartmentStorage {
         }
         return null;
     }
-//        String sql = "SELECT * FROM application.departments WHERE id = " + id;
-//        Statement statement = null;
-//        try {
-//            statement = con.createStatement();
-//            ResultSet resultSet = statement.executeQuery(sql);
-//            if (resultSet.next()) {
-//                Department department = new Department();
-//                long currentId = resultSet.getLong(1);
-//                String name = resultSet.getString(2);
-//                long parentDepartmentId = resultSet.getLong(3);
-//                Department parentDepartment = getDepartment(parentDepartmentId);
-//
-//                department.setId(currentId);
-//                department.setName(name);
-//                department.setParentDepartment(parentDepartment);
-//
-//                return department;
-//            }
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        } finally {
-//            if (statement != null) {
-//                try {
-//                    statement.close();
-//                } catch (SQLException throwables) {
-//                    throw new RuntimeException();
-//                }
-//            }
-//        }
-//        return null;
-//    }
 
     @Override
     public Collection<Department> getAllDepartments() {
         List<Department> departmentList = new ArrayList<>();
         try (Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(
-                    "SELECT * FROM application.departments");) {
+                    "SELECT * FROM application.departments")) {
                 while (resultSet.next()) {
                     Department department = new Department();
+
                     long currentId = resultSet.getLong(1);
                     String name = resultSet.getString(2);
                     long parentDepartmentId = resultSet.getLong(3);
