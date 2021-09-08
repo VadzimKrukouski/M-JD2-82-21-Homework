@@ -6,22 +6,22 @@
          metadata-complete="false">
     <display-name>DataBase</display-name>
 
-<!--    <filter>-->
-<!--        <filter-name>MessengerEncodingFilter</filter-name>-->
-<!--        <filter-class>by.it_academy.jd2.task_database.controller.web.filters.MessengerEncodingFilter-->
-<!--        </filter-class>-->
-<!--        <init-param>-->
-<!--            <param-name>encoding</param-name>-->
-<!--            <param-value>utf-8</param-value>-->
-<!--        </init-param>-->
-<!--    </filter>-->
+    <filter>
+        <filter-name>MessengerEncodingFilter</filter-name>
+        <filter-class>by.it_academy.jd2.task_database.controller.web.filters.MessengerEncodingFilter
+        </filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>utf-8</param-value>
+        </init-param>
+    </filter>
 
 
-<!--    <filter-mapping>-->
-<!--        <filter-name>MessengerEncodingFilter</filter-name>-->
-<!--        <url-pattern>/*</url-pattern>-->
-<!--        <dispatcher>REQUEST</dispatcher>-->
-<!--    </filter-mapping>-->
+    <filter-mapping>
+        <filter-name>MessengerEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
 
 
 
