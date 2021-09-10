@@ -12,12 +12,14 @@ import by.it_academy.jd2.task_database.view.api.IPositionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
+@WebServlet(name = "ServletAddEmployeeCPDS" , urlPatterns = "/addEmployeeCPDS")
 public class ServletAddEmployeeCPDS extends HttpServlet {
     private final IEmployeeService employeeService;
     private final IDepartmentService departmentService;
