@@ -12,21 +12,19 @@ import by.it_academy.jd2.task_database.view.api.IPositionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
-@WebServlet (name = "ServletAddEmployee", urlPatterns = "/addEmployee")
-public class ServletAddEmployee extends HttpServlet {
+public class ServletAddEmployeeCPDS extends HttpServlet {
     private final IEmployeeService employeeService;
     private final IDepartmentService departmentService;
     private final IPositionService positionService;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public ServletAddEmployee() {
+    public ServletAddEmployeeCPDS() {
         this.employeeService = EmployeeService.getInstance();
         this.departmentService = DepartmentService.getInstance();
         this.positionService = PositionService.getInstance();
@@ -44,19 +42,7 @@ public class ServletAddEmployee extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        String name = req.getParameter("name");
-//        double salary = Double.parseDouble((req.getParameter("salary")));
-//        long departmentId = Long.parseLong(req.getParameter("department"));
-//        long positionId = Long.parseLong(req.getParameter("position"));
-
-//        Department department = departmentService.getDepartment(departmentId);
-//        Position position = positionService.getPosition(positionId);
-
         Employee employee = mapper.readValue(req.getInputStream(), Employee.class);
-//        employee.setName(name);
-//        employee.setSalary(salary);
-//        employee.setDepartment(department);
-//        employee.setPosition(position);
 
         long id = employeeService.addEmployee(employee);
         if (id>0){
