@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "ServletAddPositionCPDS", urlPatterns = "/addPositionCPDS")
-public class ServletAddPositionCPDS extends HttpServlet {
+@WebServlet(name = "ServletAddPositionMapper", urlPatterns = "/addPositionMapper")
+public class ServletAddPositionMapper extends HttpServlet {
     private final PositionService positionService;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public ServletAddPositionCPDS() {
+    public ServletAddPositionMapper() {
         this.positionService = PositionService.getInstance();
     }
 

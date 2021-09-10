@@ -2,7 +2,6 @@ package by.it_academy.jd2.task_database.storage;
 
 import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.storage.api.IDepartmentStorage;
-import by.it_academy.jd2.task_database.view.DataBaseConnection;
 import by.it_academy.jd2.task_database.view.DataBaseConnectionCPDS;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 

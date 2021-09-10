@@ -19,14 +19,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
-@WebServlet(name = "ServletAddEmployeeCPDS" , urlPatterns = "/addEmployeeCPDS")
-public class ServletAddEmployeeCPDS extends HttpServlet {
+@WebServlet(name = "ServletAddEmployeeMapper" , urlPatterns = "/addEmployeeMapper")
+public class ServletAddEmployeeMapper extends HttpServlet {
     private final IEmployeeService employeeService;
     private final IDepartmentService departmentService;
     private final IPositionService positionService;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public ServletAddEmployeeCPDS() {
+    public ServletAddEmployeeMapper() {
         this.employeeService = EmployeeService.getInstance();
         this.departmentService = DepartmentService.getInstance();
         this.positionService = PositionService.getInstance();

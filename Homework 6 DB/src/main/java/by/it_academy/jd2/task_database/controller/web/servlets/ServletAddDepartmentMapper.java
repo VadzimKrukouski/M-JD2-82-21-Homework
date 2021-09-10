@@ -12,12 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
-@WebServlet (name = "ServletAddDepartmentCPDS" , urlPatterns = "/addDepartmentCPDS")
-public class ServletAddDepartmentCPDS extends HttpServlet {
+@WebServlet (name = "ServletAddDepartmentMapper" , urlPatterns = "/addDepartmentMapper")
+public class ServletAddDepartmentMapper extends HttpServlet {
     private final DepartmentService departmentService;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public ServletAddDepartmentCPDS() {
+    public ServletAddDepartmentMapper() {
         this.departmentService = DepartmentService.getInstance();
     }
 
