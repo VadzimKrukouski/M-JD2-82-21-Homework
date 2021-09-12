@@ -2,9 +2,7 @@ package by.it_academy.jd2.task_database.storage;
 
 import by.it_academy.jd2.task_database.model.Position;
 import by.it_academy.jd2.task_database.storage.api.IPositionStorage;
-import by.it_academy.jd2.task_database.view.DataBaseConnection;
 import by.it_academy.jd2.task_database.view.DataBaseConnectionCPDS;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,10 +11,10 @@ import java.util.List;
 
 public class PositionStorage implements IPositionStorage {
     private static final PositionStorage instance = new PositionStorage();
-    public final ComboPooledDataSource cpds;
+//    public final ComboPooledDataSource cpds;
 
     public PositionStorage() {
-        this.cpds = DataBaseConnectionCPDS.getInstance().getConnection();
+//        this.cpds = DataBaseConnectionCPDS.getInstance().getConnection();
     }
 
     public static PositionStorage getInstance() {
@@ -25,7 +23,7 @@ public class PositionStorage implements IPositionStorage {
 
     @Override
     public long addPosition(Position position) {
-        try (Connection con = cpds.getConnection();
+        try (Connection con = DataBaseConnectionCPDS.getConnection();
                 PreparedStatement preparedStatement = con.prepareStatement(
                 "INSERT INTO application.positions(\n" +
                         "\tname)\n" +
@@ -50,7 +48,7 @@ public class PositionStorage implements IPositionStorage {
 
     @Override
     public Position getPosition(long id) {
-        try (Connection con = cpds.getConnection();
+        try (Connection con = DataBaseConnectionCPDS.getConnection();
                 Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(
                     "SELECT * FROM application.positions WHERE id=" + id)) {
@@ -74,7 +72,7 @@ public class PositionStorage implements IPositionStorage {
     @Override
     public Collection<Position> getAllPositions() {
         List<Position> positionList = new ArrayList<>();
-        try (Connection con = cpds.getConnection();
+        try (Connection con = DataBaseConnectionCPDS.getConnection();
                 Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(
                     "SELECT * FROM application.positions")) {

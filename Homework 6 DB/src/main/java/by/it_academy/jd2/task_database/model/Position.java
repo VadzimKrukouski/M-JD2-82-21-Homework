@@ -4,6 +4,9 @@ public class Position {
     private long id;
     private String name;
 
+    public Position() {
+    }
+
     public long getId() {
         return id;
     }

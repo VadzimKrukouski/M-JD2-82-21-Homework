@@ -5,6 +5,9 @@ public class Department {
     private String name;
     private Department parentDepartment;
 
+    public Department() {
+    }
+
     public long getId() {
         return id;
     }

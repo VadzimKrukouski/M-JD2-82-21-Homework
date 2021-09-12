@@ -4,9 +4,7 @@ import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.model.Position;
 import by.it_academy.jd2.task_database.storage.api.IEmployeeStorage;
-import by.it_academy.jd2.task_database.view.DataBaseConnection;
 import by.it_academy.jd2.task_database.view.DataBaseConnectionCPDS;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,10 +13,10 @@ import java.util.List;
 
 public class EmployeesStorage implements IEmployeeStorage {
     private static final EmployeesStorage instance = new EmployeesStorage();
-    private final ComboPooledDataSource cpds;
+//    private final ComboPooledDataSource cpds;
 
     private EmployeesStorage() {
-        this.cpds = DataBaseConnectionCPDS.getInstance().getConnection();
+//        this.cpds = DataBaseConnectionCPDS.getInstance().getConnection();
     }
 
     public static EmployeesStorage getInstance() {
@@ -27,7 +25,7 @@ public class EmployeesStorage implements IEmployeeStorage {
 
     @Override
     public long addEmployee(Employee employee) {
-        try (Connection con = cpds.getConnection();
+        try (Connection con = DataBaseConnectionCPDS.getConnection();
                 PreparedStatement preparedStatement = con.prepareStatement(
                 "INSERT INTO application.employers(\n" +
                         "\tname, salary, position, department)\n" +
@@ -62,7 +60,7 @@ public class EmployeesStorage implements IEmployeeStorage {
                 "JOIN application.departments\n" +
                 "ON employers.department=departments.id\n" +
                 "WHERE employers.id=";
-        try (Connection con = cpds.getConnection();
+        try (Connection con = DataBaseConnectionCPDS.getConnection();
                 Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(sql + id)) {
                 if (resultSet.next()) {
@@ -103,7 +101,7 @@ public class EmployeesStorage implements IEmployeeStorage {
                 "                    ON employers.position=positions.id\n" +
                 "                    JOIN application.departments\n" +
                 "                    ON employers.department=departments.id";
-        try (Connection con = cpds.getConnection();
+        try (Connection con = DataBaseConnectionCPDS.getConnection();
                 Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(sql)) {
                 while (resultSet.next()) {

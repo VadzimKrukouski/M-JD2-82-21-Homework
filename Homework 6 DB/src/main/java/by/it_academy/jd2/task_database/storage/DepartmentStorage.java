@@ -3,7 +3,6 @@ package by.it_academy.jd2.task_database.storage;
 import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.storage.api.IDepartmentStorage;
 import by.it_academy.jd2.task_database.view.DataBaseConnectionCPDS;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,10 +11,10 @@ import java.util.List;
 
 public class DepartmentStorage implements IDepartmentStorage {
     private static final DepartmentStorage instance = new DepartmentStorage();
-    private final ComboPooledDataSource cpds;
+//    private final ComboPooledDataSource cpds;
 
     public DepartmentStorage() {
-        this.cpds = DataBaseConnectionCPDS.getInstance().getConnection();
+//        this.cpds = DataBaseConnectionCPDS.getInstance().getConnection();
     }
 
     public static DepartmentStorage getInstance() {
@@ -25,7 +24,7 @@ public class DepartmentStorage implements IDepartmentStorage {
     @Override
     public long addDepartment(Department department) {
         if (department.getParentDepartment() == null) {
-            try (Connection con = cpds.getConnection();
+            try (Connection con = DataBaseConnectionCPDS.getConnection();
                     PreparedStatement preparedStatement = con.prepareStatement(
                     "INSERT INTO application.departments(\n" +
                             "\tname)\n" +
@@ -44,7 +43,7 @@ public class DepartmentStorage implements IDepartmentStorage {
                 throw new IllegalStateException("Ошибка работы с базой данных", e);
             }
         } else {
-            try (Connection con = cpds.getConnection();
+            try (Connection con = DataBaseConnectionCPDS.getConnection();
                     PreparedStatement preparedStatement = con.prepareStatement(
                     "INSERT INTO application.departments(\n" +
                             "\tname, parentDepartment)\n" +
@@ -71,7 +70,7 @@ public class DepartmentStorage implements IDepartmentStorage {
 
     @Override
     public Department getDepartment(long id) {
-        try (Connection con = cpds.getConnection();
+        try (Connection con = DataBaseConnectionCPDS.getConnection();
                 Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery("SELECT * FROM application.departments WHERE id=" + id)) {
                 if (resultSet.next()) {
@@ -98,7 +97,7 @@ public class DepartmentStorage implements IDepartmentStorage {
     @Override
     public Collection<Department> getAllDepartments() {
         List<Department> departmentList = new ArrayList<>();
-        try (Connection con = cpds.getConnection();
+        try (Connection con = DataBaseConnectionCPDS.getConnection();
                 Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(
                     "SELECT * FROM application.departments")) {

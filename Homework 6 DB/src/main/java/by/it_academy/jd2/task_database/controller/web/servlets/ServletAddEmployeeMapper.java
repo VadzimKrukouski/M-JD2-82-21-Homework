@@ -39,7 +39,7 @@ public class ServletAddEmployeeMapper extends HttpServlet {
 
         req.setAttribute("allDepartments", allDepartments);
         req.setAttribute("allPositions", allPositions);
-        req.getRequestDispatcher("views/addEmployee.jsp").forward(req,resp);
+        req.getRequestDispatcher("views/addEmployeeMapper.jsp").forward(req,resp);
     }
 
     @Override
@@ -53,6 +53,6 @@ public class ServletAddEmployeeMapper extends HttpServlet {
         } else {
             req.setAttribute("infoErr", "Сотрудник не добавлен");
         }
-        req.getRequestDispatcher("views/addEmployee.jsp").forward(req,resp);
+        req.getRequestDispatcher("views/addEmployeeMapper.jsp").forward(req,resp);
     }
 }
