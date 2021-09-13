@@ -27,4 +27,9 @@ public class EmployeeService implements IEmployeeService {
     public Collection<Employee> getAllEmployers() {
         return EmployeesStorage.getInstance().getAllEmployers();
     }
+
+    @Override
+    public Collection<Employee> getEmployersByPosition(long idPosition) {
+        return EmployeesStorage.getInstance().getEmployersByPosition(idPosition);
+    }
 }

@@ -8,4 +8,5 @@ public interface IEmployeeService {
     long addEmployee(Employee employee);
     Employee getEmployee(long id);
     Collection<Employee> getAllEmployers();
+    Collection<Employee> getEmployersByPosition(long idPosition);
 }
