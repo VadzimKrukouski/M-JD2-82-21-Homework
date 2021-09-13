@@ -32,4 +32,9 @@ public class EmployeeService implements IEmployeeService {
     public Collection<Employee> getEmployersByPosition(long idPosition) {
         return EmployeesStorage.getInstance().getEmployersByPosition(idPosition);
     }
+
+    @Override
+    public Collection<Employee> getEmployersByDepartment(long idDepartment) {
+        return EmployeesStorage.getInstance().getEmployersByDepartment(idDepartment);
+    }
 }

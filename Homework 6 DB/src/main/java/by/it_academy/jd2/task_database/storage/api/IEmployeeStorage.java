@@ -9,4 +9,5 @@ public interface IEmployeeStorage {
     Employee getEmployee (long id);
     Collection<Employee> getAllEmployers();
     Collection<Employee> getEmployersByPosition(long idPosition);
+    Collection<Employee> getEmployersByDepartment(long idDepartment);
 }

@@ -3,19 +3,19 @@
 
 <html>
 <head>
-    <title>Все должности</title>
+    <title>Все отделы</title>
 </head>
 <body>
-<h3> Все должности </h3>
+<h3> Все отделы </h3>
 
 <table border="1">
     <tr>
         <tbody>
-<c:forEach items="${requestScope.allPositions}"
-               			var="position">
+<c:forEach items="${requestScope.allDepartments}"
+               			var="department">
                    <tr>
-                       <td>${position.id}</td>
-                       <td><a href="getPosition?id=${position.id}">${position.name}</a></td>
+                       <td>${department.id}</td>
+                       <td><a href="getDepartment?id=${department.id}">${department.name}</a></td>
                    </tr>
 </c:forEach>
         </tbody>
