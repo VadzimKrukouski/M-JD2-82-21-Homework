@@ -10,7 +10,7 @@
 
 <html>
 	<body>
-		<form id="benderform" action="addEmployeeMapper" method="POST">
+		<form id="2" action="addEmployeeMapper" method="POST">
 			<input type="text" name="name">
 			<input type="number" name="salary">
 			<input type="text" name="department.id">
@@ -19,7 +19,7 @@
 			<input type="submit">
 		</form>
 		<script type="text/javascript">
-			document.getElementById('benderform').addEventListener('submit', submitForm);
+			document.getElementById('2').addEventListener('submit', submitForm);
 
 			function submitForm(event) {
 			    // Отменяем стандартное поведение браузера с отправкой формы
