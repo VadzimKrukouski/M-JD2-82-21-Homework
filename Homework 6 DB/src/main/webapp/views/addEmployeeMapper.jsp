@@ -16,6 +16,7 @@
 			<input type="text" name="department.id">
 			<input type="text" name="position.id">
 
+
 			<input type="submit">
 		</form>
 		<script type="text/javascript">
