@@ -37,7 +37,7 @@ public class ServletGetEmployeeMapper extends HttpServlet {
         } else {
             req.setAttribute("info", "Такого пользователя не существует");
         }
-        req.getRequestDispatcher("views/getEmployee.jsp").forward(req, resp);
+        req.getRequestDispatcher("views/getEmployeeMapper.jsp").forward(req, resp);
     }
 
 

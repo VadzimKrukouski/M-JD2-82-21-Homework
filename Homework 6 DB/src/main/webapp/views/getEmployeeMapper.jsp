@@ -15,7 +15,6 @@
 		</form>
 		<script type="text/javascript">
 			document.getElementById('2').addEventListener('submit', submitForm);
-			let val = document.getElementById('2').value;
 
 			function submitForm(event) {
 			    // Отменяем стандартное поведение браузера с отправкой формы
@@ -24,10 +23,28 @@
 			    // event.target — это HTML-элемент form
 			    let formData = new FormData(event.target);
 
+			    // Собираем данные формы в объект
+                			    let obj = {};
+                			    formData.forEach(
+                			    	(value, key) => {
+                						if(key.includes('.')){
+                							var partName = key.split(".");
+                			    			obj[partName[0]] = {};
+                			    			obj[partName[0]][partName[1]] = value;
+                			    		} else {
+                							obj[key] = value;
+                			    		}
+
+                			    	}
+                			    );
+
+                			    let num = Number (obj);
+
+
 			    // Собираем запрос к серверу
 			    let request = new Request(event.target.action, {
 			        method: 'POST',
-			        body: JSON.stringify(val),
+			        body: JSON.stringify(num),
 			        headers: {
 			            'Content-Type': 'application/json',
 			        },
