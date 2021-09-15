@@ -26,10 +26,10 @@ public class EmployeesStorage implements IEmployeeStorage {
     @Override
     public long addEmployee(Employee employee) {
         try (Connection con = DataBaseConnectionCPDS.getConnection();
-                PreparedStatement preparedStatement = con.prepareStatement(
-                "INSERT INTO application.employers(\n" +
-                        "\tname, salary, position, department)\n" +
-                        "\tVALUES (?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS)
+             PreparedStatement preparedStatement = con.prepareStatement(
+                     "INSERT INTO application.employers(\n" +
+                             "\tname, salary, position, department)\n" +
+                             "\tVALUES (?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS)
         ) {
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setDouble(2, employee.getSalary());
@@ -61,7 +61,7 @@ public class EmployeesStorage implements IEmployeeStorage {
                 "ON employers.department=departments.id\n" +
                 "WHERE employers.id=";
         try (Connection con = DataBaseConnectionCPDS.getConnection();
-                Statement statement = con.createStatement()) {
+             Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(sql + id)) {
                 if (resultSet.next()) {
                     Employee employee = new Employee();
@@ -102,7 +102,7 @@ public class EmployeesStorage implements IEmployeeStorage {
                 "                    JOIN application.departments\n" +
                 "                    ON employers.department=departments.id";
         try (Connection con = DataBaseConnectionCPDS.getConnection();
-                Statement statement = con.createStatement()) {
+             Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(sql)) {
                 while (resultSet.next()) {
                     Employee employee = new Employee();
@@ -143,7 +143,7 @@ public class EmployeesStorage implements IEmployeeStorage {
                 "ON employers.position=positions.id\n" +
                 "JOIN application.departments\n" +
                 "ON employers.department=departments.id\n" +
-                "WHERE \"position\"=" ;
+                "WHERE \"position\"=";
         try (Connection con = DataBaseConnectionCPDS.getConnection();
              Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(sql + idPosition)) {
@@ -186,10 +186,57 @@ public class EmployeesStorage implements IEmployeeStorage {
                 "ON employers.position=positions.id\n" +
                 "JOIN application.departments\n" +
                 "ON employers.department=departments.id\n" +
-                "WHERE \"department\"=" ;
+                "WHERE \"department\"=";
         try (Connection con = DataBaseConnectionCPDS.getConnection();
              Statement statement = con.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(sql + idDepartment)) {
+                while (resultSet.next()) {
+                    Employee employee = new Employee();
+
+                    long currentId = resultSet.getLong(1);
+                    String name = resultSet.getString(2);
+                    double salary = resultSet.getDouble(3);
+
+                    Position position = new Position();
+                    String namePosition = resultSet.getString(4);
+                    position.setName(namePosition);
+
+                    Department department = new Department();
+                    String nameDepartment = resultSet.getString(5);
+                    department.setName(nameDepartment);
+
+                    employee.setId(currentId);
+                    employee.setName(name);
+                    employee.setSalary(salary);
+                    employee.setPosition(position);
+                    employee.setDepartment(department);
+
+                    employeeList.add(employee);
+                }
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Ошибка работы с базой данных", e);
+        }
+        return employeeList;
+    }
+
+    @Override
+    public Collection<Employee> getALLEmployersLimit(long limit, long offset) {
+        List<Employee> employeeList = new ArrayList<>();
+        String sql = "SELECT employers.id, employers.name, employers.salary, positions.name, departments.name\n" +
+                "FROM application.employers\n" +
+                "JOIN application.positions\n" +
+                "ON employers.position=positions.id\n" +
+                "JOIN application.departments\n" +
+                "ON employers.department=departments.id\n" +
+                "ORDER BY id ASC \n" +
+                "LIMIT ? OFFSET ?";
+        try (Connection connection = DataBaseConnectionCPDS.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setLong(1, 3);
+            preparedStatement.setLong(2, 0);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     Employee employee = new Employee();
 

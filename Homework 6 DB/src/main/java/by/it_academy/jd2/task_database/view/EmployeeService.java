@@ -37,4 +37,9 @@ public class EmployeeService implements IEmployeeService {
     public Collection<Employee> getEmployersByDepartment(long idDepartment) {
         return EmployeesStorage.getInstance().getEmployersByDepartment(idDepartment);
     }
+
+    @Override
+    public Collection<Employee> getALLEmployersLimit(long limit, long offset) {
+                return EmployeesStorage.getInstance().getALLEmployersLimit(limit,offset);
+    }
 }
