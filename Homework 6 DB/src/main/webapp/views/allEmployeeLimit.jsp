@@ -27,9 +27,11 @@
             </tr>
         </c:forEach>
 
-        <span><a href="getEmployeeLimit?page=1">1 </span>
-        <span><a href="getEmployeeLimit?page=2">2 </span>
-        <span><a href="getEmployeeLimit?page=3">3 </span>
+        <span><a href="allEmployeeLimit?page=1">1 </span>
+        <span><a href="allEmployeeLimit?page=2">2 </span>
+        <span><a href="allEmployeeLimit?page=3">3 </span>
+        <span><a href="allEmployeeLimit?page=${pageCount}">${pageCount} </span>
+
 
 
         </tbody>

@@ -12,20 +12,24 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
-@WebServlet (name = "ServletGetEmployeeLimit", urlPatterns = "/getEmployeeLimit")
-public class ServletGetEmployeeLimit extends HttpServlet {
+@WebServlet (name = "ServletAllEmployersLimit", urlPatterns = "/allEmployeeLimit")
+public class ServletAllEmployersLimit extends HttpServlet {
     private final IEmployeeService employeeService;
 
-    public ServletGetEmployeeLimit() {
+    public ServletAllEmployersLimit() {
         this.employeeService= EmployeeService.getInstance();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        final long limit = 10;
+        final long limit = 3;
+        long countAllEntries = employeeService.getCountAllEntries();
+        long pageCount=countAllEntries/limit;
         String page = req.getParameter("page");
         Collection<Employee> allEmployers = employeeService.getALLEmployersLimit(limit,Long.parseLong(page));
 
+        req.setAttribute("pageCount", pageCount);
+        req.setAttribute("page", page);
         req.setAttribute("allEmployers", allEmployers);
         req.getRequestDispatcher("views/allEmployeeLimit.jsp").forward(req,resp);
 

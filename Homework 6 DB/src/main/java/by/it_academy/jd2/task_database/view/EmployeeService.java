@@ -46,4 +46,9 @@ public class EmployeeService implements IEmployeeService {
         }
         return EmployeesStorage.getInstance().getALLEmployersLimit(limit, offset);
     }
+
+    @Override
+    public long getCountAllEntries() {
+        return EmployeesStorage.getInstance().getCountAllEntries();
+    }
 }

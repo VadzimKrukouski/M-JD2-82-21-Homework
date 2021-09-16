@@ -14,7 +14,7 @@
 <p><input type="button" onclick="location.href='allEmployers';" value="Посмотреть всех сотрудников"</p>
 <p><input type="button" onclick="location.href='allPositions';" value="Посмотреть все должности"</p>
 <p><input type="button" onclick="location.href='allDepartments';" value="Посмотреть все отделы"</p>
-<p><input type="button" onclick="location.href='getEmployeeLimit?page=1';" value="Посмотреть всех сотрудников Limit"</p>
+<p><input type="button" onclick="location.href='allEmployeeLimit?page=1';" value="Посмотреть всех сотрудников Limit"</p>
 
 
 </body>

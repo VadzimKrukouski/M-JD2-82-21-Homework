@@ -266,6 +266,25 @@ public class EmployeesStorage implements IEmployeeStorage {
         }
         return employeeList;
     }
+
+    @Override
+    public long getCountAllEntries() {
+        long count = 0;
+        String sql = "SELECT count(id) \n" +
+                "FROM application.employers";
+        try (Connection connection = DataBaseConnectionCPDS.getConnection();
+             Statement statement = connection.createStatement()){
+            try (ResultSet resultSet = statement.executeQuery(sql)){
+                while (resultSet.next()){
+                    count=resultSet.getLong(1);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new IllegalStateException("Ошибка работы с базой данных", e);
+        }
+        return count;
+    }
 }
 
 
