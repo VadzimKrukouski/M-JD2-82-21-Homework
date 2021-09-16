@@ -23,11 +23,15 @@
                    var="employers">
             <tr>
                 <td>${employers.id}</td>
-                <td><a href="getEmployee?id=${employers.id}">${employers.name}</a></td>
+                <td>${employers.name}</td>
             </tr>
         </c:forEach>
 
-        <span><a href="allEmployeeLimit.jsp?" </span>
+        <span><a href="getEmployeeLimit?page=1">1 </span>
+        <span><a href="getEmployeeLimit?page=2">2 </span>
+        <span><a href="getEmployeeLimit?page=3">3 </span>
+
+
         </tbody>
     </tr>
 </table>

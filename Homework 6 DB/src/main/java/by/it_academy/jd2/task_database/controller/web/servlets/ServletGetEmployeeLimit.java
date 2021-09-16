@@ -22,11 +22,12 @@ public class ServletGetEmployeeLimit extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String size = req.getParameter("size");
+        final long limit = 10;
         String page = req.getParameter("page");
-        Collection<Employee> allEmployers = employeeService.getALLEmployersLimit(Long.parseLong(size),Long.parseLong(page));
+        Collection<Employee> allEmployers = employeeService.getALLEmployersLimit(limit,Long.parseLong(page));
 
-        req.getRequestDispatcher("views/getEmployee.jsp").forward(req, resp);
+        req.setAttribute("allEmployers", allEmployers);
+        req.getRequestDispatcher("views/allEmployeeLimit.jsp").forward(req,resp);
 
     }
 

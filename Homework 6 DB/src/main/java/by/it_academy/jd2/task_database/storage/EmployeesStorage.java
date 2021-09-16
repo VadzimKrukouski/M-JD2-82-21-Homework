@@ -233,8 +233,8 @@ public class EmployeesStorage implements IEmployeeStorage {
                 "LIMIT ? OFFSET ?";
         try (Connection connection = DataBaseConnectionCPDS.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setLong(1, 3);
-            preparedStatement.setLong(2, 0);
+            preparedStatement.setLong(1, limit);
+            preparedStatement.setLong(2, offset);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {

@@ -39,7 +39,11 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public Collection<Employee> getALLEmployersLimit(long limit, long offset) {
-                return EmployeesStorage.getInstance().getALLEmployersLimit(limit,offset);
+    public Collection<Employee> getALLEmployersLimit(long limit, long page) {
+        long offset = 0;
+        if (page != 1) {
+            offset = limit * page;
+        }
+        return EmployeesStorage.getInstance().getALLEmployersLimit(limit, offset);
     }
 }

@@ -10,6 +10,6 @@ public interface IEmployeeService {
     Collection<Employee> getAllEmployers();
     Collection<Employee> getEmployersByPosition(long idPosition);
     Collection<Employee> getEmployersByDepartment(long idDepartment);
-    Collection<Employee> getALLEmployersLimit(long limit, long offset);
+    Collection<Employee> getALLEmployersLimit(long limit, long page);
 
 }
