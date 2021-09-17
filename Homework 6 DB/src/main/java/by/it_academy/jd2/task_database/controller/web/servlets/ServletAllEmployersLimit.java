@@ -24,7 +24,7 @@ public class ServletAllEmployersLimit extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long limit = 20;
         long countAllEntries = employeeService.getCountAllEntries();
-        long pageCount= (long) Math.ceil(countAllEntries/limit);
+        long pageCount= (long) Math.ceil((double) countAllEntries/limit);
         String page = req.getParameter("page");
         Collection<Employee> allEmployers = employeeService.getALLEmployersLimit(limit,Long.parseLong(page));
 
