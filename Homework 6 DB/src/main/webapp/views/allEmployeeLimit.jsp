@@ -19,24 +19,29 @@
         <tbody>
 
 
-        <c:forEach items="${requestScope.allEmployers}"
-                   var="employers">
+        <c:forEach items="${requestScope.allEmployers}" var="employers">
             <tr>
                 <td>${employers.id}</td>
                 <td>${employers.name}</td>
             </tr>
         </c:forEach>
-
-        <span><a href="allEmployeeLimit?page=1">1 </span>
-        <span><a href="allEmployeeLimit?page=2">2 </span>
-        <span><a href="allEmployeeLimit?page=3">3 </span>
-        <span><a href="allEmployeeLimit?page=${pageCount}">${pageCount} </span>
-
-
-
         </tbody>
     </tr>
 </table>
+
+<c:if test="${requestScope.page != 1}">
+<span><a href="allEmployeeLimit?page=1">В начало</span>
+</c:if>
+
+<c:forEach begin="${page}" end="${page+5}" var="i">
+    <c:if test="${i<=pageCount}">
+        <span><a href="allEmployeeLimit?page=${i}">${i}</span>
+    </c:if>
+</c:forEach>
+
+<c:if test="${requestScope.page != pageCount}">
+<span><a href="allEmployeeLimit?page=${pageCount}">В конец</span>
+</c:if>
 
 <p><input type="button" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"</p>
 </body>
