@@ -33,6 +33,12 @@
 <span><a href="allEmployeeLimit?page=1">В начало</span>
 </c:if>
 
+<c:forEach begin="${page-5}" end="${page-1}" var="i">
+    <c:if test="${i<=page}">
+        <span><a href="allEmployeeLimit?page=${i}">${i}</span>
+    </c:if>
+</c:forEach>
+
 <c:forEach begin="${page}" end="${page+5}" var="i">
     <c:if test="${i<=pageCount}">
         <span><a href="allEmployeeLimit?page=${i}">${i}</span>
