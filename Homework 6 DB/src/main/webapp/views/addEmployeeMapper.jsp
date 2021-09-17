@@ -9,16 +9,35 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
-	<body>
-		<form id="2" action="addEmployeeMapper" method="POST">
-			<input type="text" name="name">
-			<input type="number" name="salary">
-			<input type="text" name="department.id">
-			<input type="text" name="position.id">
+<body>
+<h3>Заполните данные</h3>
+  <span style='color: green;'>${info}${id}</p>
+  <span style='color: red;'>${infoErr}</p>
+
+  <form id="2" action="addEmployeeMapper" method="POST">
+		<p>Имя сотрудника: <input type="text" name="name">
+		<p>Зарплата: <input type="number" name="salary">
+		<p>
+		  <br>
+              <select name="position.id">
+                 <option disabled>Выберите должность</option>
+                         <c:forEach items="${allPositions}" var="position">
+                            <option value="${position.id}">${position.name}</option>
+                         </c:forEach>
+              </select>
 
 
-			<input type="submit">
-		</form>
+              <select name="department.id">
+                   <option disabled>Выберите отдел</option>
+                          <c:forEach items="${allDepartments}" var="department">
+                              <option value="${department.id}">${department.name}</option>
+                          </c:forEach>
+              </select>
+               <br>
+
+		<p><input type="submit" value="Отправить данные">
+		<p><input type="button" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"</p>
+  </form>
 		<script type="text/javascript">
 			document.getElementById('2').addEventListener('submit', submitForm);
 
