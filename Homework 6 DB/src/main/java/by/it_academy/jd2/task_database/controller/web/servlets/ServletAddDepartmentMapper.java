@@ -23,7 +23,10 @@ public class ServletAddDepartmentMapper extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("views/addDepartment.jsp").forward(req, resp);
+        Collection<Department> allDepartments = departmentService.getAllDepartments();
+        req.setAttribute("allDepartments", allDepartments);
+
+        req.getRequestDispatcher("views/addDepartmentMapper.jsp").forward(req, resp);
     }
 
     @Override
@@ -40,8 +43,8 @@ public class ServletAddDepartmentMapper extends HttpServlet {
             req.setAttribute("info", "Отдел успешно добавлен с id=");
 
         } else {
-            req.setAttribute("info", "Отдел не добавлен");
+            req.setAttribute("infoErr", "Отдел не добавлен");
         }
-        req.getRequestDispatcher("views/addDepartment.jsp").forward(req,resp);
+        req.getRequestDispatcher("views/addDepartmentMapper.jsp").forward(req,resp);
     }
 }

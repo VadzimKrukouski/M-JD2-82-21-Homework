@@ -22,7 +22,7 @@ public class ServletAddPositionMapper extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("views/addPosition.jsp").forward(req,resp);
+        req.getRequestDispatcher("views/addPositionMapper.jsp").forward(req,resp);
     }
 
     @Override
@@ -37,6 +37,6 @@ public class ServletAddPositionMapper extends HttpServlet {
         } else {
             req.setAttribute("infoErr", "Должность не добавлена");
         }
-        req.getRequestDispatcher("views/addPosition.jsp").forward(req,resp);
+        req.getRequestDispatcher("views/addPositionMapper.jsp").forward(req,resp);
     }
 }
