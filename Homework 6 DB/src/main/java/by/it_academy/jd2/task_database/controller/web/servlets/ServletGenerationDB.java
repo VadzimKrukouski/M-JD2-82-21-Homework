@@ -24,6 +24,7 @@ public class ServletGenerationDB extends HttpServlet {
         dataBaseGenerationByData.generationDepartment();
         dataBaseGenerationByData.generationEmployers();
 
+        req.setAttribute("info", "База успешно сгенерирована");
         req.getRequestDispatcher("views/generationDB.jsp");
     }
 }

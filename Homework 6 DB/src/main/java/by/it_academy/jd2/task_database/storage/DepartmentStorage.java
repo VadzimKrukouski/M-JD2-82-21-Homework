@@ -46,7 +46,7 @@ public class DepartmentStorage implements IDepartmentStorage {
             try (Connection con = DataBaseConnectionCPDS.getConnection();
                     PreparedStatement preparedStatement = con.prepareStatement(
                     "INSERT INTO application.departments(\n" +
-                            "\tname, parentDepartment)\n" +
+                            "\tname, parent_department)\n" +
                             "\tVALUES (?, ?);", Statement.RETURN_GENERATED_KEYS)
             ) {
                 preparedStatement.setString(1, department.getName());
@@ -72,7 +72,8 @@ public class DepartmentStorage implements IDepartmentStorage {
     public Department getDepartment(long id) {
         try (Connection con = DataBaseConnectionCPDS.getConnection();
                 Statement statement = con.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery("SELECT * FROM application.departments WHERE id=" + id)) {
+            try (ResultSet resultSet = statement.executeQuery(
+                    "SELECT * FROM application.departments WHERE id=" + id)) {
                 if (resultSet.next()) {
                     Department department = new Department();
 

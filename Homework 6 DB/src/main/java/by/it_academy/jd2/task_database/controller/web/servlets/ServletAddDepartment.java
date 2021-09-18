@@ -21,6 +21,9 @@ public class ServletAddDepartment extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Collection<Department> allDepartments = departmentService.getAllDepartments();
+
+        req.setAttribute("allDepartments", allDepartments);
         req.getRequestDispatcher("views/addDepartment.jsp").forward(req, resp);
     }
 
