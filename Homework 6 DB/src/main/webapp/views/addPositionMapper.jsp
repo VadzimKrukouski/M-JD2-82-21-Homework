@@ -3,7 +3,7 @@
 
 <html>
 <body>
-<h3>Добавьте должность/h3>
+<h3>Добавьте должность</h3>
   <span style='color: green;'>${info}${id}</p>
   <span style='color: red;'>${infoErr}</p>
 

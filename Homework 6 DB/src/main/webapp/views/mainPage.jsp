@@ -7,14 +7,13 @@
 <h2> Приветствуем на нашем сайте! Выберите действие: </h2>
 
 <p><input type="button" onclick="location.href='generationDB';" value="Сгенерировать базу данных"</p>
-<p><input type="button" onclick="location.href='addEmployee';" value="Внести данные сотрудника"</p>
+<p><input type="button" onclick="location.href='addEmployeeMapper';" value="Внести данные сотрудника"</p>
 <p><input type="button" onclick="location.href='getEmployee';" value="Получить данные сотрудника"</p>
-<p><input type="button" onclick="location.href='addDepartment';" value="Внести в базу новый отдел"</p>
-<p><input type="button" onclick="location.href='addPosition';" value="Внести в базу новую должность"</p>
-<p><input type="button" onclick="location.href='allEmployers';" value="Посмотреть всех сотрудников"</p>
+<p><input type="button" onclick="location.href='addDepartmentMapper';" value="Внести в базу новый отдел"</p>
+<p><input type="button" onclick="location.href='addPositionMapper';" value="Внести в базу новую должность"</p>
 <p><input type="button" onclick="location.href='allPositions';" value="Посмотреть все должности"</p>
 <p><input type="button" onclick="location.href='allDepartments';" value="Посмотреть все отделы"</p>
-<p><input type="button" onclick="location.href='allEmployeeLimit?page=1';" value="Посмотреть всех сотрудников Limit"</p>
+<p><input type="button" onclick="location.href='allEmployeeLimit?page=1';" value="Посмотреть всех сотрудников"</p>
 
 
 </body>

@@ -22,7 +22,7 @@
         <c:forEach items="${requestScope.allEmployers}" var="employers">
             <tr>
                 <td>${employers.id}</td>
-                <td>${employers.name}</td>
+                <td><a href="getEmployee?id=${employers.id}">${employers.name}</td>
             </tr>
         </c:forEach>
         </tbody>
