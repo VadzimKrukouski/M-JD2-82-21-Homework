@@ -122,4 +122,55 @@ public class DepartmentStorage implements IDepartmentStorage {
         }
         return departmentList;
     }
+
+    @Override
+    public long getCountAllEntries() {
+        long count = 0;
+        String sql = "SELECT count(id) \n" +
+                "FROM application.departments";
+        try (Connection connection = DataBaseConnectionCPDS.getConnection();
+             Statement statement = connection.createStatement()){
+            try (ResultSet resultSet = statement.executeQuery(sql)){
+                if (resultSet.next()){
+                    count=resultSet.getLong(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Ошибка работы с базой данных", e);
+        }
+        return count;
+    }
+
+    @Override
+    public Collection<Department> getAllDepartmentsLimit(long limit, long offset) {
+        Collection<Department> departmentList = new ArrayList<>();
+        try (Connection connection = DataBaseConnectionCPDS.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "SELECT *\n" +
+                             "FROM application.departments\n" +
+                             "ORDER by id ASC\n" +
+                             "LIMIT ? OFFSET ?")){
+            preparedStatement.setLong(1,limit);
+            preparedStatement.setLong(2,offset);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while (resultSet.next()){
+                    Department department = new Department();
+
+                    long currentId = resultSet.getLong(1);
+                    String name = resultSet.getString(2);
+                    long parentDepartmentId = resultSet.getLong(3);
+                    Department parentDepartment = getDepartment(parentDepartmentId);
+
+                    department.setId(currentId);
+                    department.setName(name);
+                    department.setParentDepartment(parentDepartment);
+
+                    departmentList.add(department);
+                }
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Ошибка работы с базой данных", e);
+        }
+        return departmentList;
+    }
 }

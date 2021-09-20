@@ -33,4 +33,15 @@ public class DepartmentService implements IDepartmentService {
     public Collection<Department> getAllDepartments() {
         return departmentStorage.getAllDepartments();
     }
+
+    @Override
+    public long getCountAllEntries() {
+        return departmentStorage.getCountAllEntries();
+    }
+
+    @Override
+    public Collection<Department> getAllDepartmentsLimit(long limit, long page) {
+        long offset = limit*(page-1);
+        return departmentStorage.getAllDepartmentsLimit(limit,offset);
+    }
 }

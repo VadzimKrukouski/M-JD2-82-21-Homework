@@ -22,9 +22,15 @@ public class ServletAllDepartments extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Collection<Department> allDepartments = departmentService.getAllDepartments();
+        long limit = 20;
+        long countAllEntries = departmentService.getCountAllEntries();
+        long pageCount = (long) Math.ceil((double) countAllEntries/limit);
+        String page = req.getParameter("page");
+        Collection<Department> allDepartments = departmentService.getAllDepartmentsLimit(limit, Long.parseLong(page));
 
         req.setAttribute("allDepartments", allDepartments);
+        req.setAttribute("pageCount", pageCount);
+        req.setAttribute("page", page);
         req.getRequestDispatcher("views/allDepartments.jsp").forward(req,resp);
     }
 

@@ -8,4 +8,7 @@ public interface IDepartmentService {
     long addDepartment(Department department);
     Department getDepartment(long id);
     Collection<Department> getAllDepartments();
+    long getCountAllEntries();
+    Collection<Department> getAllDepartmentsLimit(long limit, long page);
+
 }
