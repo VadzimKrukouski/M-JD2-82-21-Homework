@@ -8,4 +8,7 @@ public interface IPositionStorage {
     long addPosition(Position position);
     Position getPosition(long id);
     Collection<Position> getAllPositions();
+    long getCountAllEntries();
+    Collection<Position> getAllPositionsLimit(long limit, long offset);
+
 }

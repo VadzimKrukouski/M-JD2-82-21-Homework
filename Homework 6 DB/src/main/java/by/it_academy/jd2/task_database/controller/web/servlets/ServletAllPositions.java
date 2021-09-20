@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
-@WebServlet (name = "ServletAllPositions", urlPatterns = "/allPositions")
+@WebServlet(name = "ServletAllPositions", urlPatterns = "/allPositions")
 public class ServletAllPositions extends HttpServlet {
     private final IPositionService positionService;
 
@@ -22,14 +22,19 @@ public class ServletAllPositions extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Collection<Position> allPositions = positionService.getAllPositions();
+        long limit = 20;
+        long countAllEntries = positionService.getCountAllEntries();
+        long pageCount = (long) Math.ceil((double) countAllEntries/limit);
+        String page = req.getParameter("page");
+        Collection<Position> allPositions = positionService.getAllPositionsLimit(limit, Long.parseLong(page));
 
         req.setAttribute("allPositions", allPositions);
-        req.getRequestDispatcher("views/allPositions.jsp").forward(req,resp);
+        req.setAttribute("pageCount", pageCount);
+        req.setAttribute("page", page);
+        req.getRequestDispatcher("views/allPositions.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
     }
 }

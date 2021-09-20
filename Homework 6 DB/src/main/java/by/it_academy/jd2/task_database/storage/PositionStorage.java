@@ -11,10 +11,8 @@ import java.util.List;
 
 public class PositionStorage implements IPositionStorage {
     private static final PositionStorage instance = new PositionStorage();
-//    public final ComboPooledDataSource cpds;
 
     public PositionStorage() {
-//        this.cpds = DataBaseConnectionCPDS.getInstance().getConnection();
     }
 
     public static PositionStorage getInstance() {
@@ -82,6 +80,53 @@ public class PositionStorage implements IPositionStorage {
                     String name = resultSet.getString(2);
 
                     position.setId(currentId);
+                    position.setName(name);
+
+                    positionList.add(position);
+                }
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Ошибка работы с базой данных", e);
+        }
+        return positionList;
+    }
+
+    @Override
+    public long getCountAllEntries() {
+        long count = 0;
+        String sql = "SELECT count(id) \n" +
+                "FROM application.positions";
+        try (Connection connection = DataBaseConnectionCPDS.getConnection();
+             Statement statement = connection.createStatement()){
+            try (ResultSet resultSet = statement.executeQuery(sql)){
+                if (resultSet.next()){
+                    count=resultSet.getLong(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Ошибка работы с базой данных", e);
+        }
+        return count;
+    }
+
+    @Override
+    public Collection<Position> getAllPositionsLimit(long limit, long offset) {
+        List<Position> positionList = new ArrayList<>();
+        try (Connection connection = DataBaseConnectionCPDS.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "SELECT *\n" +
+                     "FROM application.positions\n" +
+                     "ORDER by id ASC\n" +
+                     "LIMIT ? OFFSET ?")){
+            preparedStatement.setLong(1,limit);
+            preparedStatement.setLong(2,offset);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while (resultSet.next()){
+                    Position position = new Position();
+                    long currentID = resultSet.getLong(1);
+                    String name = resultSet.getString(2);
+
+                    position.setId(currentID);
                     position.setName(name);
 
                     positionList.add(position);

@@ -20,6 +20,17 @@ public class ServletGetEmployee extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = req.getParameter("id");
+
+        if (id != null) {
+            Employee employee = employeeService.getEmployee(Long.parseLong(id));
+
+            if (employee != null) {
+                req.setAttribute("employee", employee.toString());
+            } else {
+                req.setAttribute("info", "Такого пользователя не существует");
+            }
+        }
         req.getRequestDispatcher("views/getEmployee.jsp").forward(req, resp);
     }
 
