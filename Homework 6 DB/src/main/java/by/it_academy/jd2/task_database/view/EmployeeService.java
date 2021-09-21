@@ -30,21 +30,6 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public Collection<Employee> getAllEmployers() {
-        return employeeStorage.getAllEmployers();
-    }
-
-    @Override
-    public Collection<Employee> getEmployersByPosition(long idPosition) {
-        return employeeStorage.getEmployersByPosition(idPosition);
-    }
-
-    @Override
-    public Collection<Employee> getEmployersByDepartment(long idDepartment) {
-        return employeeStorage.getEmployersByDepartment(idDepartment);
-    }
-
-    @Override
     public Collection<Employee> getALLEmployersLimit(long limit, long page) {
         long offset = limit*(page-1);
         return employeeStorage.getALLEmployersLimit(limit, offset);

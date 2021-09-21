@@ -30,7 +30,6 @@ public class ServletGetPosition extends HttpServlet {
         String id = req.getParameter("id");
 
         Position position = positionService.getPosition(Long.parseLong(id));
-//        Collection<Employee> employersByPosition = employeeService.getEmployersByPosition(Long.parseLong(id));
 
         long countAllEntriesByPosition = employeeService.getCountAllEntriesByPosition(Long.parseLong(id));
 
@@ -53,17 +52,5 @@ public class ServletGetPosition extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        String id = req.getParameter("id");
-//
-//        Position position = positionService.getPosition(Long.parseLong(id));
-//
-//        if (position!=null){
-//            req.setAttribute("position", position.toString());
-//        } else {
-//            req.setAttribute("info", "Такой должности не существует");
-//        }
-//        req.getRequestDispatcher("views/getPosition.jsp").forward(req,resp);
-
-
     }
 }

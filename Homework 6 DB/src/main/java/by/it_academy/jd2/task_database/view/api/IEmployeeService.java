@@ -7,9 +7,6 @@ import java.util.Collection;
 public interface IEmployeeService {
     long addEmployee(Employee employee);
     Employee getEmployee(long id);
-    Collection<Employee> getAllEmployers();
-    Collection<Employee> getEmployersByPosition(long idPosition);
-    Collection<Employee> getEmployersByDepartment(long idDepartment);
     Collection<Employee> getALLEmployersLimit(long limit, long page);
     long getCountAllEntries();
     Collection<Employee> getEmployersByPositionLimit(long idPosition, long limit, long page);

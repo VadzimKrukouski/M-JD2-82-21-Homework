@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
-@WebServlet (name = "ServletAllEmployersLimit", urlPatterns = "/allEmployeeLimit")
-public class ServletAllEmployersLimit extends HttpServlet {
+@WebServlet (name = "ServletAllEmployees", urlPatterns = "/allEmployeeLimit")
+public class ServletAllEmployees extends HttpServlet {
     private final IEmployeeService employeeService;
 
-    public ServletAllEmployersLimit() {
+    public ServletAllEmployees() {
         this.employeeService= EmployeeService.getInstance();
     }
 

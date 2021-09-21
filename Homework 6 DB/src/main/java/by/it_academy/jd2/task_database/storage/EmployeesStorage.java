@@ -13,10 +13,8 @@ import java.util.List;
 
 public class EmployeesStorage implements IEmployeeStorage {
     private static final EmployeesStorage instance = new EmployeesStorage();
-//    private final ComboPooledDataSource cpds;
 
     private EmployeesStorage() {
-//        this.cpds = DataBaseConnectionCPDS.getInstance().getConnection();
     }
 
     public static EmployeesStorage getInstance() {
@@ -90,134 +88,6 @@ public class EmployeesStorage implements IEmployeeStorage {
             throw new IllegalStateException("Ошибка работы с базой данных", e);
         }
         return null;
-    }
-
-    @Override
-    public Collection<Employee> getAllEmployers() {
-        List<Employee> employeeList = new ArrayList<>();
-        String sql = "SELECT employers.id, employers.name, employers.salary, positions.name, departments.name\n" +
-                "                    FROM application.employers\n" +
-                "                    JOIN application.positions\n" +
-                "                    ON employers.position=positions.id\n" +
-                "                    JOIN application.departments\n" +
-                "                    ON employers.department=departments.id";
-        try (Connection con = DataBaseConnectionCPDS.getConnection();
-             Statement statement = con.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(sql)) {
-                while (resultSet.next()) {
-                    Employee employee = new Employee();
-
-                    long currentId = resultSet.getLong(1);
-                    String name = resultSet.getString(2);
-                    double salary = resultSet.getDouble(3);
-
-                    Position position = new Position();
-                    String namePosition = resultSet.getString(4);
-                    position.setName(namePosition);
-
-                    Department department = new Department();
-                    String nameDepartment = resultSet.getString(5);
-                    department.setName(nameDepartment);
-
-                    employee.setId(currentId);
-                    employee.setName(name);
-                    employee.setSalary(salary);
-                    employee.setPosition(position);
-                    employee.setDepartment(department);
-
-                    employeeList.add(employee);
-                }
-            }
-        } catch (SQLException e) {
-            throw new IllegalStateException("Ошибка работы с базой данных", e);
-        }
-        return employeeList;
-    }
-
-    @Override
-    public Collection<Employee> getEmployersByPosition(long idPosition) {
-        List<Employee> employeeList = new ArrayList<>();
-        String sql = "SELECT employers.id,employers.name,employers.salary,positions.name,departments.name  \n" +
-                "FROM application.employers \n" +
-                "JOIN application.positions\n" +
-                "ON employers.position=positions.id\n" +
-                "JOIN application.departments\n" +
-                "ON employers.department=departments.id\n" +
-                "WHERE \"position\"=";
-        try (Connection con = DataBaseConnectionCPDS.getConnection();
-             Statement statement = con.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(sql + idPosition)) {
-                while (resultSet.next()) {
-                    Employee employee = new Employee();
-
-                    long currentId = resultSet.getLong(1);
-                    String name = resultSet.getString(2);
-                    double salary = resultSet.getDouble(3);
-
-                    Position position = new Position();
-                    String namePosition = resultSet.getString(4);
-                    position.setName(namePosition);
-
-                    Department department = new Department();
-                    String nameDepartment = resultSet.getString(5);
-                    department.setName(nameDepartment);
-
-                    employee.setId(currentId);
-                    employee.setName(name);
-                    employee.setSalary(salary);
-                    employee.setPosition(position);
-                    employee.setDepartment(department);
-
-                    employeeList.add(employee);
-                }
-            }
-        } catch (SQLException e) {
-            throw new IllegalStateException("Ошибка работы с базой данных", e);
-        }
-        return employeeList;
-    }
-
-    @Override
-    public Collection<Employee> getEmployersByDepartment(long idDepartment) {
-        List<Employee> employeeList = new ArrayList<>();
-        String sql = "SELECT employers.id,employers.name,employers.salary,positions.name,departments.name  \n" +
-                "FROM application.employers \n" +
-                "JOIN application.positions\n" +
-                "ON employers.position=positions.id\n" +
-                "JOIN application.departments\n" +
-                "ON employers.department=departments.id\n" +
-                "WHERE \"department\"=";
-        try (Connection con = DataBaseConnectionCPDS.getConnection();
-             Statement statement = con.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(sql + idDepartment)) {
-                while (resultSet.next()) {
-                    Employee employee = new Employee();
-
-                    long currentId = resultSet.getLong(1);
-                    String name = resultSet.getString(2);
-                    double salary = resultSet.getDouble(3);
-
-                    Position position = new Position();
-                    String namePosition = resultSet.getString(4);
-                    position.setName(namePosition);
-
-                    Department department = new Department();
-                    String nameDepartment = resultSet.getString(5);
-                    department.setName(nameDepartment);
-
-                    employee.setId(currentId);
-                    employee.setName(name);
-                    employee.setSalary(salary);
-                    employee.setPosition(position);
-                    employee.setDepartment(department);
-
-                    employeeList.add(employee);
-                }
-            }
-        } catch (SQLException e) {
-            throw new IllegalStateException("Ошибка работы с базой данных", e);
-        }
-        return employeeList;
     }
 
     @Override

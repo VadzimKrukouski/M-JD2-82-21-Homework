@@ -38,8 +38,6 @@ public class ServletGetDepartment extends HttpServlet {
 
         Collection<Employee> employersByDepartmentLimit = employeeService.getEmployersByDepartmentLimit(Long.parseLong(id), limit, Long.parseLong(page));
 
-//        Collection<Employee> employersByDepartment = employeeService.getEmployersByDepartment(Long.parseLong(id));
-
         if (department != null) {
             req.setAttribute("department", department);
             req.setAttribute("employersByDepartment", employersByDepartmentLimit);
