@@ -33,7 +33,7 @@ public class ServletGetPosition extends HttpServlet {
 
         long countAllEntriesByPosition = employeeService.getCountAllEntriesByPosition(Long.parseLong(id));
 
-        long limit = 20;
+        long limit = 10;
         long pageCount = (long) Math.ceil((double) countAllEntriesByPosition/limit);
         String page = req.getParameter("page");
 

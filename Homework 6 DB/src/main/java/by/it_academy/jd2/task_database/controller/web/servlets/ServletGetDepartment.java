@@ -32,7 +32,7 @@ public class ServletGetDepartment extends HttpServlet {
         Department department = departmentService.getDepartment(Long.parseLong(id));
 
         long countAllEntriesByDepartment = employeeService.getCountAllEntriesByDepartment(Long.parseLong(id));
-        long limit = 20;
+        long limit = 10;
         long pageCount= (long) Math.ceil((double) countAllEntriesByDepartment/limit);
         String page = req.getParameter("page");
 
