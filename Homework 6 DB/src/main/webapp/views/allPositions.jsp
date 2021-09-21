@@ -15,7 +15,7 @@
                			var="position">
                    <tr>
                        <td>${position.id}</td>
-                       <td><a href="getPosition?id=${position.id}">${position.name}</a></td>
+                       <td><a href="getPosition?id=${position.id}&page=1">${position.name}</a></td>
                    </tr>
 </c:forEach>
         </tbody>

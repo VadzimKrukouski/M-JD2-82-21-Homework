@@ -12,7 +12,7 @@
 <p><input type="button" onclick="location.href='addDepartmentMapper';" value="Внести в базу новый отдел"</p>
 <p><input type="button" onclick="location.href='addPositionMapper';" value="Внести в базу новую должность"</p>
 <p><input type="button" onclick="location.href='allPositions?page=1';" value="Посмотреть все должности"</p>
-<p><input type="button" onclick="location.href='allDepartments';" value="Посмотреть все отделы"</p>
+<p><input type="button" onclick="location.href='allDepartments?page=1';" value="Посмотреть все отделы"</p>
 <p><input type="button" onclick="location.href='allEmployeeLimit?page=1';" value="Посмотреть всех сотрудников"</p>
 
 

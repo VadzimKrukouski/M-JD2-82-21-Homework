@@ -30,11 +30,21 @@ public class ServletGetPosition extends HttpServlet {
         String id = req.getParameter("id");
 
         Position position = positionService.getPosition(Long.parseLong(id));
-        Collection<Employee> employersByPosition = employeeService.getEmployersByPosition(Long.parseLong(id));
+//        Collection<Employee> employersByPosition = employeeService.getEmployersByPosition(Long.parseLong(id));
+
+        long countAllEntriesByPosition = employeeService.getCountAllEntriesByPosition(Long.parseLong(id));
+
+        long limit = 20;
+        long pageCount = (long) Math.ceil((double) countAllEntriesByPosition/limit);
+        String page = req.getParameter("page");
+
+        Collection<Employee> employersByPosition = employeeService.getEmployersByPositionLimit(Long.parseLong(id), limit, Long.parseLong(page));
 
         if (position!=null){
-            req.setAttribute("position", position.getName());
+            req.setAttribute("position", position);
             req.setAttribute("employersByPosition", employersByPosition);
+            req.setAttribute("pageCount", pageCount);
+            req.setAttribute("page", page);
         } else {
             req.setAttribute("info", "Такой должности не существует");
         }
