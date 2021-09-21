@@ -43,6 +43,31 @@
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid red;
+    border-radius: 4px;
+}
+input[type=number] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid red;
+    border-radius: 4px;
+}
+
+select {
+    width: 100%;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+}
 </style>
 </head>
 <body>
@@ -51,8 +76,10 @@
   <span style='color: red;'>${infoErr}</p>
 
   <form id="2" action="addEmployeeMapper" method="POST">
-		<p>Имя сотрудника: <input type="text" name="name">
-		<p>Зарплата: <input type="number" name="salary">
+		<p>Имя сотрудника:</p>
+		<input type="text" name="name">
+		<p>Зарплата: </p>
+		<input type="number" name="salary">
 		<p>
 		  <br>
               <select name="position.id">
