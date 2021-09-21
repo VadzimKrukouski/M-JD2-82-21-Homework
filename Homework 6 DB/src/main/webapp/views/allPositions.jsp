@@ -11,8 +11,7 @@
 <table border="1">
     <tr>
         <tbody>
-<c:forEach items="${requestScope.allPositions}"
-               			var="position">
+<c:forEach items="${requestScope.allPositions}" var="position">
                    <tr>
                        <td>${position.id}</td>
                        <td><a href="getPosition?id=${position.id}&page=1">${position.name}</a></td>

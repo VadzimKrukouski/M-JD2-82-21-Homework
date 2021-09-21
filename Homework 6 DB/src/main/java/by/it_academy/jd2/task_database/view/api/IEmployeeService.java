@@ -14,6 +14,10 @@ public interface IEmployeeService {
     long getCountAllEntries();
     Collection<Employee> getEmployersByPositionLimit(long idPosition, long limit, long page);
     long getCountAllEntriesByPosition(long id);
+    long getCountAllEntriesByDepartment(long id);
+    Collection<Employee> getEmployersByDepartmentLimit(long idDepartment, long limit, long page);
+
+
 
 
 }

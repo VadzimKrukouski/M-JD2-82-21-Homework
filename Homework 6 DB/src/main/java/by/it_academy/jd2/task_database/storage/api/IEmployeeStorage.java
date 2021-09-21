@@ -14,6 +14,10 @@ public interface IEmployeeStorage {
     long getCountAllEntries();
     Collection<Employee> getEmployersByPositionLimit(long idPosition, long limit, long offset);
     long getCountAllEntriesByPosition(long id);
+    long getCountAllEntriesByDepartment(long id);
+    Collection<Employee> getEmployersByDepartmentLimit(long idDepartment, long limit, long offset);
+
+
 
 
 

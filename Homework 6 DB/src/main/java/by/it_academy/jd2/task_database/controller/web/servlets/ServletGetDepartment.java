@@ -30,11 +30,21 @@ public class ServletGetDepartment extends HttpServlet {
         String id = req.getParameter("id");
 
         Department department = departmentService.getDepartment(Long.parseLong(id));
-        Collection<Employee> employersByDepartment = employeeService.getEmployersByDepartment(Long.parseLong(id));
+
+        long countAllEntriesByDepartment = employeeService.getCountAllEntriesByDepartment(Long.parseLong(id));
+        long limit = 20;
+        long pageCount= (long) Math.ceil((double) countAllEntriesByDepartment/limit);
+        String page = req.getParameter("page");
+
+        Collection<Employee> employersByDepartmentLimit = employeeService.getEmployersByDepartmentLimit(Long.parseLong(id), limit, Long.parseLong(page));
+
+//        Collection<Employee> employersByDepartment = employeeService.getEmployersByDepartment(Long.parseLong(id));
 
         if (department != null) {
-            req.setAttribute("department", department.getName());
-            req.setAttribute("employersByDepartment", employersByDepartment);
+            req.setAttribute("department", department);
+            req.setAttribute("employersByDepartment", employersByDepartmentLimit);
+            req.setAttribute("pageCount", pageCount);
+            req.setAttribute("page", page);
         } else {
             req.setAttribute("info", "Такого отдела не существует");
         }

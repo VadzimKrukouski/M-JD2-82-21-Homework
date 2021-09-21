@@ -307,6 +307,74 @@ public class EmployeesStorage implements IEmployeeStorage {
     }
 
     @Override
+    public long getCountAllEntriesByDepartment(long id) {
+        long count = 0;
+        String sql = "SELECT count(id)\n" +
+                "FROM application.employers\n" +
+                "WHERE \"department\"=";
+        try (Connection connection = DataBaseConnectionCPDS.getConnection();
+             Statement statement = connection.createStatement()){
+            try (ResultSet resultSet = statement.executeQuery(sql + id)){
+                while (resultSet.next()){
+                    count=resultSet.getLong(1);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new IllegalStateException("Ошибка работы с базой данных", e);
+        }
+        return count;
+    }
+
+    @Override
+    public Collection<Employee> getEmployersByDepartmentLimit(long idDepartment, long limit, long offset) {
+        List<Employee> employeeList = new ArrayList<>();
+        String sql = "SELECT employers.id,employers.name,employers.salary,positions.name,departments.name\n" +
+                "FROM application.employers\n" +
+                "JOIN application.positions\n" +
+                "ON employers.position=positions.id\n" +
+                "JOIN application.departments\n" +
+                "ON employers.department=departments.id\n" +
+                "WHERE \"department\"=" + idDepartment + "\n" +
+                "ORDER BY id ASC\n" +
+                "LIMIT ? OFFSET ?";
+        try (Connection con = DataBaseConnectionCPDS.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setLong(1,limit);
+            preparedStatement.setLong(2,offset);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Employee employee = new Employee();
+
+                    long currentId = resultSet.getLong(1);
+                    String name = resultSet.getString(2);
+                    double salary = resultSet.getDouble(3);
+
+                    Position position = new Position();
+                    String namePosition = resultSet.getString(4);
+                    position.setName(namePosition);
+
+                    Department department = new Department();
+                    String nameDepartment = resultSet.getString(5);
+                    department.setName(nameDepartment);
+
+                    employee.setId(currentId);
+                    employee.setName(name);
+                    employee.setSalary(salary);
+                    employee.setPosition(position);
+                    employee.setDepartment(department);
+
+                    employeeList.add(employee);
+                }
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Ошибка работы с базой данных", e);
+        }
+        return employeeList;
+    }
+
+    @Override
     public Collection<Employee> getEmployersByPositionLimit(long idPosition, long limit, long offset) {
         List<Employee> employeeList = new ArrayList<>();
         String sql = "SELECT employers.id,employers.name,employers.salary,positions.name,departments.name\n" +

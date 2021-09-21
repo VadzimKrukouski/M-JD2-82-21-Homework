@@ -11,12 +11,11 @@
 <table border="1">
     <tr>
         <tbody>
-<c:forEach items="${requestScope.allDepartments}"
-               			var="department">
+<c:forEach items="${requestScope.allDepartments}" var="department">
                    <tr>
                        <td>${department.id}</td>
-                       <td><a href="getDepartment?id=${department.id}">${department.name}</a></td>
-                       <td>${department.parentDepartment}</td>
+                       <td><a href="getDepartment?id=${department.id}&page=1">${department.name}</a></td>
+                       <td>${department.parentDepartment.name}</td>
                    </tr>
 </c:forEach>
         </tbody>
