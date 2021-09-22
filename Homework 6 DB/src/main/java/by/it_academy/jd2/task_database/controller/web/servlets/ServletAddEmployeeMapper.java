@@ -53,6 +53,7 @@ public class ServletAddEmployeeMapper extends HttpServlet {
         } else {
             req.setAttribute("infoErr", "Сотрудник не добавлен");
         }
-        req.getRequestDispatcher("views/addEmployeeMapper.jsp").forward(req,resp);
+//        req.getRequestDispatcher("views/addEmployeeMapper.jsp").forward(req,resp);
+        resp.sendRedirect("addEmployeeMapper.jsp");
     }
 }
