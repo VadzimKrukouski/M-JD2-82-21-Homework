@@ -101,9 +101,9 @@ tr:nth-child(even) {
    <span><a href="allEmployeeLimit?page=${pageCount}">В конец</span>
 </c:if>
 
-
-<p><input type="button" class="button button1" onclick="location.href='/';" value="Вернуться на главную страницу"</p>
-
+<form action="${pageContext.request.contextPath}/" method="GET">
+<p><input type="submit" class="button button1" value="Вернуться на главную страницу"</p>
+</form>
 
 </body>
 </html>

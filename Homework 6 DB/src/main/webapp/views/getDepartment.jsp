@@ -98,7 +98,8 @@ tr:nth-child(even) {
    <span><a href="getDepartment?id=${department.id}&page=${pageCount}">В конец</span>
 </c:if>
 
-
-   <p><input type="button" class="button button1" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"</p>
+<form action="${pageContext.request.contextPath}/" method="GET">
+<p><input type="submit" class="button button1" value="Вернуться на главную страницу"</p>
+</form>
 </body>
 </html>
