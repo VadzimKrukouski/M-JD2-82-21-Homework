@@ -24,6 +24,5 @@ public class StartUp {
         sessionOne.getTransaction().commit();
 
         HibernateUtil.shutdown();
-
     }
 }
