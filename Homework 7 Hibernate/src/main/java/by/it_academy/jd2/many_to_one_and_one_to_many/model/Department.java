@@ -1,4 +1,4 @@
-package by.it_academy.jd2.one_to_many.model;
+package by.it_academy.jd2.many_to_one_and_one_to_many.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -7,14 +7,12 @@ import java.util.List;
 
 @Entity
 public class Department implements Serializable {
-
     private long id;
     private String name;
-    private List<Employee> employees = new ArrayList<>();
-
+    private List<Employee> employeeList = new ArrayList<>();
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     public long getId() {
         return id;
     }
@@ -23,7 +21,6 @@ public class Department implements Serializable {
         this.id = id;
     }
 
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -32,14 +29,18 @@ public class Department implements Serializable {
         this.name = name;
     }
 
-    @OneToMany
-    @JoinColumn (name = "department_id")
-    public List<Employee> getEmployees() {
-        return employees;
+    @OneToMany (mappedBy = "department", orphanRemoval = true)
+    public List<Employee> getEmployeeList() {
+        return employeeList;
     }
 
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
+    }
+
+    public void addEmployee(Employee employee){
+        this.employeeList.add(employee);
+        employee.setDepartment(this);
     }
 
     @Override
@@ -47,7 +48,7 @@ public class Department implements Serializable {
         return "Department{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", employees=" + employees +
+                ", employeeList=" + employeeList +
                 '}';
     }
 }
