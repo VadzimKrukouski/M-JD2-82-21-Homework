@@ -10,19 +10,23 @@ public class StartUp {
         sessionOne.beginTransaction();
 
         Department department = new Department();
-        department.setName("Управление");
+        department.setName("Бухгалтерия");
 
         sessionOne.save(department);
 
         Employee employee = new Employee();
-        employee.setName("Vad");
-        employee.setSalary(2225);
+        employee.setName("Сергей");
+        employee.setSalary(585);
         employee.setDepartment(department);
 
         sessionOne.save(employee);
 
+        System.out.println(employee.toString());
+
         sessionOne.getTransaction().commit();
 
         HibernateUtil.shutdown();
+
+
     }
 }

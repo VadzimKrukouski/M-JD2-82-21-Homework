@@ -15,7 +15,7 @@
 
         <property name="hibernate.default_schema">application</property>
 
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
 
         <mapping class="by.it_academy.jd2.one_to_one.model.Employee"/>
         <mapping class="by.it_academy.jd2.one_to_one.model.Department"/>
