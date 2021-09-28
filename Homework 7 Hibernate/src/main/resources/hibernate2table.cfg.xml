@@ -13,12 +13,12 @@
         <property name="hibernate.connection.password">9876543210</property>
         <property name="hibernate.show_sql">true</property>
 
-        <property name="hibernate.default_schema">application2</property>
+        <property name="hibernate.default_schema">application_table</property>
 
         <property name="hibernate.hbm2ddl.auto">create</property>
 
-        <mapping class="by.it_academy.jd2.one_to_many.model.Employee"/>
-        <mapping class="by.it_academy.jd2.one_to_many.model.Department"/>
+        <mapping class="by.it_academy.jd2.one_to_many.table.model.Employee"/>
+        <mapping class="by.it_academy.jd2.one_to_many.table.model.Department"/>
 
     </session-factory>
 </hibernate-configuration>

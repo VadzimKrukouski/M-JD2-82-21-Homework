@@ -1,4 +1,4 @@
-package by.it_academy.jd2.one_to_many.service;
+package by.it_academy.jd2.one_to_many.join.service;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -13,7 +13,7 @@ public class HibernateUtil {
         try {
             if (sessionFactory==null){
                 StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                        .configure("hibernate2.cfg.xml").build();
+                        .configure("hibernate2join.cfg.xml").build();
                 Metadata metadata = new MetadataSources(serviceRegistry)
                         .getMetadataBuilder()
                         .build();

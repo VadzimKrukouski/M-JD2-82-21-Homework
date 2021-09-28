@@ -1,9 +1,7 @@
-package by.it_academy.jd2.one_to_many.model;
+package by.it_academy.jd2.one_to_many.join.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @Entity
