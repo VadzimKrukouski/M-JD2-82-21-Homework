@@ -7,14 +7,24 @@ import java.util.Set;
 
 @Entity
 public class Employee implements Serializable {
-    private long id;
-    private String name;
-    private double Salary;
-    private Set<Department> departments = new HashSet<>();
-
-
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column (name = "name")
+    private String name;
+
+    @Column (name = "salary")
+    private double Salary;
+
+    @ManyToMany
+    @JoinTable (
+            name = "Employee_Department",
+            joinColumns = {@JoinColumn(name = "employee_id")},
+            inverseJoinColumns = {@JoinColumn(name = "department_id")}
+    )
+    private Set<Department> departments = new HashSet<>();
+
     public long getId() {
         return id;
     }
@@ -23,12 +33,6 @@ public class Employee implements Serializable {
         this.id = id;
     }
 
-    @ManyToMany
-    @JoinTable (
-            name = "Employee_Department",
-            joinColumns = {@JoinColumn(name = "employee_id")},
-            inverseJoinColumns = {@JoinColumn(name = "department_id")}
-    )
     public Set<Department> getDepartments() {
         return departments;
     }
@@ -37,7 +41,6 @@ public class Employee implements Serializable {
         this.departments = departments;
     }
 
-    @Column (name = "name")
     public String getName() {
         return name;
     }
@@ -46,13 +49,17 @@ public class Employee implements Serializable {
         this.name = name;
     }
 
-    @Column (name = "salary")
     public double getSalary() {
         return Salary;
     }
 
     public void setSalary(double salary) {
         Salary = salary;
+    }
+
+    public void addDepartment(Department department){
+        departments.add(department);
+        department.getEmployees().add(this);
     }
 
 
