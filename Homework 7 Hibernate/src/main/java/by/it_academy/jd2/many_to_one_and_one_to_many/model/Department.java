@@ -7,12 +7,16 @@ import java.util.List;
 
 @Entity
 public class Department implements Serializable {
-    private long id;
-    private String name;
-    private List<Employee> employeeList = new ArrayList<>();
-
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column (name = "name")
+    private String name;
+
+    @OneToMany (mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Employee> employeeList = new ArrayList<>();
+
     public long getId() {
         return id;
     }
@@ -21,7 +25,6 @@ public class Department implements Serializable {
         this.id = id;
     }
 
-    @Column (name = "name")
     public String getName() {
         return name;
     }
@@ -30,7 +33,6 @@ public class Department implements Serializable {
         this.name = name;
     }
 
-    @OneToMany (mappedBy = "department", orphanRemoval = true)
     public List<Employee> getEmployeeList() {
         return employeeList;
     }
@@ -40,8 +42,8 @@ public class Department implements Serializable {
     }
 
     public void addEmployee(Employee employee){
+        employeeList.add(employee);
         employee.setDepartment(this);
-        getEmployeeList().add(employee);
     }
 
     @Override

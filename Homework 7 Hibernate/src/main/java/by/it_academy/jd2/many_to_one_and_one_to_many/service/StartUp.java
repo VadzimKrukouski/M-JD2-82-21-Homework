@@ -12,20 +12,20 @@ public class StartUp {
         Department department = new Department();
         department.setName("Financial");
 
+        Employee employee1 = new Employee();
+        employee1.setName("Rich");
+        employee1.setSalary(8);
+
+        Employee employee2 = new Employee();
+        employee2.setName("Matt");
+        employee2.setSalary(78);
+
+        department.addEmployee(employee1);
+        department.addEmployee(employee2);
+
         session.save(department);
-
-        Employee employee = new Employee();
-        employee.setName("Rich");
-        employee.setSalary(8);
-        employee.setDepartment(department);
-
-        department.addEmployee(employee);
-
-        session.save(employee);
         session.getTransaction().commit();
 
         HibernateUtil.shutdown();
-
-
     }
 }

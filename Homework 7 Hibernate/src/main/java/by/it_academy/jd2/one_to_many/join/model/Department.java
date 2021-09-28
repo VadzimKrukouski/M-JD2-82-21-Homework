@@ -2,6 +2,8 @@ package by.it_academy.jd2.one_to_many.join.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -10,10 +12,12 @@ public class Department implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column (name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "department")
-    private Set<Employee> employees;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn (name = "department_id")
+    private List<Employee> employees = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -31,12 +35,11 @@ public class Department implements Serializable {
         this.name = name;
     }
 
-
-    public Set<Employee> getEmployees() {
+    public List<Employee> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(Set<Employee> employees) {
+    public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
 

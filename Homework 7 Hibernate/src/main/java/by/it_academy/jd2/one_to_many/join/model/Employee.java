@@ -16,17 +16,6 @@ public class Employee implements Serializable {
     @Column(name = "salary")
     private double salary;
 
-    @JoinColumn (name = "department_id")
-    private Department department;
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
     public long getId() {
         return id;
     }
@@ -57,7 +46,7 @@ public class Employee implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", salary=" + salary +
-                ", department=" + department +
+
                 '}';
     }
 }

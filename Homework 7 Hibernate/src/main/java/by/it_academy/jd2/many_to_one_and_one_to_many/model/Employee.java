@@ -5,13 +5,19 @@ import java.io.Serializable;
 
 @Entity
 public class Employee implements Serializable {
-    private long id;
-    private String name;
-    private double salary;
-    private Department department;
-
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column (name = "name")
+    private String name;
+
+    @Column (name = "salary")
+    private double salary;
+
+    @ManyToOne (fetch = FetchType.LAZY)
+    private Department department;
+
     public long getId() {
         return id;
     }
@@ -20,7 +26,6 @@ public class Employee implements Serializable {
         this.id = id;
     }
 
-    @Column (name = "name")
     public String getName() {
         return name;
     }
@@ -29,7 +34,6 @@ public class Employee implements Serializable {
         this.name = name;
     }
 
-    @Column (name = "salary")
     public double getSalary() {
         return salary;
     }
@@ -38,8 +42,6 @@ public class Employee implements Serializable {
         this.salary = salary;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "department_id")
     public Department getDepartment() {
         return department;
     }
