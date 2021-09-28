@@ -4,17 +4,19 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Department implements Serializable {
-
-    private long id;
-    private String name;
-    private List<Employee> employees = new ArrayList<>();
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    private String name;
+
+    @OneToMany(mappedBy = "department")
+    private Set<Employee> employees;
+
     public long getId() {
         return id;
     }
@@ -23,7 +25,6 @@ public class Department implements Serializable {
         this.id = id;
     }
 
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -32,13 +33,12 @@ public class Department implements Serializable {
         this.name = name;
     }
 
-    @OneToMany
-    @JoinColumn (name = "department_id")
-    public List<Employee> getEmployees() {
+
+    public Set<Employee> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(List<Employee> employees) {
+    public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
     }
 

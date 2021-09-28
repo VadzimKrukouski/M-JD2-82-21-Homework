@@ -21,6 +21,7 @@ public class Department implements Serializable {
         this.id = id;
     }
 
+    @Column (name = "name")
     public String getName() {
         return name;
     }
@@ -39,8 +40,8 @@ public class Department implements Serializable {
     }
 
     public void addEmployee(Employee employee){
-        this.employeeList.add(employee);
         employee.setDepartment(this);
+        getEmployeeList().add(employee);
     }
 
     @Override

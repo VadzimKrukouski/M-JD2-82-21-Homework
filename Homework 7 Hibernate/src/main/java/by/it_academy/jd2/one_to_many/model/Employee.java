@@ -19,7 +19,7 @@ public class Employee implements Serializable {
     @Column(name = "salary")
     private double salary;
 
-    @Column(name = "department_id")
+    @JoinColumn (name = "department_id")
     private Department department;
 
     public Department getDepartment() {

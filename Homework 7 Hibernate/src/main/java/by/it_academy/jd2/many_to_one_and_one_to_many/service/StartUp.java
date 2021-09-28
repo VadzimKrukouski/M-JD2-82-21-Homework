@@ -4,8 +4,6 @@ import by.it_academy.jd2.many_to_one_and_one_to_many.model.Department;
 import by.it_academy.jd2.many_to_one_and_one_to_many.model.Employee;
 import org.hibernate.Session;
 
-import java.util.List;
-
 public class StartUp {
     public static void main(String[] args) {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -14,19 +12,17 @@ public class StartUp {
         Department department = new Department();
         department.setName("Financial");
 
+        session.save(department);
+
         Employee employee = new Employee();
         employee.setName("Rich");
         employee.setSalary(8);
+        employee.setDepartment(department);
 
         department.addEmployee(employee);
 
-        session.save(department);
+        session.save(employee);
         session.getTransaction().commit();
-
-        List<Employee> employeeList = department.getEmployeeList();
-        for (Employee employee1 : employeeList) {
-            System.out.println(employee1.toString());
-        }
 
         HibernateUtil.shutdown();
 

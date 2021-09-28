@@ -15,7 +15,7 @@ public class StartUp {
         session.save(department);
 
         Employee employee = new Employee();
-        employee.setName("Kral");
+        employee.setName("COOL");
         employee.setSalary(5);
         employee.setDepartment(department);
 

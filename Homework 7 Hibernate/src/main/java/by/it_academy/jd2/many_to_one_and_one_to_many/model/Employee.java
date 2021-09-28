@@ -20,6 +20,7 @@ public class Employee implements Serializable {
         this.id = id;
     }
 
+    @Column (name = "name")
     public String getName() {
         return name;
     }
@@ -28,6 +29,7 @@ public class Employee implements Serializable {
         this.name = name;
     }
 
+    @Column (name = "salary")
     public double getSalary() {
         return salary;
     }
@@ -37,6 +39,7 @@ public class Employee implements Serializable {
     }
 
     @ManyToOne
+    @JoinColumn(name = "department_id")
     public Department getDepartment() {
         return department;
     }
