@@ -1,8 +1,17 @@
 package by.it_academy.jd2.task_database.model;
 
+import javax.persistence.*;
+
+@Entity
 public class Department {
+    @Id
+    @GeneratedValue
     private long id;
+
+    @Column(name = "name")
     private String name;
+
+    @OneToOne
     private Department parentDepartment;
 
     public Department() {

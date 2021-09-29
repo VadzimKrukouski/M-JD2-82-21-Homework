@@ -18,7 +18,7 @@ public class DataBaseConnectionCPDS {
         }
         cpds.setJdbcUrl("jdbc:postgresql://localhost:5432/crm");
         cpds.setUser("postgres");
-        cpds.setPassword("9876543210");
+        cpds.setPassword("123456789");
     }
 
     public static Connection getConnection() throws SQLException {

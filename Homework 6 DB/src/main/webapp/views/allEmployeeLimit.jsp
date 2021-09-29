@@ -73,7 +73,7 @@ tr:nth-child(even) {
         <c:forEach items="${requestScope.allEmployers}" var="employers">
             <tr>
                 <td>${employers.id}</td>
-                <td><a href="getEmployee?id=${employers.id}">${employers.name}</td>
+                <td><a href="getEmployee?id=${employers.id}">${employers.name}</a></td>
             </tr>
         </c:forEach>
         </tbody>
@@ -81,28 +81,37 @@ tr:nth-child(even) {
 </table>
 
 <c:if test="${requestScope.page != 1}">
-   <span><a href="allEmployeeLimit?page=1">В начало</span>
+   <span><a href="allEmployeeLimit?page=1">В начало</a></span>
 </c:if>
 <c:if test="${page>5}">
    <c:forEach begin="${page-5}" end="${page-1}" var="i">
       <c:if test="${i<=page}">
-        <span><a href="allEmployeeLimit?page=${i}">${i}</span>
+        <span><a href="allEmployeeLimit?page=${i}">${i}</a></span>
       </c:if>
    </c:forEach>
 </c:if>
 
 <c:forEach begin="${page}" end="${page+5}" var="i">
     <c:if test="${i<=pageCount}">
-        <span><a href="allEmployeeLimit?page=${i}">${i}</span>
+        <span><a href="allEmployeeLimit?page=${i}">${i}</a></span>
     </c:if>
 </c:forEach>
 
 <c:if test="${requestScope.page != pageCount}">
-   <span><a href="allEmployeeLimit?page=${pageCount}">В конец</span>
+   <span><a href="allEmployeeLimit?page=${pageCount}">В конец</a></span>
 </c:if>
 
-<form action="${pageContext.request.contextPath}/" method="GET">
-<p><input type="submit" class="button button1" value="Вернуться на главную страницу"</p>
+<%--<form action="${pageContext.request.contextPath}/" method="GET">--%>
+<%--<p><input type="submit" class="button button1" value="Вернуться на главную страницу"</p>--%>
+<%--</form>--%>
+
+<form action="search" method="GET">
+Имя сотрудника: <input type="text" name="name"/>
+<p>
+Зарплата: От <input type="number" name="salary1" value="0"/>  До <input type="number" name="salary2" value="0"/>
+<p>
+<input type="submit" value="Искать"/>
+</p>
 </form>
 
 </body>

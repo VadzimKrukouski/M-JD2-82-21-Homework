@@ -5,7 +5,12 @@ import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.model.Position;
 import by.it_academy.jd2.task_database.storage.api.IEmployeeStorage;
 import by.it_academy.jd2.task_database.view.DataBaseConnectionCPDS;
+import by.it_academy.jd2.task_database.view.HibernateUtil;
+import org.hibernate.Session;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -143,10 +148,10 @@ public class EmployeesStorage implements IEmployeeStorage {
         String sql = "SELECT count(id) \n" +
                 "FROM application.employers";
         try (Connection connection = DataBaseConnectionCPDS.getConnection();
-             Statement statement = connection.createStatement()){
-            try (ResultSet resultSet = statement.executeQuery(sql)){
-                while (resultSet.next()){
-                    count=resultSet.getLong(1);
+             Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(sql)) {
+                while (resultSet.next()) {
+                    count = resultSet.getLong(1);
                 }
             }
 
@@ -163,10 +168,10 @@ public class EmployeesStorage implements IEmployeeStorage {
                 "FROM application.employers\n" +
                 "WHERE \"position\"=";
         try (Connection connection = DataBaseConnectionCPDS.getConnection();
-             Statement statement = connection.createStatement()){
-            try (ResultSet resultSet = statement.executeQuery(sql + id)){
-                while (resultSet.next()){
-                    count=resultSet.getLong(1);
+             Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(sql + id)) {
+                while (resultSet.next()) {
+                    count = resultSet.getLong(1);
                 }
             }
 
@@ -183,10 +188,10 @@ public class EmployeesStorage implements IEmployeeStorage {
                 "FROM application.employers\n" +
                 "WHERE \"department\"=";
         try (Connection connection = DataBaseConnectionCPDS.getConnection();
-             Statement statement = connection.createStatement()){
-            try (ResultSet resultSet = statement.executeQuery(sql + id)){
-                while (resultSet.next()){
-                    count=resultSet.getLong(1);
+             Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(sql + id)) {
+                while (resultSet.next()) {
+                    count = resultSet.getLong(1);
                 }
             }
 
@@ -210,8 +215,8 @@ public class EmployeesStorage implements IEmployeeStorage {
                 "LIMIT ? OFFSET ?";
         try (Connection con = DataBaseConnectionCPDS.getConnection();
              PreparedStatement preparedStatement = con.prepareStatement(sql)) {
-            preparedStatement.setLong(1,limit);
-            preparedStatement.setLong(2,offset);
+            preparedStatement.setLong(1, limit);
+            preparedStatement.setLong(2, offset);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
@@ -258,8 +263,8 @@ public class EmployeesStorage implements IEmployeeStorage {
                 "LIMIT ? OFFSET ?";
         try (Connection con = DataBaseConnectionCPDS.getConnection();
              PreparedStatement preparedStatement = con.prepareStatement(sql)) {
-            preparedStatement.setLong(1,limit);
-            preparedStatement.setLong(2,offset);
+            preparedStatement.setLong(1, limit);
+            preparedStatement.setLong(2, offset);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
@@ -290,6 +295,23 @@ public class EmployeesStorage implements IEmployeeStorage {
             throw new IllegalStateException("Ошибка работы с базой данных", e);
         }
         return employeeList;
+    }
+
+    public Collection<Employee> getEmployeesForSearch(String name, long salary1, long salary2) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        CriteriaBuilder criteriaBuilder = HibernateUtil.getSessionFactory().createEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+
+        Root<Employee> itemRoot = criteriaQuery.from(Employee.class);
+
+        criteriaQuery.where(
+                criteriaBuilder.and(
+                        criteriaBuilder.equal(itemRoot.get("name"), name),
+                        criteriaBuilder.between(itemRoot.get("salary"), salary1,salary2)
+                )
+        );
+        List<Employee> resultList = session.createQuery(criteriaQuery).getResultList();
+        return resultList;
     }
 }
 

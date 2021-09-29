@@ -1,9 +1,6 @@
 package by.it_academy.jd2.task_database.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -14,10 +11,14 @@ public class Employee implements Serializable {
 
     @Column (name = "name")
     private String name;
+
     @Column (name = "salary")
     private Double salary;
+
     @Column (name = "department")
+    @OneToOne
     private Department department;
+
     @Column (name = "position")
     private Position position;
 

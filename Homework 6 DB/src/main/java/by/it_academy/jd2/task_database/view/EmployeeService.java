@@ -61,4 +61,11 @@ public class EmployeeService implements IEmployeeService {
         long offset = limit*(page-1);
         return employeeStorage.getEmployersByPositionLimit(idPosition,limit,offset);
     }
+
+    @Override
+    public Collection<Employee> getEmployeesForSearch(String name, long salary1, long salary2) {
+        return employeeStorage.getEmployeesForSearch(name,salary1,salary2);
+    }
+
+
 }

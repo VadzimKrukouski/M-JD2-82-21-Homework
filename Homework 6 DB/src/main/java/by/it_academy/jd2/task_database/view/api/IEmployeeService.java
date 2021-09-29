@@ -13,7 +13,7 @@ public interface IEmployeeService {
     long getCountAllEntriesByPosition(long id);
     long getCountAllEntriesByDepartment(long id);
     Collection<Employee> getEmployersByDepartmentLimit(long idDepartment, long limit, long page);
-
+    Collection<Employee> getEmployeesForSearch(String name, long salary1, long salary2);
 
 
 
