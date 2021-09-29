@@ -17,7 +17,7 @@ public class Employee implements Serializable {
     @Column (name = "salary")
     private double Salary;
 
-    @ManyToMany
+    @ManyToMany (cascade = CascadeType.ALL)
     @JoinTable (
             name = "Employee_Department",
             joinColumns = {@JoinColumn(name = "employee_id")},
