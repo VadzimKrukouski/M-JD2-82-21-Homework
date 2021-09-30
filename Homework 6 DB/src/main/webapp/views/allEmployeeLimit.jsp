@@ -59,6 +59,31 @@ th, td {
 tr:nth-child(even) {
     background-color: #f2f2f2
 }
+
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid red;
+    border-radius: 4px;
+}
+input[type=number] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid red;
+    border-radius: 4px;
+}
+
+select {
+    width: 100%;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+}
 </style>
 </head>
 <body>
@@ -101,16 +126,14 @@ tr:nth-child(even) {
    <span><a href="allEmployeeLimit?page=${pageCount}">В конец</a></span>
 </c:if>
 
-<%--<form action="${pageContext.request.contextPath}/" method="GET">--%>
-<%--<p><input type="submit" class="button button1" value="Вернуться на главную страницу"</p>--%>
-<%--</form>--%>
+<p><input type="button" class="button button1" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"</p>
 
 <form action="search" method="GET">
 Имя сотрудника: <input type="text" name="name"/>
 <p>
 Зарплата: От <input type="number" name="salary1" value="0"/>  До <input type="number" name="salary2" value="0"/>
 <p>
-<input type="submit" value="Искать"/>
+<input type="submit" class="button button1" value="Искать"/>
 </p>
 </form>
 

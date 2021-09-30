@@ -2,6 +2,7 @@ package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.view.DepartmentService;
+import by.it_academy.jd2.task_database.view.api.IDepartmentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -14,7 +15,7 @@ import java.util.Collection;
 
 @WebServlet (name = "ServletAddDepartmentMapper" , urlPatterns = "/addDepartmentMapper")
 public class ServletAddDepartmentMapper extends HttpServlet {
-    private final DepartmentService departmentService;
+    private final IDepartmentService departmentService;
     private final ObjectMapper mapper = new ObjectMapper();
 
     public ServletAddDepartmentMapper() {

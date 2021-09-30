@@ -2,6 +2,7 @@ package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Position;
 import by.it_academy.jd2.task_database.view.PositionService;
+import by.it_academy.jd2.task_database.view.api.IPositionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -13,7 +14,7 @@ import java.io.IOException;
 
 @WebServlet(name = "ServletAddPositionMapper", urlPatterns = "/addPositionMapper")
 public class ServletAddPositionMapper extends HttpServlet {
-    private final PositionService positionService;
+    private final IPositionService positionService;
     private final ObjectMapper mapper = new ObjectMapper();
 
     public ServletAddPositionMapper() {

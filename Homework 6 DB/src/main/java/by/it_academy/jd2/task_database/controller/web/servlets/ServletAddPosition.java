@@ -2,6 +2,7 @@ package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Position;
 import by.it_academy.jd2.task_database.view.PositionService;
+import by.it_academy.jd2.task_database.view.api.IPositionService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +13,7 @@ import java.io.IOException;
 
 @WebServlet (name = "ServletAddPosition", urlPatterns = "/addPosition")
 public class ServletAddPosition extends HttpServlet {
-    private final PositionService positionService;
+    private final IPositionService positionService;
 
     public ServletAddPosition() {
         this.positionService = PositionService.getInstance();

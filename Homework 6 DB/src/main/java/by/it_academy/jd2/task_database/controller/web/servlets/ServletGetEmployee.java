@@ -2,6 +2,7 @@ package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.view.EmployeeService;
+import by.it_academy.jd2.task_database.view.api.IEmployeeService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +13,7 @@ import java.io.IOException;
 
 @WebServlet(name = "ServletGetEmployee", urlPatterns = "/getEmployee")
 public class ServletGetEmployee extends HttpServlet {
-    private final EmployeeService employeeService;
+    private final IEmployeeService employeeService;
 
     public ServletGetEmployee() {
         this.employeeService = EmployeeService.getInstance();

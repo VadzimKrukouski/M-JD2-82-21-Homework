@@ -2,6 +2,7 @@ package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.view.DepartmentService;
+import by.it_academy.jd2.task_database.view.api.IDepartmentService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,7 @@ import java.util.Collection;
 
 @WebServlet(name = "ServletAddDepartment", urlPatterns = "/addDepartment")
 public class ServletAddDepartment extends HttpServlet {
-    private final DepartmentService departmentService;
+    private final IDepartmentService departmentService;
 
     public ServletAddDepartment() {
         this.departmentService = DepartmentService.getInstance();
