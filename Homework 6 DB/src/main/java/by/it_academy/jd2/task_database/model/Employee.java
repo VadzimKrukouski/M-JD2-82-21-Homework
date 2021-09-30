@@ -4,22 +4,22 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "employers")
 public class Employee implements Serializable {
     @Id
     @GeneratedValue
     private long id;
 
-    @Column (name = "name")
+    @Column(name = "name")
     private String name;
 
-    @Column (name = "salary")
+    @Column(name = "salary")
     private Double salary;
 
-    @Column (name = "department")
-    @OneToOne
+    @ManyToOne
     private Department department;
 
-    @Column (name = "position")
+    @ManyToOne
     private Position position;
 
     public Employee() {

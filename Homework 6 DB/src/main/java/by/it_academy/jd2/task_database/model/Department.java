@@ -1,18 +1,26 @@
 package by.it_academy.jd2.task_database.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table (name = "departments")
 public class Department {
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "name")
     private String name;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn (name = "parent_department")
     private Department parentDepartment;
+
+    @OneToMany
+    @JoinColumn (name = "department")
+    private List<Employee> employees = new ArrayList<>();
 
     public Department() {
     }
@@ -41,4 +49,11 @@ public class Department {
         this.parentDepartment = parentDepartment;
     }
 
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
 }
