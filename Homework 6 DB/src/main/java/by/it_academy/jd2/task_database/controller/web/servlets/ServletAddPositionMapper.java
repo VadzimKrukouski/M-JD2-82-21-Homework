@@ -2,7 +2,9 @@ package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Position;
 import by.it_academy.jd2.task_database.view.PositionService;
+import by.it_academy.jd2.task_database.view.PositionServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IPositionService;
+import by.it_academy.jd2.task_database.view.api.IPositionServiceHibernate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -15,10 +17,12 @@ import java.io.IOException;
 @WebServlet(name = "ServletAddPositionMapper", urlPatterns = "/addPositionMapper")
 public class ServletAddPositionMapper extends HttpServlet {
     private final IPositionService positionService;
+    private final IPositionServiceHibernate positionServiceHibernate;
     private final ObjectMapper mapper = new ObjectMapper();
 
     public ServletAddPositionMapper() {
         this.positionService = PositionService.getInstance();
+        this.positionServiceHibernate= PositionServiceHibernate.getInstance();
     }
 
     @Override
@@ -30,7 +34,11 @@ public class ServletAddPositionMapper extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Position position = mapper.readValue(req.getInputStream(), Position.class);
 
-        long id = positionService.addPosition(position);
+//        long id = positionService.addPosition(position);
+
+        long id = positionServiceHibernate.addPosition(position);
+
+
 
         if (id>0){
             req.setAttribute("id", id);
