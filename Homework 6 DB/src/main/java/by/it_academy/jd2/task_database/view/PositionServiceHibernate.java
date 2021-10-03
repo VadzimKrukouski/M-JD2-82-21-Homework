@@ -20,4 +20,9 @@ public class PositionServiceHibernate implements IPositionServiceHibernate {
     public long addPosition(Position position) {
         return positionStorage.addPosition(position);
     }
+
+    @Override
+    public Position getPosition(long id) {
+        return positionStorage.getPosition(id);
+    }
 }

@@ -4,6 +4,7 @@ import by.it_academy.jd2.task_database.model.Position;
 import by.it_academy.jd2.task_database.storage.api.IPositionStorageHibernate;
 import by.it_academy.jd2.task_database.view.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -11,6 +12,8 @@ import javax.persistence.criteria.Root;
 
 public class PositionStorageHibernate implements IPositionStorageHibernate {
     private static final PositionStorageHibernate instance = new PositionStorageHibernate();
+    private Session session = HibernateUtil.getSessionFactory().openSession();
+    private CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
 
     private PositionStorageHibernate() {
     }
@@ -20,13 +23,10 @@ public class PositionStorageHibernate implements IPositionStorageHibernate {
     }
 
 
+
+
     @Override
     public long addPosition(Position position) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        CriteriaBuilder criteriaBuilder = HibernateUtil.getSessionFactory().createEntityManager().getCriteriaBuilder();
-        CriteriaQuery<Position> criteriaQuery = criteriaBuilder.createQuery(Position.class);
-        Root<Position> itemRoot = criteriaQuery.from(Position.class);
-
         session.beginTransaction();
 
         Position position1 = new Position();
@@ -36,9 +36,20 @@ public class PositionStorageHibernate implements IPositionStorageHibernate {
 
         session.getTransaction().commit();
 
-        HibernateUtil.shutdown();
-
         return position1.getId();
 
+    }
+
+    @Override
+    public Position getPosition(long id) {
+        CriteriaQuery<Position> criteriaQuery = criteriaBuilder.createQuery(Position.class);
+        Root<Position> itemRoot = criteriaQuery.from(Position.class);
+
+        criteriaQuery.where(
+                criteriaBuilder.equal(itemRoot.get("id"), id)
+        );
+        Query<Position> query = session.createQuery(criteriaQuery);
+
+        return query.getSingleResult();
     }
 }
