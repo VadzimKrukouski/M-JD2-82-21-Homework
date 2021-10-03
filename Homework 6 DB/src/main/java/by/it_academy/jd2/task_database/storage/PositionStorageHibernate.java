@@ -9,6 +9,8 @@ import org.hibernate.query.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.Collection;
+import java.util.List;
 
 public class PositionStorageHibernate implements IPositionStorageHibernate {
     private static final PositionStorageHibernate instance = new PositionStorageHibernate();
@@ -21,9 +23,6 @@ public class PositionStorageHibernate implements IPositionStorageHibernate {
     public static PositionStorageHibernate getInstance() {
         return instance;
     }
-
-
-
 
     @Override
     public long addPosition(Position position) {
@@ -51,5 +50,29 @@ public class PositionStorageHibernate implements IPositionStorageHibernate {
         Query<Position> query = session.createQuery(criteriaQuery);
 
         return query.getSingleResult();
+    }
+
+    @Override
+    public long getCountAllEntries() {
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<Position> itemRoot = criteriaQuery.from(Position.class);
+
+        criteriaQuery.select(criteriaBuilder.count(itemRoot));
+        Query<Long> query = session.createQuery(criteriaQuery);
+
+        return query.getSingleResult();
+    }
+
+    @Override
+    public Collection<Position> getAllPositionsLimit(long limit, long offset) {
+        CriteriaQuery<Position> criteriaQuery = criteriaBuilder.createQuery(Position.class);
+        Root<Position> itemRoot = criteriaQuery.from(Position.class);
+
+        criteriaQuery.select(itemRoot);
+        Query<Position> query = session.createQuery(criteriaQuery);
+        query.setFirstResult((int) offset);
+        query.setMaxResults((int) limit);
+
+        return query.list();
     }
 }
