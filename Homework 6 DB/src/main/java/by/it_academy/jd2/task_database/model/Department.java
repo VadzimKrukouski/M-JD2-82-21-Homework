@@ -18,9 +18,9 @@ public class Department {
     @JoinColumn (name = "parent_department")
     private Department parentDepartment;
 
-    @OneToMany
-    @JoinColumn (name = "department")
-    private List<Employee> employees = new ArrayList<>();
+//    @OneToMany
+//    @JoinColumn (name = "department")
+//    private List<Employee> employees = new ArrayList<>();
 
     public Department() {
     }
@@ -48,12 +48,12 @@ public class Department {
     public void setParentDepartment(Department parentDepartment) {
         this.parentDepartment = parentDepartment;
     }
-
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
-    }
+//
+//    public List<Employee> getEmployees() {
+//        return employees;
+//    }
+//
+//    public void setEmployees(List<Employee> employees) {
+//        this.employees = employees;
+//    }
 }

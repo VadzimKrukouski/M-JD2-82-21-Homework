@@ -19,7 +19,7 @@ public class Employee implements Serializable {
     @ManyToOne
     private Department department;
 
-    @ManyToOne
+    @OneToOne
     private Position position;
 
     public Employee() {

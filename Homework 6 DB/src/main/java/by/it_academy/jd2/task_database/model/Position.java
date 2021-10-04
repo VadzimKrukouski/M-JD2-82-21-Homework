@@ -14,9 +14,9 @@ public class Position {
     @Column (name = "name")
     private String name;
 
-    @OneToMany
-    @JoinColumn (name = "position")
-    private List<Employee> employees = new ArrayList<>();
+//    @OneToMany
+//    @JoinColumn (name = "position")
+//    private List<Employee> employees = new ArrayList<>();
 
     public Position() {
     }
@@ -36,14 +36,14 @@ public class Position {
     public void setName(String name) {
         this.name = name;
     }
-
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
-    }
+//
+//    public List<Employee> getEmployees() {
+//        return employees;
+//    }
+//
+//    public void setEmployees(List<Employee> employees) {
+//        this.employees = employees;
+//    }
 
     @Override
     public String toString() {
