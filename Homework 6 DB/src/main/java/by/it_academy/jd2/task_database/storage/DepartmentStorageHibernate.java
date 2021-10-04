@@ -54,6 +54,31 @@ public class DepartmentStorageHibernate implements IDepartmentStorageHibernate {
 
         criteriaQuery.select(root);
         Query<Department> query = session.createQuery(criteriaQuery);
+
+        return query.list();
+    }
+
+    @Override
+    public long getCountAllEntries() {
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<Department> root = criteriaQuery.from(Department.class);
+
+        criteriaQuery.select(criteriaBuilder.count(root));
+        Query<Long> query = session.createQuery(criteriaQuery);
+
+        return query.getSingleResult();
+    }
+
+    @Override
+    public Collection<Department> getAllDepartmentsLimit(long limit, long offset) {
+        CriteriaQuery<Department> criteriaQuery = criteriaBuilder.createQuery(Department.class);
+        Root<Department> root = criteriaQuery.from(Department.class);
+
+        criteriaQuery.select(root);
+        Query<Department> query = session.createQuery(criteriaQuery);
+        query.setFirstResult((int) offset);
+        query.setMaxResults((int) limit);
+
         return query.list();
     }
 }

@@ -32,4 +32,15 @@ public class DepartmentServiceHibernate implements IDepartmentServiceHibernate {
     public Collection<Department> getAllDepartments() {
         return departmentStorageHibernate.getAllDepartments();
     }
+
+    @Override
+    public long getCountAllEntries() {
+        return departmentStorageHibernate.getCountAllEntries();
+    }
+
+    @Override
+    public Collection<Department> getAllDepartmentsLimit(long limit, long page) {
+        long offset = limit*(page-1);
+        return departmentStorageHibernate.getAllDepartmentsLimit(limit,offset);
+    }
 }
