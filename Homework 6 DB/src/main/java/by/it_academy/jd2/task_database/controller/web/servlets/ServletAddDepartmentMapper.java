@@ -2,7 +2,9 @@ package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.view.DepartmentService;
+import by.it_academy.jd2.task_database.view.DepartmentServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IDepartmentService;
+import by.it_academy.jd2.task_database.view.api.IDepartmentServiceHibernate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -15,16 +17,19 @@ import java.util.Collection;
 
 @WebServlet (name = "ServletAddDepartmentMapper" , urlPatterns = "/addDepartmentMapper")
 public class ServletAddDepartmentMapper extends HttpServlet {
+    private final IDepartmentServiceHibernate departmentServiceHibernate;
     private final IDepartmentService departmentService;
     private final ObjectMapper mapper = new ObjectMapper();
 
     public ServletAddDepartmentMapper() {
         this.departmentService = DepartmentService.getInstance();
+        this.departmentServiceHibernate = DepartmentServiceHibernate.getInstance();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Collection<Department> allDepartments = departmentService.getAllDepartments();
+//        Collection<Department> allDepartments = departmentService.getAllDepartments();
+        Collection<Department> allDepartments = departmentServiceHibernate.getAllDepartments();
         req.setAttribute("allDepartments", allDepartments);
 
         req.getRequestDispatcher("views/addDepartmentMapper.jsp").forward(req, resp);
@@ -34,9 +39,11 @@ public class ServletAddDepartmentMapper extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Department department = mapper.readValue(req.getInputStream(), Department.class);
 
-        long id = departmentService.addDepartment(department);
+//        long id = departmentService.addDepartment(department);
+        long id = departmentServiceHibernate.addDepartment(department);
 
-        Collection<Department> allDepartments = departmentService.getAllDepartments();
+//        Collection<Department> allDepartments = departmentService.getAllDepartments();
+        Collection<Department> allDepartments = departmentServiceHibernate.getAllDepartments();
         req.setAttribute("allDepartments", allDepartments);
 
         if (id>0){
