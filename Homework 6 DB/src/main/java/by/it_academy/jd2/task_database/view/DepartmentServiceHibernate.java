@@ -24,6 +24,11 @@ public class DepartmentServiceHibernate implements IDepartmentServiceHibernate {
     }
 
     @Override
+    public Department getDepartment(long id) {
+        return departmentStorageHibernate.getDepartment(id);
+    }
+
+    @Override
     public Collection<Department> getAllDepartments() {
         return departmentStorageHibernate.getAllDepartments();
     }

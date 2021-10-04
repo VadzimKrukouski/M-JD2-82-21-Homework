@@ -6,6 +6,7 @@ import java.util.Collection;
 
 public interface IDepartmentStorageHibernate {
     long addDepartment (Department department);
+    Department getDepartment(long id);
     Collection<Department> getAllDepartments();
 
 

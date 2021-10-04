@@ -38,6 +38,16 @@ public class DepartmentStorageHibernate implements IDepartmentStorageHibernate {
     }
 
     @Override
+    public Department getDepartment(long id) {
+        CriteriaQuery<Department> criteriaQuery = criteriaBuilder.createQuery(Department.class);
+        Root<Department> root = criteriaQuery.from(Department.class);
+
+        criteriaQuery.where(criteriaBuilder.equal(root.get("id"), id));
+        Query<Department> query = session.createQuery(criteriaQuery);
+        return query.getSingleResult();
+    }
+
+    @Override
     public Collection<Department> getAllDepartments() {
         CriteriaQuery<Department> criteriaQuery = criteriaBuilder.createQuery(Department.class);
         Root<Department> root = criteriaQuery.from(Department.class);
