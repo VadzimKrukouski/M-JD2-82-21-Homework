@@ -35,6 +35,11 @@ public class PositionServiceHibernate implements IPositionServiceHibernate {
     }
 
     @Override
+    public Collection<Position> getAllPositions() {
+        return positionStorage.getAllPositions();
+    }
+
+    @Override
     public long getCountAllEntries() {
         return positionStorage.getCountAllEntries();
     }

@@ -9,6 +9,8 @@ public interface IPositionStorageHibernate {
     Position getPosition(long id);
     long getCountAllEntries();
     Collection<Position> getAllPositionsLimit(long limit, long offset);
+    Collection<Position> getAllPositions();
+
 
 
 

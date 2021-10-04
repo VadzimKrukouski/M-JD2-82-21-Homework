@@ -9,6 +9,8 @@ public interface IPositionServiceHibernate {
     Position getPosition(long id);
     long getCountAllEntries();
     Collection<Position> getAllPositionsLimit(long limit, long page);
+    Collection<Position> getAllPositions();
+
 
 
 

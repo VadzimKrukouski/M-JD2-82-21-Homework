@@ -75,4 +75,15 @@ public class PositionStorageHibernate implements IPositionStorageHibernate {
 
         return query.list();
     }
+
+    @Override
+    public Collection<Position> getAllPositions() {
+        CriteriaQuery<Position> criteriaQuery = criteriaBuilder.createQuery(Position.class);
+        Root<Position> root = criteriaQuery.from(Position.class);
+
+        criteriaQuery.select(root);
+        Query<Position> query = session.createQuery(criteriaQuery);
+
+        return query.list();
+    }
 }
