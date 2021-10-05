@@ -38,4 +38,15 @@ public class EmployeeServiceHibernate implements IEmployeeServiceHibernate {
     public long getCountAllEntries() {
         return employeesStorageHibernate.getCountAllEntries();
     }
+
+    @Override
+    public long getCountAllEntriesByDepartment(long id) {
+        return employeesStorageHibernate.getCountAllEntriesByDepartment(id);
+    }
+
+    @Override
+    public Collection<Employee> getEmployersByDepartmentLimit(long idDepartment, long limit, long page) {
+        long offset=limit*(page-1);
+        return employeesStorageHibernate.getEmployersByDepartmentLimit(idDepartment,limit,offset);
+    }
 }

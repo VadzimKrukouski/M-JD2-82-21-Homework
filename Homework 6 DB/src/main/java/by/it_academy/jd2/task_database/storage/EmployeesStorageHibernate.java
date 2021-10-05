@@ -1,5 +1,6 @@
 package by.it_academy.jd2.task_database.storage;
 
+import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.storage.api.IEmployeeStorageHibernate;
 import by.it_academy.jd2.task_database.view.HibernateUtil;
@@ -8,6 +9,7 @@ import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
 import java.util.Collection;
 
@@ -72,5 +74,24 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
         Query<Long> query = session.createQuery(criteriaQuery);
 
         return query.getSingleResult();
+    }
+
+    @Override
+    public long getCountAllEntriesByDepartment(long id) {
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<Department> root = criteriaQuery.from(Department.class);
+
+//        criteriaQuery.select(
+//                criteriaBuilder.count(
+//                        criteriaQuery.where(
+//                                criteriaBuilder.equal(root.get("id"), id))));
+
+        Query<Long> query = session.createQuery(criteriaQuery);
+        return query.getSingleResult();
+    }
+
+    @Override
+    public Collection<Employee> getEmployersByDepartmentLimit(long idDepartment, long limit, long offset) {
+        return null;
     }
 }

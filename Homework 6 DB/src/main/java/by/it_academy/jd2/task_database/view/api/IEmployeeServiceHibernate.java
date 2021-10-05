@@ -9,6 +9,8 @@ public interface IEmployeeServiceHibernate {
     Employee getEmployee(long id);
     Collection<Employee> getALLEmployersLimit(long limit, long page);
     long getCountAllEntries();
+    long getCountAllEntriesByDepartment(long id);
+    Collection<Employee> getEmployersByDepartmentLimit(long idDepartment, long limit, long page);
 
 
 }

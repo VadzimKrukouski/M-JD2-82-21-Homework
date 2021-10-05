@@ -5,9 +5,11 @@ import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.view.DepartmentService;
 import by.it_academy.jd2.task_database.view.DepartmentServiceHibernate;
 import by.it_academy.jd2.task_database.view.EmployeeService;
+import by.it_academy.jd2.task_database.view.EmployeeServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IDepartmentService;
 import by.it_academy.jd2.task_database.view.api.IDepartmentServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IEmployeeService;
+import by.it_academy.jd2.task_database.view.api.IEmployeeServiceHibernate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,11 +24,13 @@ public class ServletGetDepartment extends HttpServlet {
     private final IDepartmentService departmentService;
     private final IDepartmentServiceHibernate departmentServiceHibernate;
     private final IEmployeeService employeeService;
+    private final IEmployeeServiceHibernate employeeServiceHibernate;
 
     public ServletGetDepartment() {
         this.departmentService = DepartmentService.getInstance();
         this.departmentServiceHibernate = DepartmentServiceHibernate.getInstance();
         this.employeeService = EmployeeService.getInstance();
+        this.employeeServiceHibernate = EmployeeServiceHibernate.getInstance();
     }
 
     @Override
@@ -36,7 +40,8 @@ public class ServletGetDepartment extends HttpServlet {
 //        Department department = departmentService.getDepartment(Long.parseLong(id));
         Department department = departmentServiceHibernate.getDepartment(Long.parseLong(id));
 
-        long countAllEntriesByDepartment = employeeService.getCountAllEntriesByDepartment(Long.parseLong(id));
+//        long countAllEntriesByDepartment = employeeService.getCountAllEntriesByDepartment(Long.parseLong(id));
+        long countAllEntriesByDepartment = employeeServiceHibernate.getCountAllEntriesByDepartment(Long.parseLong(id));
         long limit = 10;
         long pageCount= (long) Math.ceil((double) countAllEntriesByDepartment/limit);
         String page = req.getParameter("page");
