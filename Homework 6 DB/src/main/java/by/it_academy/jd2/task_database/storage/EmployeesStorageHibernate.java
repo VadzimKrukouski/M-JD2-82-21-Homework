@@ -85,8 +85,8 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
                 criteriaBuilder.count(root))
                 .where(criteriaBuilder.equal(root.get("department"), id));
 
-
         Query<Long> query = session.createQuery(criteriaQuery);
+
         return query.getSingleResult();
     }
 
@@ -96,6 +96,7 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
         Root<Employee> root = criteriaQuery.from(Employee.class);
 
         criteriaQuery.where(criteriaBuilder.equal(root.get("department"), idDepartment));
+
         Query<Employee> query = session.createQuery(criteriaQuery);
         query.setFirstResult((int) offset);
         query.setMaxResults((int) limit);
