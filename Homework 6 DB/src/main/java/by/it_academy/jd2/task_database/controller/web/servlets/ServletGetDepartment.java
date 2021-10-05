@@ -46,8 +46,8 @@ public class ServletGetDepartment extends HttpServlet {
         long pageCount= (long) Math.ceil((double) countAllEntriesByDepartment/limit);
         String page = req.getParameter("page");
 
-        Collection<Employee> employersByDepartmentLimit = employeeService.getEmployersByDepartmentLimit(Long.parseLong(id), limit, Long.parseLong(page));
-
+//        Collection<Employee> employersByDepartmentLimit = employeeService.getEmployersByDepartmentLimit(Long.parseLong(id), limit, Long.parseLong(page));
+        Collection<Employee> employersByDepartmentLimit = employeeServiceHibernate.getEmployersByDepartmentLimit(Long.parseLong(id), limit, Long.parseLong(page));
         if (department != null) {
             req.setAttribute("department", department);
             req.setAttribute("employersByDepartment", employersByDepartmentLimit);

@@ -79,12 +79,12 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
     @Override
     public long getCountAllEntriesByDepartment(long id) {
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
-        Root<Department> root = criteriaQuery.from(Department.class);
+        Root<Employee> root = criteriaQuery.from(Employee.class);
 
-//        criteriaQuery.select(
-//                criteriaBuilder.count(
-//                        criteriaQuery.where(
-//                                criteriaBuilder.equal(root.get("id"), id))));
+        criteriaQuery.select(
+                criteriaBuilder.count(root))
+                .where(criteriaBuilder.equal(root.get("department"), id));
+
 
         Query<Long> query = session.createQuery(criteriaQuery);
         return query.getSingleResult();
@@ -92,6 +92,14 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
 
     @Override
     public Collection<Employee> getEmployersByDepartmentLimit(long idDepartment, long limit, long offset) {
-        return null;
+        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+        Root<Employee> root = criteriaQuery.from(Employee.class);
+
+        criteriaQuery.where(criteriaBuilder.equal(root.get("department"), idDepartment));
+        Query<Employee> query = session.createQuery(criteriaQuery);
+        query.setFirstResult((int) offset);
+        query.setMaxResults((int) limit);
+
+        return query.list();
     }
 }
