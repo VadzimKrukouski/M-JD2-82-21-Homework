@@ -16,7 +16,7 @@ public class Employee implements Serializable {
     @Column(name = "salary")
     private Double salary;
 
-    @ManyToOne
+    @OneToOne
     private Department department;
 
     @OneToOne

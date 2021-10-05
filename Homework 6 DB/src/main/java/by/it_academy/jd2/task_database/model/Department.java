@@ -48,7 +48,7 @@ public class Department {
     public void setParentDepartment(Department parentDepartment) {
         this.parentDepartment = parentDepartment;
     }
-//
+
 //    public List<Employee> getEmployees() {
 //        return employees;
 //    }
@@ -56,4 +56,13 @@ public class Department {
 //    public void setEmployees(List<Employee> employees) {
 //        this.employees = employees;
 //    }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", parentDepartment=" + parentDepartment +
+                '}';
+    }
 }
