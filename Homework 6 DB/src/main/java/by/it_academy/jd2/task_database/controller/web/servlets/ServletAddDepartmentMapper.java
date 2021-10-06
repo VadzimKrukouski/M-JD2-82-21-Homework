@@ -23,7 +23,7 @@ public class ServletAddDepartmentMapper extends HttpServlet {
 
     public ServletAddDepartmentMapper() {
         this.departmentService = DepartmentService.getInstance();
-        this.departmentServiceHibernate = DepartmentServiceHibernate.getInstance();
+        this.departmentServiceHibernate = DepartmentServiceHibernate();
     }
 
     @Override

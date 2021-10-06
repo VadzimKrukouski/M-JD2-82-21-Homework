@@ -4,6 +4,7 @@ import by.it_academy.jd2.task_database.model.Position;
 import by.it_academy.jd2.task_database.storage.api.IPositionStorageHibernate;
 import by.it_academy.jd2.task_database.view.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,19 +14,20 @@ import java.util.Collection;
 import java.util.List;
 
 public class PositionStorageHibernate implements IPositionStorageHibernate {
-    private static final PositionStorageHibernate instance = new PositionStorageHibernate();
-    private Session session = HibernateUtil.getSessionFactory().openSession();
-    private CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+//    private static final PositionStorageHibernate instance = new PositionStorageHibernate();
+    private final SessionFactory sessionFactory;
 
-    private PositionStorageHibernate() {
+    private PositionStorageHibernate(SessionFactory sessionFactory) {
+        this.sessionFactory=sessionFactory;
     }
-
-    public static PositionStorageHibernate getInstance() {
-        return instance;
-    }
+//
+//    public static PositionStorageHibernate getInstance() {
+//        return instance;
+//    }
 
     @Override
     public long addPosition(Position position) {
+        Session session = sessionFactory.openSession();
         session.beginTransaction();
 
         Position position1 = new Position();
@@ -41,6 +43,8 @@ public class PositionStorageHibernate implements IPositionStorageHibernate {
 
     @Override
     public Position getPosition(long id) {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Position> criteriaQuery = criteriaBuilder.createQuery(Position.class);
         Root<Position> itemRoot = criteriaQuery.from(Position.class);
 
@@ -54,6 +58,8 @@ public class PositionStorageHibernate implements IPositionStorageHibernate {
 
     @Override
     public long getCountAllEntries() {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
         Root<Position> itemRoot = criteriaQuery.from(Position.class);
 
@@ -65,6 +71,8 @@ public class PositionStorageHibernate implements IPositionStorageHibernate {
 
     @Override
     public Collection<Position> getAllPositionsLimit(long limit, long offset) {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Position> criteriaQuery = criteriaBuilder.createQuery(Position.class);
         Root<Position> itemRoot = criteriaQuery.from(Position.class);
 
@@ -78,6 +86,8 @@ public class PositionStorageHibernate implements IPositionStorageHibernate {
 
     @Override
     public Collection<Position> getAllPositions() {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Position> criteriaQuery = criteriaBuilder.createQuery(Position.class);
         Root<Position> root = criteriaQuery.from(Position.class);
 

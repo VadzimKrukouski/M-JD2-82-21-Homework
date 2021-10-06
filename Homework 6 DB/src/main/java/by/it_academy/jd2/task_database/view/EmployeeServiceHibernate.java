@@ -7,16 +7,15 @@ import by.it_academy.jd2.task_database.view.api.IEmployeeServiceHibernate;
 import java.util.Collection;
 
 public class EmployeeServiceHibernate implements IEmployeeServiceHibernate {
-    private static final EmployeeServiceHibernate instance = new EmployeeServiceHibernate();
     private final EmployeesStorageHibernate employeesStorageHibernate;
 
-    private EmployeeServiceHibernate() {
-        this.employeesStorageHibernate = EmployeesStorageHibernate.getInstance();
+    public EmployeeServiceHibernate(EmployeesStorageHibernate employeesStorageHibernate) {
+        this.employeesStorageHibernate = employeesStorageHibernate;
     }
 
-    public static EmployeeServiceHibernate getInstance() {
-        return instance;
-    }
+//    public static EmployeeServiceHibernate getInstance() {
+//        return instance;
+//    }
 
     @Override
     public long addEmployee(Employee employee) {

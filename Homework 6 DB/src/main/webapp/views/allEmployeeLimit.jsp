@@ -105,28 +105,9 @@ select {
     </tr>
 </table>
 
-<c:if test="${requestScope.page != 1}">
-   <span><a href="allEmployeeLimit?page=1">В начало</a></span>
-</c:if>
-<c:if test="${page>5}">
-   <c:forEach begin="${page-5}" end="${page-1}" var="i">
-      <c:if test="${i<=page}">
-        <span><a href="allEmployeeLimit?page=${i}">${i}</a></span>
-      </c:if>
-   </c:forEach>
-</c:if>
 
-<c:forEach begin="${page}" end="${page+5}" var="i">
-    <c:if test="${i<=pageCount}">
-        <span><a href="allEmployeeLimit?page=${i}">${i}</a></span>
-    </c:if>
-</c:forEach>
 
-<c:if test="${requestScope.page != pageCount}">
-   <span><a href="allEmployeeLimit?page=${pageCount}">В конец</a></span>
-</c:if>
-
-<p><input type="button" class="button button1" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"</p>
+<p><input type="button" class="button button1" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"/>></p>
 
 <form action="search" method="GET">
 Имя сотрудника: <input type="text" name="name"/>
