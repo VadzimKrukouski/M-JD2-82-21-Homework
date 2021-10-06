@@ -56,6 +56,17 @@ public class EmployeeServiceHibernate implements IEmployeeServiceHibernate {
     }
 
     @Override
+    public Collection<Employee> getEmployeesForSearch(String name, long salary1, long salary2, long limit, long page) {
+        long offset=limit*(page-1);
+        return employeesStorageHibernate.getEmployeesForSearch(name,salary1,salary2,limit,offset);
+    }
+
+    @Override
+    public long getCountAllEntriesForSearch(String name, long salary1, long salary2) {
+        return employeesStorageHibernate.getCountAllEntriesForSearch(name,salary1,salary2);
+    }
+
+    @Override
     public Collection<Employee> getEmployersByPositionLimit(long idPosition, long limit, long page) {
         long offset=limit*(page-1);
         return employeesStorageHibernate.getEmployersByPositionLimit(idPosition,limit,offset);

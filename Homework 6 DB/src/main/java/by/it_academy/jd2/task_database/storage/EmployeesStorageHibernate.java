@@ -1,6 +1,5 @@
 package by.it_academy.jd2.task_database.storage;
 
-import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.storage.api.IEmployeeStorageHibernate;
 import by.it_academy.jd2.task_database.view.HibernateUtil;
@@ -9,7 +8,6 @@ import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
 import java.util.Collection;
 
@@ -115,6 +113,41 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
 
         Query<Long> query = session.createQuery(criteriaQuery);
 
+        return query.getSingleResult();
+    }
+
+    @Override
+    public Collection<Employee> getEmployeesForSearch(String name, long salary1, long salary2, long limit, long offset) {
+        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+        Root<Employee> root = criteriaQuery.from(Employee.class);
+
+        criteriaQuery.where(
+                criteriaBuilder.and(
+                        criteriaBuilder.equal(root.get("name"), name),
+                        criteriaBuilder.between(root.get("salary"), salary1,salary2)
+                )
+        );
+        Query<Employee> query = session.createQuery(criteriaQuery);
+        query.setFirstResult((int) offset);
+        query.setMaxResults((int) limit);
+
+        return query.list();
+    }
+
+    @Override
+    public long getCountAllEntriesForSearch(String name, long salary1, long salary2) {
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<Employee> root = criteriaQuery.from(Employee.class);
+
+        criteriaQuery.select(
+                criteriaBuilder.count(root))
+                .where(criteriaBuilder.and(
+                        criteriaBuilder.equal(root.get("name"), name),
+                        criteriaBuilder.between(root.get("salary"), salary1,salary2)
+                )
+        );
+
+        Query<Long> query = session.createQuery(criteriaQuery);
         return query.getSingleResult();
     }
 

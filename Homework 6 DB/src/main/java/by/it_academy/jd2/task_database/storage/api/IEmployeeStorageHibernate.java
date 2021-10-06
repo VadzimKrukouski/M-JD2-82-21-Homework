@@ -13,5 +13,7 @@ public interface IEmployeeStorageHibernate {
     Collection<Employee> getEmployersByDepartmentLimit(long idDepartment, long limit, long offset);
     Collection<Employee> getEmployersByPositionLimit(long idPosition, long limit, long offset);
     long getCountAllEntriesByPosition(long id);
+    Collection<Employee> getEmployeesForSearch(String name, long salary1, long salary2, long limit, long offset);
+    long getCountAllEntriesForSearch(String name, long salary1, long salary2);
 
 }

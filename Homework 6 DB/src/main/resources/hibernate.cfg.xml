@@ -13,7 +13,7 @@
         <property name="hibernate.connection.password">9876543210</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
-        <property name="hibernate.default_schema">application1</property>
+        <property name="hibernate.default_schema">application</property>
 
         <mapping class="by.it_academy.jd2.task_database.model.Employee"/>
         <mapping class="by.it_academy.jd2.task_database.model.Department"/>
