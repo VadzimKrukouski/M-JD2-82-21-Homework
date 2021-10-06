@@ -103,4 +103,32 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
 
         return query.list();
     }
+
+    @Override
+    public long getCountAllEntriesByPosition(long id) {
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<Employee> root = criteriaQuery.from(Employee.class);
+
+        criteriaQuery.select(
+                criteriaBuilder.count(root))
+                .where(criteriaBuilder.equal(root.get("position"), id));
+
+        Query<Long> query = session.createQuery(criteriaQuery);
+
+        return query.getSingleResult();
+    }
+
+    @Override
+    public Collection<Employee> getEmployersByPositionLimit(long idPosition, long limit, long offset) {
+        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+        Root<Employee> root = criteriaQuery.from(Employee.class);
+
+        criteriaQuery.where(criteriaBuilder.equal(root.get("position"), idPosition));
+
+        Query<Employee> query = session.createQuery(criteriaQuery);
+        query.setFirstResult((int) offset);
+        query.setMaxResults((int) limit);
+
+        return query.list();
+    }
 }

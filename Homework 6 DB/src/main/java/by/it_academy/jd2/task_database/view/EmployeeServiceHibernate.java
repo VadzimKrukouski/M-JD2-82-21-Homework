@@ -49,4 +49,15 @@ public class EmployeeServiceHibernate implements IEmployeeServiceHibernate {
         long offset=limit*(page-1);
         return employeesStorageHibernate.getEmployersByDepartmentLimit(idDepartment,limit,offset);
     }
+
+    @Override
+    public long getCountAllEntriesByPosition(long id) {
+        return employeesStorageHibernate.getCountAllEntriesByPosition(id);
+    }
+
+    @Override
+    public Collection<Employee> getEmployersByPositionLimit(long idPosition, long limit, long page) {
+        long offset=limit*(page-1);
+        return employeesStorageHibernate.getEmployersByPositionLimit(idPosition,limit,offset);
+    }
 }
