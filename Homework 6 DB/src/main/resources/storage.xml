@@ -18,7 +18,7 @@
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean" destroy-method="destroy">
         <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="by.it_academy.jd2.task_database.storage"/>
+        <property name="packagesToScan" value="by.it_academy.jd2.task_database.model"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.show_sql">true</prop>
