@@ -1,6 +1,7 @@
 package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Position;
+import by.it_academy.jd2.task_database.view.ApplicationUtil;
 import by.it_academy.jd2.task_database.view.PositionService;
 import by.it_academy.jd2.task_database.view.PositionServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IPositionService;
@@ -16,13 +17,12 @@ import java.io.IOException;
 
 @WebServlet(name = "ServletAddPositionMapper", urlPatterns = "/addPositionMapper")
 public class ServletAddPositionMapper extends HttpServlet {
-    private final IPositionService positionService;
+//    private final IPositionService positionService;
     private final IPositionServiceHibernate positionServiceHibernate;
     private final ObjectMapper mapper = new ObjectMapper();
 
     public ServletAddPositionMapper() {
-        this.positionService = PositionService.getInstance();
-        this.positionServiceHibernate= PositionServiceHibernate.getInstance();
+       this.positionServiceHibernate = ApplicationUtil.getContext().getBean("positionServiceHibernate", IPositionServiceHibernate.class);
     }
 
     @Override

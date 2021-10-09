@@ -11,6 +11,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.Collection;
+import java.util.List;
 
 public class DepartmentStorageHibernate implements IDepartmentStorageHibernate {
     //    private static final DepartmentStorageHibernate instance = new DepartmentStorageHibernate();
@@ -36,7 +37,11 @@ public class DepartmentStorageHibernate implements IDepartmentStorageHibernate {
         session.save(department1);
         session.getTransaction().commit();
 
-        return department1.getId();
+        long id = department1.getId();
+
+        session.close();
+
+        return id;
     }
 
     @Override
@@ -48,7 +53,11 @@ public class DepartmentStorageHibernate implements IDepartmentStorageHibernate {
 
         criteriaQuery.where(criteriaBuilder.equal(root.get("id"), id));
         Query<Department> query = session.createQuery(criteriaQuery);
-        return query.getSingleResult();
+        Department singleResult = query.getSingleResult();
+
+        session.close();
+
+        return singleResult;
     }
 
     @Override
@@ -60,8 +69,11 @@ public class DepartmentStorageHibernate implements IDepartmentStorageHibernate {
 
         criteriaQuery.select(root);
         Query<Department> query = session.createQuery(criteriaQuery);
+        List<Department> list = query.list();
 
-        return query.list();
+        session.close();
+
+        return list;
     }
 
     @Override
@@ -73,8 +85,11 @@ public class DepartmentStorageHibernate implements IDepartmentStorageHibernate {
 
         criteriaQuery.select(criteriaBuilder.count(root));
         Query<Long> query = session.createQuery(criteriaQuery);
+        Long singleResult = query.getSingleResult();
 
-        return query.getSingleResult();
+        session.close();
+
+        return singleResult;
     }
 
     @Override
@@ -88,7 +103,10 @@ public class DepartmentStorageHibernate implements IDepartmentStorageHibernate {
         Query<Department> query = session.createQuery(criteriaQuery);
         query.setFirstResult((int) offset);
         query.setMaxResults((int) limit);
+        List<Department> list = query.list();
 
-        return query.list();
+        session.close();
+
+        return list;
     }
 }

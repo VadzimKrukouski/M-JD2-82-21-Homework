@@ -1,6 +1,7 @@
 package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Employee;
+import by.it_academy.jd2.task_database.view.ApplicationUtil;
 import by.it_academy.jd2.task_database.view.EmployeeService;
 import by.it_academy.jd2.task_database.view.EmployeeServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IEmployeeService;
@@ -15,12 +16,11 @@ import java.io.IOException;
 
 @WebServlet(name = "ServletGetEmployee", urlPatterns = "/getEmployee")
 public class ServletGetEmployee extends HttpServlet {
-    private final IEmployeeService employeeService;
+//    private final IEmployeeService employeeService;
     private final IEmployeeServiceHibernate employeeServiceHibernate;
 
     public ServletGetEmployee() {
-        this.employeeService = EmployeeService.getInstance();
-        this.employeeServiceHibernate = EmployeeServiceHibernate.getInstance();
+        this.employeeServiceHibernate = ApplicationUtil.getContext().getBean("employeeServiceHibernate", IEmployeeServiceHibernate.class);
     }
 
     @Override

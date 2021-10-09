@@ -32,7 +32,7 @@
         <property name="driverClass" value="org.postgresql.Driver"/>
         <property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/crm"/>
         <property name="user" value="postgres"/>
-        <property name="password" value="9876543210"/>
+        <property name="password" value="123456789"/>
         <!-- these are connection pool properties for C3P0 -->
         <property name="minPoolSize" value="5"/>
         <property name="maxPoolSize" value="20"/>

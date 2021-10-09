@@ -4,6 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <import resource="storage.xml"/>
+
     <bean id="employeeServiceHibernate" class="by.it_academy.jd2.task_database.view.EmployeeServiceHibernate">
         <constructor-arg ref="employeesStorageHibernate"/>
     </bean>
@@ -13,27 +15,10 @@
     <bean id="positionServiceHibernate" class="by.it_academy.jd2.task_database.view.PositionServiceHibernate">
         <constructor-arg ref="positionStorageHibernate"/>
     </bean>
+    <bean id="dataBaseGenerationByData" class="by.it_academy.jd2.task_database.view.DataBaseGenerationByData">
+        <constructor-arg ref="employeeServiceHibernate"/>
+        <constructor-arg ref="departmentServiceHibernate"/>
+        <constructor-arg ref="positionServiceHibernate"/>
+    </bean>
 
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean" destroy-method="destroy">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="by.it_academy.jd2.task_database.model"/>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.default_schema">application</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
-                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</prop>
-            </props>
-        </property>
-    </bean>
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <property name="driverClass" value="org.postgresql.Driver"/>
-        <property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/crm"/>
-        <property name="user" value="postgres"/>
-        <property name="password" value="9876543210"/>
-        <!-- these are connection pool properties for C3P0 -->
-        <property name="minPoolSize" value="5"/>
-        <property name="maxPoolSize" value="20"/>
-        <property name="maxIdleTime" value="30000"/>
-    </bean>
 </beans>

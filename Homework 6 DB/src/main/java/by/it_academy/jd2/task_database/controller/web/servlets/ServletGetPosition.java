@@ -2,10 +2,7 @@ package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.model.Position;
-import by.it_academy.jd2.task_database.view.EmployeeService;
-import by.it_academy.jd2.task_database.view.EmployeeServiceHibernate;
-import by.it_academy.jd2.task_database.view.PositionService;
-import by.it_academy.jd2.task_database.view.PositionServiceHibernate;
+import by.it_academy.jd2.task_database.view.*;
 import by.it_academy.jd2.task_database.view.api.IEmployeeService;
 import by.it_academy.jd2.task_database.view.api.IEmployeeServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IPositionService;
@@ -21,16 +18,14 @@ import java.util.Collection;
 
 @WebServlet(name = "ServletGetPosition", urlPatterns = "/getPosition")
 public class ServletGetPosition extends HttpServlet {
-    private final IPositionService positionService;
-    private final IEmployeeService employeeService;
+//    private final IPositionService positionService;
+//    private final IEmployeeService employeeService;
     private final IPositionServiceHibernate positionServiceHibernate;
     private final IEmployeeServiceHibernate employeeServiceHibernate;
 
     public ServletGetPosition() {
-        this.positionService = PositionService.getInstance();
-        this.employeeService = EmployeeService.getInstance();
-        this.positionServiceHibernate = PositionServiceHibernate.getInstance();
-        this.employeeServiceHibernate = EmployeeServiceHibernate.getInstance();
+        this.positionServiceHibernate = ApplicationUtil.getContext().getBean("positionServiceHibernate", IPositionServiceHibernate.class);
+        this.employeeServiceHibernate = ApplicationUtil.getContext().getBean("employeeServiceHibernate", IEmployeeServiceHibernate.class);
     }
 
     @Override

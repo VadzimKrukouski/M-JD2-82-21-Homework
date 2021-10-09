@@ -11,6 +11,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.Collection;
+import java.util.List;
 
 public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
     private final SessionFactory sessionFactory;
@@ -36,8 +37,10 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
 
         session.save(employee1);
         session.getTransaction().commit();
+        long id = employee1.getId();
+        session.close();
 
-        return employee1.getId();
+        return id;
     }
 
     @Override
@@ -49,8 +52,10 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
 
         criteriaQuery.where(criteriaBuilder.equal(root.get("id"), id));
         Query<Employee> query = session.createQuery(criteriaQuery);
+        Employee singleResult = query.getSingleResult();
+        session.close();
 
-        return query.getSingleResult();
+        return singleResult;
     }
 
     @Override
@@ -64,8 +69,10 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
         Query<Employee> query = session.createQuery(criteriaQuery);
         query.setFirstResult((int) offset);
         query.setMaxResults((int) limit);
+        List<Employee> list = query.list();
 
-        return query.list();
+        session.close();
+        return list;
     }
 
     @Override
@@ -77,8 +84,11 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
 
         criteriaQuery.select(criteriaBuilder.count(root));
         Query<Long> query = session.createQuery(criteriaQuery);
+        Long singleResult = query.getSingleResult();
 
-        return query.getSingleResult();
+        session.close();
+
+        return singleResult;
     }
 
     @Override
@@ -93,8 +103,11 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
                 .where(criteriaBuilder.equal(root.get("department"), id));
 
         Query<Long> query = session.createQuery(criteriaQuery);
+        Long singleResult = query.getSingleResult();
 
-        return query.getSingleResult();
+        session.close();
+
+        return singleResult;
     }
 
     @Override
@@ -109,8 +122,11 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
         Query<Employee> query = session.createQuery(criteriaQuery);
         query.setFirstResult((int) offset);
         query.setMaxResults((int) limit);
+        List<Employee> list = query.list();
 
-        return query.list();
+        session.close();
+
+        return list;
     }
 
     @Override
@@ -125,8 +141,11 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
                 .where(criteriaBuilder.equal(root.get("position"), id));
 
         Query<Long> query = session.createQuery(criteriaQuery);
+        Long singleResult = query.getSingleResult();
 
-        return query.getSingleResult();
+        session.close();
+
+        return singleResult;
     }
 
     @Override
@@ -146,7 +165,11 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
         query.setFirstResult((int) offset);
         query.setMaxResults((int) limit);
 
-        return query.list();
+        List<Employee> list = query.list();
+
+        session.close();
+
+        return list;
     }
 
     @Override
@@ -165,7 +188,11 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
                 );
 
         Query<Long> query = session.createQuery(criteriaQuery);
-        return query.getSingleResult();
+        Long singleResult = query.getSingleResult();
+
+        session.close();
+
+        return singleResult;
     }
 
     @Override
@@ -181,6 +208,10 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
         query.setFirstResult((int) offset);
         query.setMaxResults((int) limit);
 
-        return query.list();
+        List<Employee> list = query.list();
+
+        session.close();
+
+        return list;
     }
 }

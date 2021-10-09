@@ -1,5 +1,6 @@
 package by.it_academy.jd2.task_database.controller.web.servlets;
 
+import by.it_academy.jd2.task_database.view.ApplicationUtil;
 import by.it_academy.jd2.task_database.view.DataBaseGenerationByData;
 import by.it_academy.jd2.task_database.view.api.IDataBaseGenerationByData;
 
@@ -15,7 +16,7 @@ public class ServletGenerationDB extends HttpServlet {
     private final IDataBaseGenerationByData dataBaseGenerationByData;
 
     public ServletGenerationDB() {
-        this.dataBaseGenerationByData = DataBaseGenerationByData.getInstance();
+        this.dataBaseGenerationByData = ApplicationUtil.getContext().getBean("dataBaseGenerationByData", DataBaseGenerationByData.class);
     }
 
     @Override

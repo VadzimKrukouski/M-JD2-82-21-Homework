@@ -37,6 +37,8 @@ public class PositionStorageHibernate implements IPositionStorageHibernate {
 
         session.getTransaction().commit();
 
+        session.close();
+
         return position1.getId();
 
     }
@@ -52,8 +54,11 @@ public class PositionStorageHibernate implements IPositionStorageHibernate {
                 criteriaBuilder.equal(itemRoot.get("id"), id)
         );
         Query<Position> query = session.createQuery(criteriaQuery);
+        Position singleResult = query.getSingleResult();
 
-        return query.getSingleResult();
+        session.close();
+
+        return singleResult;
     }
 
     @Override
@@ -65,8 +70,10 @@ public class PositionStorageHibernate implements IPositionStorageHibernate {
 
         criteriaQuery.select(criteriaBuilder.count(itemRoot));
         Query<Long> query = session.createQuery(criteriaQuery);
+        Long singleResult = query.getSingleResult();
+        session.close();
 
-        return query.getSingleResult();
+        return singleResult;
     }
 
     @Override
@@ -80,8 +87,10 @@ public class PositionStorageHibernate implements IPositionStorageHibernate {
         Query<Position> query = session.createQuery(criteriaQuery);
         query.setFirstResult((int) offset);
         query.setMaxResults((int) limit);
+        List<Position> list = query.list();
+        session.close();
 
-        return query.list();
+        return list;
     }
 
     @Override
@@ -93,7 +102,9 @@ public class PositionStorageHibernate implements IPositionStorageHibernate {
 
         criteriaQuery.select(root);
         Query<Position> query = session.createQuery(criteriaQuery);
+        List<Position> list = query.list();
+        session.close();
 
-        return query.list();
+        return list;
     }
 }

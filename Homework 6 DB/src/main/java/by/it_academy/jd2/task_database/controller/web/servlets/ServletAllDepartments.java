@@ -1,6 +1,7 @@
 package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Department;
+import by.it_academy.jd2.task_database.view.ApplicationUtil;
 import by.it_academy.jd2.task_database.view.DepartmentService;
 import by.it_academy.jd2.task_database.view.DepartmentServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IDepartmentService;
@@ -16,12 +17,11 @@ import java.util.Collection;
 
 @WebServlet(name = "ServletAllDepartments", urlPatterns = "/allDepartments")
 public class ServletAllDepartments extends HttpServlet {
-    private final IDepartmentService departmentService;
+//    private final IDepartmentService departmentService;
     private final IDepartmentServiceHibernate departmentServiceHibernate;
 
     public ServletAllDepartments() {
-        this.departmentService = DepartmentService.getInstance();
-        this.departmentServiceHibernate = DepartmentServiceHibernate.getInstance();
+        this.departmentServiceHibernate = ApplicationUtil.getContext().getBean("departmentServiceHibernate", IDepartmentServiceHibernate.class);
     }
 
     @Override

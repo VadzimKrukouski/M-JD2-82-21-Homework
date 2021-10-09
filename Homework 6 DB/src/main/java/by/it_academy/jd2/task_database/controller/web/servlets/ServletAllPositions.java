@@ -1,6 +1,7 @@
 package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Position;
+import by.it_academy.jd2.task_database.view.ApplicationUtil;
 import by.it_academy.jd2.task_database.view.PositionService;
 import by.it_academy.jd2.task_database.view.PositionServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IPositionService;
@@ -16,12 +17,11 @@ import java.util.Collection;
 
 @WebServlet(name = "ServletAllPositions", urlPatterns = "/allPositions")
 public class ServletAllPositions extends HttpServlet {
-    private final IPositionService positionService;
+//    private final IPositionService positionService;
     private final IPositionServiceHibernate positionServiceHibernate;
 
     public ServletAllPositions() {
-        this.positionService = PositionService.getInstance();
-        this.positionServiceHibernate = PositionServiceHibernate.getInstance();
+       this.positionServiceHibernate = ApplicationUtil.getContext().getBean("positionServiceHibernate", IPositionServiceHibernate.class);
     }
 
     @Override

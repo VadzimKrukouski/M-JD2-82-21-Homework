@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
-@WebServlet(name = "ServletAddEmployeeMapper" , urlPatterns = "/addEmployeeMapper")
+@WebServlet(name = "ServletAddEmployeeMapper", urlPatterns = "/addEmployeeMapper")
 public class ServletAddEmployeeMapper extends HttpServlet {
     private final IEmployeeService employeeService;
     private final IDepartmentService departmentService;
@@ -29,9 +29,10 @@ public class ServletAddEmployeeMapper extends HttpServlet {
         this.employeeService = EmployeeService.getInstance();
         this.departmentService = DepartmentService.getInstance();
         this.positionService = PositionService.getInstance();
-        this.employeeServiceHibernate = EmployeeServiceHibernate.getInstance();
-        this.departmentServiceHibernate = DepartmentServiceHibernate.getInstance();
-        this.positionServiceHibernate = PositionServiceHibernate.getInstance();
+        this.employeeServiceHibernate = ApplicationUtil.getContext().getBean("employeeServiceHibernate", IEmployeeServiceHibernate.class);
+        this.departmentServiceHibernate = ApplicationUtil.getContext().getBean("departmentServiceHibernate", IDepartmentServiceHibernate.class);
+        this.positionServiceHibernate = ApplicationUtil.getContext().getBean("positionServiceHibernate", IPositionServiceHibernate.class);
+
     }
 
     @Override
@@ -43,7 +44,7 @@ public class ServletAddEmployeeMapper extends HttpServlet {
 
         req.setAttribute("allDepartments", allDepartments);
         req.setAttribute("allPositions", allPositions);
-        req.getRequestDispatcher("views/addEmployeeMapper.jsp").forward(req,resp);
+        req.getRequestDispatcher("views/addEmployeeMapper.jsp").forward(req, resp);
     }
 
     @Override
@@ -52,7 +53,7 @@ public class ServletAddEmployeeMapper extends HttpServlet {
 
 //        long id = employeeService.addEmployee(employee);
         long id = employeeServiceHibernate.addEmployee(employee);
-        if (id>0){
+        if (id > 0) {
             req.setAttribute("id", id);
             req.setAttribute("info", "Сотрудник успешно добавлен с id=");
         } else {

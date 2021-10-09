@@ -1,11 +1,13 @@
 package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Department;
+import by.it_academy.jd2.task_database.view.ApplicationUtil;
 import by.it_academy.jd2.task_database.view.DepartmentService;
 import by.it_academy.jd2.task_database.view.DepartmentServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IDepartmentService;
 import by.it_academy.jd2.task_database.view.api.IDepartmentServiceHibernate;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.context.ApplicationContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,12 +20,11 @@ import java.util.Collection;
 @WebServlet (name = "ServletAddDepartmentMapper" , urlPatterns = "/addDepartmentMapper")
 public class ServletAddDepartmentMapper extends HttpServlet {
     private final IDepartmentServiceHibernate departmentServiceHibernate;
-    private final IDepartmentService departmentService;
+//    private final IDepartmentService departmentService;
     private final ObjectMapper mapper = new ObjectMapper();
 
     public ServletAddDepartmentMapper() {
-        this.departmentService = DepartmentService.getInstance();
-        this.departmentServiceHibernate = DepartmentServiceHibernate();
+       this.departmentServiceHibernate = ApplicationUtil.getContext().getBean("departmentServiceHibernate", IDepartmentServiceHibernate.class);
     }
 
     @Override
