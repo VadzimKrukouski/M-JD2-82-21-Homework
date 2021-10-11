@@ -43,7 +43,7 @@
   <span style='color: green;'>${info}${id}</p>
   <span style='color: red;'>${infoErr}</p>
 
-  <form id="2" action="addPositionMapper" method="POST">
+  <form id="2" action="position" method="POST">
 		<p>Наименование должности: <input type="text" name="name">
 
 		<p><input type="submit" class="button button1" value="Отправить данные">
