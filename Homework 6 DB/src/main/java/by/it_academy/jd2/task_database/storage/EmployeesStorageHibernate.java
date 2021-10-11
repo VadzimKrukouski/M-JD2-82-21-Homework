@@ -2,7 +2,6 @@ package by.it_academy.jd2.task_database.storage;
 
 import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.storage.api.IEmployeeStorageHibernate;
-import by.it_academy.jd2.task_database.view.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -19,10 +18,6 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
     private EmployeesStorageHibernate(SessionFactory sessionFactory) {
         this.sessionFactory=sessionFactory;
     }
-
-//    public static EmployeesStorageHibernate getInstance() {
-//        return instance;
-//    }
 
     @Override
     public long addEmployee(Employee employee) {

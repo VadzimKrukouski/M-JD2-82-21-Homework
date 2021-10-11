@@ -13,10 +13,6 @@ public class EmployeeServiceHibernate implements IEmployeeServiceHibernate {
         this.employeesStorageHibernate = employeesStorageHibernate;
     }
 
-//    public static EmployeeServiceHibernate getInstance() {
-//        return instance;
-//    }
-
     @Override
     public long addEmployee(Employee employee) {
         return employeesStorageHibernate.addEmployee(employee);

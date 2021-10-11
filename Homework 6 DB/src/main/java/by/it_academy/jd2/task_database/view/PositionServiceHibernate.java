@@ -7,16 +7,11 @@ import by.it_academy.jd2.task_database.view.api.IPositionServiceHibernate;
 import java.util.Collection;
 
 public class PositionServiceHibernate implements IPositionServiceHibernate {
-//    private static final PositionServiceHibernate instance = new PositionServiceHibernate();
     private final PositionStorageHibernate positionStorageHibernate;
 
     private PositionServiceHibernate(PositionStorageHibernate positionStorageHibernate) {
         this.positionStorageHibernate = positionStorageHibernate;
     }
-
-//    public static PositionServiceHibernate getInstance() {
-//        return instance;
-//    }
 
     @Override
     public long addPosition(Position position) {

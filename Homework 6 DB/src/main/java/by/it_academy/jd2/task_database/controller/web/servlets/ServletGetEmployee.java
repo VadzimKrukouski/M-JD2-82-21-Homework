@@ -2,9 +2,6 @@ package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.view.ApplicationUtil;
-import by.it_academy.jd2.task_database.view.EmployeeService;
-import by.it_academy.jd2.task_database.view.EmployeeServiceHibernate;
-import by.it_academy.jd2.task_database.view.api.IEmployeeService;
 import by.it_academy.jd2.task_database.view.api.IEmployeeServiceHibernate;
 
 import javax.servlet.ServletException;
@@ -16,7 +13,6 @@ import java.io.IOException;
 
 @WebServlet(name = "ServletGetEmployee", urlPatterns = "/getEmployee")
 public class ServletGetEmployee extends HttpServlet {
-//    private final IEmployeeService employeeService;
     private final IEmployeeServiceHibernate employeeServiceHibernate;
 
     public ServletGetEmployee() {
@@ -28,9 +24,7 @@ public class ServletGetEmployee extends HttpServlet {
         String id = req.getParameter("id");
 
         if (id != null) {
-//            Employee employee = employeeService.getEmployee(Long.parseLong(id));
             Employee employee = employeeServiceHibernate.getEmployee(Long.parseLong(id));
-
             if (employee != null) {
                 req.setAttribute("employee", employee.toString());
             } else {
@@ -43,7 +37,6 @@ public class ServletGetEmployee extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-//        Employee employee = employeeService.getEmployee(Long.parseLong(id));
         Employee employee = employeeServiceHibernate.getEmployee(Long.parseLong(id));
 
         if (employee != null) {

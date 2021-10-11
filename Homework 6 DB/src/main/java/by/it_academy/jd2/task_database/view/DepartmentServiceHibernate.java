@@ -7,17 +7,11 @@ import by.it_academy.jd2.task_database.view.api.IDepartmentServiceHibernate;
 import java.util.Collection;
 
 public class DepartmentServiceHibernate implements IDepartmentServiceHibernate {
-//    private static final DepartmentServiceHibernate instance = new DepartmentServiceHibernate();
     private final DepartmentStorageHibernate departmentStorageHibernate;
 
     private DepartmentServiceHibernate(DepartmentStorageHibernate departmentStorageHibernate) {
         this.departmentStorageHibernate = departmentStorageHibernate;
     }
-
-
-//    public static DepartmentServiceHibernate getInstance() {
-//        return instance;
-//    }
 
     @Override
     public long addDepartment(Department department) {

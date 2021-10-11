@@ -2,10 +2,8 @@ package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.model.Employee;
-import by.it_academy.jd2.task_database.view.*;
-import by.it_academy.jd2.task_database.view.api.IDepartmentService;
+import by.it_academy.jd2.task_database.view.ApplicationUtil;
 import by.it_academy.jd2.task_database.view.api.IDepartmentServiceHibernate;
-import by.it_academy.jd2.task_database.view.api.IEmployeeService;
 import by.it_academy.jd2.task_database.view.api.IEmployeeServiceHibernate;
 
 import javax.servlet.ServletException;
@@ -18,9 +16,7 @@ import java.util.Collection;
 
 @WebServlet(name = "ServletGetDepartment", urlPatterns = "/getDepartment")
 public class ServletGetDepartment extends HttpServlet {
-//    private final IDepartmentService departmentService;
     private final IDepartmentServiceHibernate departmentServiceHibernate;
-//    private final IEmployeeService employeeService;
     private final IEmployeeServiceHibernate employeeServiceHibernate;
 
     public ServletGetDepartment() {
@@ -32,16 +28,13 @@ public class ServletGetDepartment extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
 
-//        Department department = departmentService.getDepartment(Long.parseLong(id));
         Department department = departmentServiceHibernate.getDepartment(Long.parseLong(id));
 
-//        long countAllEntriesByDepartment = employeeService.getCountAllEntriesByDepartment(Long.parseLong(id));
         long countAllEntriesByDepartment = employeeServiceHibernate.getCountAllEntriesByDepartment(Long.parseLong(id));
         long limit = 10;
         long pageCount= (long) Math.ceil((double) countAllEntriesByDepartment/limit);
         String page = req.getParameter("page");
 
-//        Collection<Employee> employersByDepartmentLimit = employeeService.getEmployersByDepartmentLimit(Long.parseLong(id), limit, Long.parseLong(page));
         Collection<Employee> employersByDepartmentLimit = employeeServiceHibernate.getEmployersByDepartmentLimit(Long.parseLong(id), limit, Long.parseLong(page));
         if (department != null) {
             req.setAttribute("department", department);

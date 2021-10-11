@@ -2,7 +2,6 @@ package by.it_academy.jd2.task_database.storage;
 
 import by.it_academy.jd2.task_database.model.Position;
 import by.it_academy.jd2.task_database.storage.api.IPositionStorageHibernate;
-import by.it_academy.jd2.task_database.view.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -14,16 +13,11 @@ import java.util.Collection;
 import java.util.List;
 
 public class PositionStorageHibernate implements IPositionStorageHibernate {
-//    private static final PositionStorageHibernate instance = new PositionStorageHibernate();
     private final SessionFactory sessionFactory;
 
     private PositionStorageHibernate(SessionFactory sessionFactory) {
         this.sessionFactory=sessionFactory;
     }
-//
-//    public static PositionStorageHibernate getInstance() {
-//        return instance;
-//    }
 
     @Override
     public long addPosition(Position position) {

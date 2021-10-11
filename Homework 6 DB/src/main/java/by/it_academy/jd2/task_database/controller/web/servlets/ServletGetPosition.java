@@ -2,10 +2,8 @@ package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.model.Position;
-import by.it_academy.jd2.task_database.view.*;
-import by.it_academy.jd2.task_database.view.api.IEmployeeService;
+import by.it_academy.jd2.task_database.view.ApplicationUtil;
 import by.it_academy.jd2.task_database.view.api.IEmployeeServiceHibernate;
-import by.it_academy.jd2.task_database.view.api.IPositionService;
 import by.it_academy.jd2.task_database.view.api.IPositionServiceHibernate;
 
 import javax.servlet.ServletException;
@@ -18,8 +16,6 @@ import java.util.Collection;
 
 @WebServlet(name = "ServletGetPosition", urlPatterns = "/getPosition")
 public class ServletGetPosition extends HttpServlet {
-//    private final IPositionService positionService;
-//    private final IEmployeeService employeeService;
     private final IPositionServiceHibernate positionServiceHibernate;
     private final IEmployeeServiceHibernate employeeServiceHibernate;
 
@@ -32,17 +28,14 @@ public class ServletGetPosition extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
 
-//        Position position = positionService.getPosition(Long.parseLong(id));
         Position position = positionServiceHibernate.getPosition(Long.parseLong(id));
 
-//        long countAllEntriesByPosition = employeeService.getCountAllEntriesByPosition(Long.parseLong(id));
         long countAllEntriesByPosition = employeeServiceHibernate.getCountAllEntriesByPosition(Long.parseLong(id));
 
         long limit = 10;
         long pageCount = (long) Math.ceil((double) countAllEntriesByPosition/limit);
         String page = req.getParameter("page");
 
-//        Collection<Employee> employersByPosition = employeeService.getEmployersByPositionLimit(Long.parseLong(id), limit, Long.parseLong(page));
         Collection<Employee> employersByPosition = employeeServiceHibernate.getEmployersByPositionLimit(Long.parseLong(id), limit, Long.parseLong(page));
 
         if (position!=null){
