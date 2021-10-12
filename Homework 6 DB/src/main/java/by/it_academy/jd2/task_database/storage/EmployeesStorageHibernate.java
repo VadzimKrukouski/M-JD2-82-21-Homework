@@ -60,7 +60,7 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
         CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
         Root<Employee> root = criteriaQuery.from(Employee.class);
 
-        criteriaQuery.select(root);
+        criteriaQuery.select(root).orderBy(criteriaBuilder.asc(root.get("id")));
         Query<Employee> query = session.createQuery(criteriaQuery);
         query.setFirstResult((int) offset);
         query.setMaxResults((int) limit);
