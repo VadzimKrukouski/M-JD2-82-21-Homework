@@ -1,7 +1,7 @@
-package by.it_academy.jd2.task_database.view;
+package by.it_academy.jd2.task_database.view.oldServices;
 
 import by.it_academy.jd2.task_database.model.Position;
-import by.it_academy.jd2.task_database.storage.PositionStorage;
+import by.it_academy.jd2.task_database.storage.oldStorages.PositionStorage;
 import by.it_academy.jd2.task_database.storage.api.IPositionStorage;
 import by.it_academy.jd2.task_database.view.api.IPositionService;
 

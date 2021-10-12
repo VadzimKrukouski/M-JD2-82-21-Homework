@@ -1,7 +1,7 @@
-package by.it_academy.jd2.task_database.controller.web.servlets;
+package by.it_academy.jd2.task_database.controller.web.servlets.oldServlets;
 
 import by.it_academy.jd2.task_database.model.Department;
-import by.it_academy.jd2.task_database.view.DepartmentService;
+import by.it_academy.jd2.task_database.view.oldServices.DepartmentService;
 import by.it_academy.jd2.task_database.view.api.IDepartmentService;
 
 import javax.servlet.ServletException;

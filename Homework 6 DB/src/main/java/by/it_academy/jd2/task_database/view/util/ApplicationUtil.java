@@ -1,4 +1,4 @@
-package by.it_academy.jd2.task_database.view;
+package by.it_academy.jd2.task_database.view.util;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

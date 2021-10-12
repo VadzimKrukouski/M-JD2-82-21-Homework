@@ -1,4 +1,4 @@
-package by.it_academy.jd2.task_database.view;
+package by.it_academy.jd2.task_database.view.oldDBS;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 

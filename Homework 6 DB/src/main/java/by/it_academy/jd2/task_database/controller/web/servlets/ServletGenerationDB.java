@@ -1,7 +1,7 @@
 package by.it_academy.jd2.task_database.controller.web.servlets;
 
-import by.it_academy.jd2.task_database.view.ApplicationUtil;
-import by.it_academy.jd2.task_database.view.DataBaseGenerationByData;
+import by.it_academy.jd2.task_database.view.util.ApplicationUtil;
+import by.it_academy.jd2.task_database.view.util.DataBaseGenerationByData;
 import by.it_academy.jd2.task_database.view.api.IDataBaseGenerationByData;
 
 import javax.servlet.ServletException;

@@ -15,7 +15,7 @@
     <bean id="positionServiceHibernate" class="by.it_academy.jd2.task_database.view.PositionServiceHibernate">
         <constructor-arg ref="positionStorageHibernate"/>
     </bean>
-    <bean id="dataBaseGenerationByData" class="by.it_academy.jd2.task_database.view.DataBaseGenerationByData">
+    <bean id="dataBaseGenerationByData" class="by.it_academy.jd2.task_database.view.util.DataBaseGenerationByData">
         <constructor-arg ref="employeeServiceHibernate"/>
         <constructor-arg ref="departmentServiceHibernate"/>
         <constructor-arg ref="positionServiceHibernate"/>

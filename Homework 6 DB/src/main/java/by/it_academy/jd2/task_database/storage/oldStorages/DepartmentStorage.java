@@ -1,8 +1,8 @@
-package by.it_academy.jd2.task_database.storage;
+package by.it_academy.jd2.task_database.storage.oldStorages;
 
 import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.storage.api.IDepartmentStorage;
-import by.it_academy.jd2.task_database.view.DataBaseConnectionCPDS;
+import by.it_academy.jd2.task_database.view.oldDBS.DataBaseConnectionCPDS;
 
 import java.sql.*;
 import java.util.ArrayList;

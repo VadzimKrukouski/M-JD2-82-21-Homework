@@ -1,7 +1,7 @@
-package by.it_academy.jd2.task_database.view;
+package by.it_academy.jd2.task_database.view.oldServices;
 
 import by.it_academy.jd2.task_database.model.Department;
-import by.it_academy.jd2.task_database.storage.DepartmentStorage;
+import by.it_academy.jd2.task_database.storage.oldStorages.DepartmentStorage;
 import by.it_academy.jd2.task_database.storage.api.IDepartmentStorage;
 import by.it_academy.jd2.task_database.view.api.IDepartmentService;
 

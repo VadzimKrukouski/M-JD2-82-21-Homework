@@ -1,8 +1,11 @@
-package by.it_academy.jd2.task_database.view;
+package by.it_academy.jd2.task_database.view.util;
 
 import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.model.Position;
+import by.it_academy.jd2.task_database.view.DepartmentServiceHibernate;
+import by.it_academy.jd2.task_database.view.EmployeeServiceHibernate;
+import by.it_academy.jd2.task_database.view.PositionServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IDataBaseGenerationByData;
 import by.it_academy.jd2.task_database.view.api.IDepartmentServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IEmployeeServiceHibernate;

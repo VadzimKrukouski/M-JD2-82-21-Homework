@@ -1,11 +1,11 @@
-package by.it_academy.jd2.task_database.controller.web.servlets;
+package by.it_academy.jd2.task_database.controller.web.servlets.oldServlets;
 
 import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.model.Position;
-import by.it_academy.jd2.task_database.view.DepartmentService;
-import by.it_academy.jd2.task_database.view.EmployeeService;
-import by.it_academy.jd2.task_database.view.PositionService;
+import by.it_academy.jd2.task_database.view.oldServices.DepartmentService;
+import by.it_academy.jd2.task_database.view.oldServices.EmployeeService;
+import by.it_academy.jd2.task_database.view.oldServices.PositionService;
 import by.it_academy.jd2.task_database.view.api.IDepartmentService;
 import by.it_academy.jd2.task_database.view.api.IEmployeeService;
 import by.it_academy.jd2.task_database.view.api.IPositionService;

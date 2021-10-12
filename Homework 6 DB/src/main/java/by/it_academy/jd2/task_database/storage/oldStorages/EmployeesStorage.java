@@ -1,11 +1,11 @@
-package by.it_academy.jd2.task_database.storage;
+package by.it_academy.jd2.task_database.storage.oldStorages;
 
 import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.model.Position;
 import by.it_academy.jd2.task_database.storage.api.IEmployeeStorage;
-import by.it_academy.jd2.task_database.view.DataBaseConnectionCPDS;
-import by.it_academy.jd2.task_database.view.HibernateUtil;
+import by.it_academy.jd2.task_database.view.oldDBS.DataBaseConnectionCPDS;
+import by.it_academy.jd2.task_database.view.util.HibernateUtil;
 import org.hibernate.Session;
 
 import javax.persistence.criteria.CriteriaBuilder;

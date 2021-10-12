@@ -2,7 +2,7 @@ package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.model.Position;
-import by.it_academy.jd2.task_database.view.ApplicationUtil;
+import by.it_academy.jd2.task_database.view.util.ApplicationUtil;
 import by.it_academy.jd2.task_database.view.api.IEmployeeServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IPositionServiceHibernate;
 import com.fasterxml.jackson.databind.ObjectMapper;

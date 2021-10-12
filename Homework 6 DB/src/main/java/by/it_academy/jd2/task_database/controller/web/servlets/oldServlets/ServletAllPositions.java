@@ -1,7 +1,7 @@
-package by.it_academy.jd2.task_database.controller.web.servlets;
+package by.it_academy.jd2.task_database.controller.web.servlets.oldServlets;
 
 import by.it_academy.jd2.task_database.model.Position;
-import by.it_academy.jd2.task_database.view.ApplicationUtil;
+import by.it_academy.jd2.task_database.view.util.ApplicationUtil;
 import by.it_academy.jd2.task_database.view.api.IPositionServiceHibernate;
 
 import javax.servlet.ServletException;
