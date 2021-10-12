@@ -43,10 +43,10 @@
 <p><input type="button" class="button button1" onclick="location.href='generationDB';" value="Сгенерировать базу данных"</p>
 <p><input type="button" class="button button1" onclick="location.href='addEmployeeMapper';" value="Внести данные сотрудника"</p>
 <p><input type="button" class="button button1" onclick="location.href='getEmployee';" value="Получить данные сотрудника"</p>
-<p><input type="button" class="button button1" onclick="location.href='addDepartmentMapper';" value="Внести в базу новый отдел"</p>
+<p><input type="button" class="button button1" onclick="location.href='department';" value="Внести в базу новый отдел"</p>
 <p><input type="button" class="button button1" onclick="location.href='position';" value="Внести в базу новую должность"</p>
 <p><input type="button" class="button button1" onclick="location.href='position?page=1';" value="Посмотреть все должности"</p>
-<p><input type="button" class="button button1" onclick="location.href='allDepartments?page=1';" value="Посмотреть все отделы"</p>
+<p><input type="button" class="button button1" onclick="location.href='department?page=1';" value="Посмотреть все отделы"</p>
 <p><input type="button" class="button button1" onclick="location.href='allEmployeeLimit?page=1';" value="Посмотреть всех сотрудников"</p>
 
 
