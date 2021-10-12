@@ -75,7 +75,7 @@ select {
   <span style='color: green;'>${info}${id}</p>
   <span style='color: red;'>${infoErr}</p>
 
-  <form id="2" action="addEmployeeMapper" method="POST">
+  <form id="2" action="employee" method="POST">
 		<p>Имя сотрудника:</p>
 		<input type="text" name="name">
 		<p>Зарплата: </p>

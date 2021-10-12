@@ -48,7 +48,7 @@
 <span style='color: red;'>${info}</p>
 <span style='color: black;'>${employee}</p>
 
-<form action="getEmployee" method="POST">
+<form action="employee" method="POST">
 <table>
 <tbody>
 
