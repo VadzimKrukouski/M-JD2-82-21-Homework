@@ -15,7 +15,7 @@ import java.util.List;
 public class PositionStorageHibernate implements IPositionStorageHibernate {
     private final SessionFactory sessionFactory;
 
-    private PositionStorageHibernate(SessionFactory sessionFactory) {
+    public PositionStorageHibernate(SessionFactory sessionFactory) {
         this.sessionFactory=sessionFactory;
     }
 

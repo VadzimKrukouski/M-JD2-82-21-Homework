@@ -1,5 +1,6 @@
 package by.it_academy.jd2.task_database.controller.web.listeners;
 
+import by.it_academy.jd2.task_database.view.util.ApplicationUtil;
 import by.it_academy.jd2.task_database.view.util.HibernateUtil;
 
 import javax.servlet.ServletContextEvent;
@@ -14,5 +15,6 @@ public class HibernateShutdownListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         HibernateUtil.shutdown();
+        ApplicationUtil.close();
     }
 }

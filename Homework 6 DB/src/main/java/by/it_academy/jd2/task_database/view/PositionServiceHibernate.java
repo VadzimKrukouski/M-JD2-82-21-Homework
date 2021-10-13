@@ -2,14 +2,15 @@ package by.it_academy.jd2.task_database.view;
 
 import by.it_academy.jd2.task_database.model.Position;
 import by.it_academy.jd2.task_database.storage.PositionStorageHibernate;
+import by.it_academy.jd2.task_database.storage.api.IPositionStorageHibernate;
 import by.it_academy.jd2.task_database.view.api.IPositionServiceHibernate;
 
 import java.util.Collection;
 
 public class PositionServiceHibernate implements IPositionServiceHibernate {
-    private final PositionStorageHibernate positionStorageHibernate;
+    private final IPositionStorageHibernate positionStorageHibernate;
 
-    private PositionServiceHibernate(PositionStorageHibernate positionStorageHibernate) {
+    public PositionServiceHibernate(IPositionStorageHibernate positionStorageHibernate) {
         this.positionStorageHibernate = positionStorageHibernate;
     }
 

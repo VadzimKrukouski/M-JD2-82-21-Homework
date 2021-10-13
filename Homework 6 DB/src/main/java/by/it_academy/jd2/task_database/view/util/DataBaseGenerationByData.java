@@ -28,7 +28,7 @@ public class DataBaseGenerationByData implements IDataBaseGenerationByData {
             "Авдей", "Аверьян", "АвраамАвтандил", "Витольд", "Владимир", "Владислав", "Владлен", "Влас", "Власий",
             "Воислав", "Володар", "Вольга", "Вольдемар", "Всеволод", "Всеслав", "Вышеслав", "Вячеслав");
 
-    public DataBaseGenerationByData(DepartmentServiceHibernate departmentServiceHibernate, PositionServiceHibernate positionServiceHibernate, EmployeeServiceHibernate employeeServiceHibernate) {
+    public DataBaseGenerationByData(IDepartmentServiceHibernate departmentServiceHibernate, IPositionServiceHibernate positionServiceHibernate, IEmployeeServiceHibernate employeeServiceHibernate) {
         this.departmentServiceHibernate = departmentServiceHibernate;
         this.positionServiceHibernate = positionServiceHibernate;
         this.employeeServiceHibernate = employeeServiceHibernate;

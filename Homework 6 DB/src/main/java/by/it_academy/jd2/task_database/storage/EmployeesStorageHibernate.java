@@ -15,7 +15,7 @@ import java.util.List;
 public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
     private final SessionFactory sessionFactory;
 
-    private EmployeesStorageHibernate(SessionFactory sessionFactory) {
+    public EmployeesStorageHibernate(SessionFactory sessionFactory) {
         this.sessionFactory=sessionFactory;
     }
 

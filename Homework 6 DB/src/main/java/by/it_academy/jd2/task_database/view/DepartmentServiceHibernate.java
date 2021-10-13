@@ -2,14 +2,15 @@ package by.it_academy.jd2.task_database.view;
 
 import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.storage.DepartmentStorageHibernate;
+import by.it_academy.jd2.task_database.storage.api.IDepartmentStorageHibernate;
 import by.it_academy.jd2.task_database.view.api.IDepartmentServiceHibernate;
 
 import java.util.Collection;
 
 public class DepartmentServiceHibernate implements IDepartmentServiceHibernate {
-    private final DepartmentStorageHibernate departmentStorageHibernate;
+    private final IDepartmentStorageHibernate departmentStorageHibernate;
 
-    private DepartmentServiceHibernate(DepartmentStorageHibernate departmentStorageHibernate) {
+    public DepartmentServiceHibernate(IDepartmentStorageHibernate departmentStorageHibernate) {
         this.departmentStorageHibernate = departmentStorageHibernate;
     }
 

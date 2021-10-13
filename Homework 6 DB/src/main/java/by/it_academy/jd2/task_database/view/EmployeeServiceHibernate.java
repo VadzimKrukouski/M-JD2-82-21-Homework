@@ -2,14 +2,15 @@ package by.it_academy.jd2.task_database.view;
 
 import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.storage.EmployeesStorageHibernate;
+import by.it_academy.jd2.task_database.storage.api.IEmployeeStorageHibernate;
 import by.it_academy.jd2.task_database.view.api.IEmployeeServiceHibernate;
 
 import java.util.Collection;
 
 public class EmployeeServiceHibernate implements IEmployeeServiceHibernate {
-    private final EmployeesStorageHibernate employeesStorageHibernate;
+    private final IEmployeeStorageHibernate employeesStorageHibernate;
 
-    public EmployeeServiceHibernate(EmployeesStorageHibernate employeesStorageHibernate) {
+    public EmployeeServiceHibernate(IEmployeeStorageHibernate employeesStorageHibernate) {
         this.employeesStorageHibernate = employeesStorageHibernate;
     }
 

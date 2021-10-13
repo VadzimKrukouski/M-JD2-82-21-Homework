@@ -15,7 +15,7 @@ import java.util.List;
 public class DepartmentStorageHibernate implements IDepartmentStorageHibernate {
     private final SessionFactory sessionFactory;
 
-    private DepartmentStorageHibernate(SessionFactory sessionFactory) {
+    public DepartmentStorageHibernate(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
