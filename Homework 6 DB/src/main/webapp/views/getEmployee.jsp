@@ -45,8 +45,8 @@
 </head>
 <body>
 <h3>Введите id сотрудника:</h3>
-<span style='color: red;'>${info}</p>
-<span style='color: black;'>${employee}</p>
+<p><span style='color: red;'/>${info}</p>
+<p><span style='color: black;'/>${employee}</p>
 
 <form action="employee" method="POST">
 <table>
@@ -65,7 +65,7 @@
 <p>
  <input type="submit" class="button button1" value="Получить сотрудника">
  </p>
-<p><input type="button" class="button button1" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"</p>
+<p><input type="button" class="button button1" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"></p>
 </form>
 </body>
 </html>

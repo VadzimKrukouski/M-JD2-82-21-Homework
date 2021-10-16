@@ -93,7 +93,7 @@ tr:nth-child(even) {
    <span><a href="position?page=${pageCount}">В конец</a></span>
 </c:if>
 
-<p><input type="button" class="button button1" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"</p>
+<p><input type="button" class="button button1" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"></p>
 
 </body>
 </html>

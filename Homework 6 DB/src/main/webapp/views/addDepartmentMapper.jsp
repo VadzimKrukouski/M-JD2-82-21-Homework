@@ -40,8 +40,8 @@
 </head>
 <body>
 <h3>Добавьте отдел</h3>
-  <span style='color: green;'>${info}${id}</p>
-  <span style='color: red;'>${infoErr}</p>
+  <p><span style='color: green;'/>${info}${id}</p>
+  <p><span style='color: red;'/>${infoErr}</p>
 
   <form id="2" action="department" method="POST">
 		<p>Наименование отдела: <input type="text" name="name">
@@ -56,7 +56,7 @@
           <br>
 
 		<p><input type="submit" class="button button1" value="Отправить данные">
-		<p><input type="button" class="button button1" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"</p>
+		<p><input type="button" class="button button1" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"></p>
   </form>
 		<script type="text/javascript">
 			document.getElementById('2').addEventListener('submit', submitForm);

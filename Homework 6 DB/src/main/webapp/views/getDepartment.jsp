@@ -55,8 +55,8 @@ tr:nth-child(even) {
 </head>
 <body>
 <h3>Информация об отделе</h3>
-<span style='color: red;'>${info}</p>
-<span style='color: black;'>${department.name}</p>
+<p><span style='color: red;'/>${info}</p>
+<p><span style='color: black;'/>${department.name}</p>
 
 <table>
     <tr>
@@ -98,7 +98,7 @@ tr:nth-child(even) {
    <span><a href="department?id=${department.id}&page=${pageCount}">В конец</a></span>
 </c:if>
 
-<p><input type="button" class="button button1" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"</p>
+<p><input type="button" class="button button1" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"></p>
 
 </body>
 </html>

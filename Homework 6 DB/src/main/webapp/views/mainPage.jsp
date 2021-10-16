@@ -40,14 +40,14 @@
 <body>
 <h2> Приветствуем на нашем сайте! Выберите действие: </h2>
 
-<p><input type="button" class="button button1" onclick="location.href='generationDB';" value="Сгенерировать базу данных"</p>
-<p><input type="button" class="button button1" onclick="location.href='employee';" value="Внести данные сотрудника"</p>
-<p><input type="button" class="button button1" onclick="location.href='employee?id=start';" value="Получить данные сотрудника"</p>
-<p><input type="button" class="button button1" onclick="location.href='department';" value="Внести в базу новый отдел"</p>
-<p><input type="button" class="button button1" onclick="location.href='position';" value="Внести в базу новую должность"</p>
-<p><input type="button" class="button button1" onclick="location.href='position?page=1';" value="Посмотреть все должности"</p>
-<p><input type="button" class="button button1" onclick="location.href='department?page=1';" value="Посмотреть все отделы"</p>
-<p><input type="button" class="button button1" onclick="location.href='employee?page=1';" value="Посмотреть всех сотрудников"</p>
+<p><input type="button" class="button button1" onclick="location.href='generationDB';" value="Сгенерировать базу данных"></p>
+<p><input type="button" class="button button1" onclick="location.href='employee';" value="Внести данные сотрудника"></p>
+<p><input type="button" class="button button1" onclick="location.href='employee?id=start';" value="Получить данные сотрудника"></p>
+<p><input type="button" class="button button1" onclick="location.href='department';" value="Внести в базу новый отдел"></p>
+<p><input type="button" class="button button1" onclick="location.href='position';" value="Внести в базу новую должность"></p>
+<p><input type="button" class="button button1" onclick="location.href='position?page=1';" value="Посмотреть все должности"></p>
+<p><input type="button" class="button button1" onclick="location.href='department?page=1';" value="Посмотреть все отделы"></p>
+<p><input type="button" class="button button1" onclick="location.href='employee?page=1';" value="Посмотреть всех сотрудников"></p>
 
 
 </body>
