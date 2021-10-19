@@ -74,10 +74,5 @@
         <listener-class>by.it_academy.jd2.task_database.controller.web.listeners.HibernateShutdownListener
         </listener-class>
     </listener>
-    
-    <listener>
-        <listener-class></listener-class>
-    </listener>
-
 
 </web-app>
