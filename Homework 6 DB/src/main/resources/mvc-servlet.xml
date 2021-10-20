@@ -7,9 +7,9 @@
        http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/mvc
-       http://www.springframework.org/schema/beans/spring-mvc.xsd
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/beans/spring-context.xsd">
+       http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="by.it_academy.jd2.task_database.controller"/>
 
