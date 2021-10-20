@@ -21,7 +21,7 @@ public class ServletMainPage /*extends HttpServlet*/ {
 //        req.getRequestDispatcher("views/mainPage.jsp").forward(req,resp);
 //    }
 
-    @GetMapping
+    @RequestMapping(method = RequestMethod.GET)
     public String getMainPage() {
         return "mainPage";
     }
