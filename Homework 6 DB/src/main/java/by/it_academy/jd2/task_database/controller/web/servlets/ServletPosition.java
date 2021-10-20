@@ -35,6 +35,8 @@ public class ServletPosition /*extends HttpServlet*/ {
         this.positionServiceHibernate = positionServiceHibernate;
         this.employeeServiceHibernate = employeeServiceHibernate;
     }
+
+
 //
 //    @Override
 //    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

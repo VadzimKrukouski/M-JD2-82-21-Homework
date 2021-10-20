@@ -22,7 +22,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>mvc</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     
     
@@ -73,6 +73,14 @@
     <listener>
         <listener-class>by.it_academy.jd2.task_database.controller.web.listeners.HibernateShutdownListener
         </listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
 
 </web-app>
