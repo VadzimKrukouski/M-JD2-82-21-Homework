@@ -65,7 +65,7 @@ tr:nth-child(even) {
         <tbody>
 <c:forEach items="${requestScope.allPositions}" var="position">
                    <tr>
-                       <td><a href="position?id=${position.id}&page=1">${position.name}</a></td>
+                       <td><a href="${pageContext.request.contextPath}/position/${position.id}?page=1">${position.name}</a></td>
                    </tr>
 </c:forEach>
         </tbody>
@@ -73,24 +73,24 @@ tr:nth-child(even) {
 </table>
 
 <c:if test="${requestScope.page != 1}">
-   <span><a href="position?page=1">В начало</a></span>
+   <span><a href="all?page=1">В начало</a></span>
 </c:if>
 <c:if test="${page>5}">
    <c:forEach begin="${page-5}" end="${page-1}" var="i">
       <c:if test="${i<=page}">
-        <span><a href="position?page=${i}">${i}</a></span>
+        <span><a href="all?page=${i}">${i}</a></span>
       </c:if>
    </c:forEach>
 </c:if>
 
 <c:forEach begin="${page}" end="${page+5}" var="i">
     <c:if test="${i<=pageCount}">
-        <span><a href="position?page=${i}">${i}</a></span>
+        <span><a href="all?page=${i}">${i}</a></span>
     </c:if>
 </c:forEach>
 
 <c:if test="${requestScope.page != pageCount}">
-   <span><a href="position?page=${pageCount}">В конец</a></span>
+   <span><a href="all?page=${pageCount}">В конец</a></span>
 </c:if>
 
 <p><input type="button" class="button button1" onclick="location.href='${pageContext.request.contextPath}/';" value="Вернуться на главную страницу"></p>

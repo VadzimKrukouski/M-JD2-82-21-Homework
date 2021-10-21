@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,8 +44,9 @@ public class ServletPosition /*extends HttpServlet*/ {
         return "addPositionMapper";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{page}")
-    public String getAllPositionPage(@PathVariable("page") Long page, Model model){
+    @RequestMapping(method = RequestMethod.GET, value = "/all")
+    public String getAllPositionPage(@RequestParam(value = "page", required = false) Long page,
+                                     Model model){
         long limit = 10;
         long countAllEntries = positionServiceHibernate.getCountAllEntries();
         long pageCount = (long) Math.ceil((double) countAllEntries / limit);
@@ -55,7 +57,25 @@ public class ServletPosition /*extends HttpServlet*/ {
         return "allPositions";
     }
 
-
+    @RequestMapping (method = RequestMethod.GET, value = "/{id}")
+    public String getPositionById(@PathVariable("id") Long id,
+                                  @RequestParam(value = "page", required = false) Long page,
+                                  Model model){
+        Position position = positionServiceHibernate.getPosition(id);
+        long countAllEntriesByPosition = employeeServiceHibernate.getCountAllEntriesByPosition(id);
+        long limit = 10;
+        long pageCount = (long) Math.ceil((double) countAllEntriesByPosition / limit);
+        Collection<Employee> employersByPosition = employeeServiceHibernate.getEmployersByPositionLimit(id, limit, page);
+        if (position!=null){
+            model.addAttribute("position", position);
+            model.addAttribute("employersByPosition", employersByPosition);
+            model.addAttribute("pageCount", pageCount);
+            model.addAttribute("page", page);
+        } else {
+            model.addAttribute("info", "Такой должности не существует");
+        }
+        return "getPosition";
+    }
 //
 //    @Override
 //    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
