@@ -50,6 +50,8 @@ public class ServletPosition /*extends HttpServlet*/ {
         long pageCount = (long) Math.ceil((double) countAllEntries / limit);
         Collection<Position> allPositions = positionServiceHibernate.getAllPositionsLimit(limit, page);
         model.addAttribute("allPositions", allPositions);
+        model.addAttribute("pageCount", pageCount);
+        model.addAttribute("page", page);
         return "allPositions";
     }
 
