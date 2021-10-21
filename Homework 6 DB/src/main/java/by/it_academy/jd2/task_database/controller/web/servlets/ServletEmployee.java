@@ -10,7 +10,11 @@ import by.it_academy.jd2.task_database.view.api.IPositionServiceHibernate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,14 +38,47 @@ public class ServletEmployee /*extends HttpServlet*/ {
 //        this.departmentServiceHibernate = ApplicationUtil.getContext().getBean("departmentServiceHibernate", IDepartmentServiceHibernate.class);
 //        this.positionServiceHibernate = ApplicationUtil.getContext().getBean("positionServiceHibernate", IPositionServiceHibernate.class);
 //    }
-
-
     public ServletEmployee(IEmployeeServiceHibernate employeeServiceHibernate,
                            IDepartmentServiceHibernate departmentServiceHibernate,
                            IPositionServiceHibernate positionServiceHibernate) {
         this.employeeServiceHibernate = employeeServiceHibernate;
         this.departmentServiceHibernate = departmentServiceHibernate;
         this.positionServiceHibernate = positionServiceHibernate;
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String getEmployeePage(Model model){
+        Collection<Department> allDepartments = departmentServiceHibernate.getAllDepartments();
+            Collection<Position> allPositions = positionServiceHibernate.getAllPositions();
+            model.addAttribute("allDepartments", allDepartments);
+            model.addAttribute("allPositions", allPositions);
+            return "addEmployeeMapper";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/all")
+    public String getAllEmployeePage(@RequestParam(value = "page", required = false) Long page,
+                                      Model model){
+        long limit = 10;
+        long countAllEntries = employeeServiceHibernate.getCountAllEntries();
+        long pageCount = (long) Math.ceil((double) countAllEntries / limit);
+        Collection<Employee> allEmployers = employeeServiceHibernate.getALLEmployersLimit(limit, page);
+        model.addAttribute("pageCount", pageCount);
+        model.addAttribute("page", page);
+        model.addAttribute("allEmployers", allEmployers);
+        return "allEmployeeLimit";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public String getEmployeeById(@PathVariable("id") Long id, Model model){
+        if (id!=0){
+            Employee employee = employeeServiceHibernate.getEmployee(id);
+            if (employee != null) {
+                model.addAttribute("employee", employee.toString());
+            } else {
+                model.addAttribute("info", "Такого пользователя не существует");
+            }
+        }
+        return "getEmployee";
     }
 
 
