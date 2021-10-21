@@ -7,7 +7,11 @@ import by.it_academy.jd2.task_database.view.api.IDepartmentServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IEmployeeServiceHibernate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,22 +23,59 @@ import java.util.Collection;
 
 //@WebServlet(name = "ServletDepartment", urlPatterns = "/department")
 @Controller
-@RequestMapping ("/department")
+@RequestMapping("/department")
 public class ServletDepartment /*extends HttpServlet*/ {
     private final IDepartmentServiceHibernate departmentServiceHibernate;
     private final IEmployeeServiceHibernate employeeServiceHibernate;
     private final ObjectMapper mapper = new ObjectMapper();
 
-//    public ServletDepartment() {
+    //    public ServletDepartment() {
 //        this.departmentServiceHibernate = ApplicationUtil.getContext().getBean("departmentServiceHibernate", IDepartmentServiceHibernate.class);
 //        this.employeeServiceHibernate = ApplicationUtil.getContext().getBean("employeeServiceHibernate", IEmployeeServiceHibernate.class);
 //    }
-
-
     public ServletDepartment(IDepartmentServiceHibernate departmentServiceHibernate,
                              IEmployeeServiceHibernate employeeServiceHibernate) {
         this.departmentServiceHibernate = departmentServiceHibernate;
         this.employeeServiceHibernate = employeeServiceHibernate;
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String getDepartmentPage() {
+        return "addDepartmentMapper";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/all")
+    public String getAllDepartmentPage(@RequestParam(value = "page", required = false) Long page,
+                                       Model model) {
+        long limit = 10;
+        long countAllEntries = departmentServiceHibernate.getCountAllEntries();
+        long pageCount = (long) Math.ceil((double) countAllEntries / limit);
+        Collection<Department> allDepartments = departmentServiceHibernate.getAllDepartmentsLimit(limit, page);
+        model.addAttribute("allDepartments", allDepartments);
+        model.addAttribute("pageCount", pageCount);
+        model.addAttribute("page", page);
+
+        return "allDepartments";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public String getDepartmentById(@PathVariable("id") Long id,
+                                    @RequestParam(value = "page", required = false) Long page,
+                                    Model model){
+        Department department = departmentServiceHibernate.getDepartment(id);
+        long countAllEntriesByDepartment = employeeServiceHibernate.getCountAllEntriesByDepartment(id);
+        long limit = 10;
+        long pageCount = (long) Math.ceil((double) countAllEntriesByDepartment / limit);
+        Collection<Employee> employersByDepartmentLimit = employeeServiceHibernate.getEmployersByDepartmentLimit(id, limit, page);
+        if (department != null) {
+            model.addAttribute("department", department);
+            model.addAttribute("employersByDepartment", employersByDepartmentLimit);
+            model.addAttribute("pageCount", pageCount);
+            model.addAttribute("page", page);
+        } else {
+            model.addAttribute("info", "Такого отдела не существует");
+        }
+        return "getDepartment";
     }
 //
 //    @Override

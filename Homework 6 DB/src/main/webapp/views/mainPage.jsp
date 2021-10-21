@@ -46,7 +46,7 @@
 <p><input type="button" class="button button1" onclick="location.href='department';" value="Внести в базу новый отдел"></p>
 <p><input type="button" class="button button1" onclick="location.href='position';" value="Внести в базу новую должность"></p>
 <p><input type="button" class="button button1" onclick="location.href='position/all?page=1';" value="Посмотреть все должности"></p>
-<p><input type="button" class="button button1" onclick="location.href='department?page=1';" value="Посмотреть все отделы"></p>
+<p><input type="button" class="button button1" onclick="location.href='department/all?page=1';" value="Посмотреть все отделы"></p>
 <p><input type="button" class="button button1" onclick="location.href='employee?page=1';" value="Посмотреть всех сотрудников"></p>
 
 
