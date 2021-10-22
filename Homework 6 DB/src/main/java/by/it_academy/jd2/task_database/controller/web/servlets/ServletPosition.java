@@ -2,7 +2,6 @@ package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Employee;
 import by.it_academy.jd2.task_database.model.Position;
-import by.it_academy.jd2.task_database.view.util.ApplicationUtil;
 import by.it_academy.jd2.task_database.view.api.IEmployeeServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IPositionServiceHibernate;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,12 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 
 //@WebServlet(name = "ServletPosition", urlPatterns = "/position")
@@ -27,19 +20,18 @@ import java.util.Collection;
 public class ServletPosition /*extends HttpServlet*/ {
     private final IPositionServiceHibernate positionServiceHibernate;
     private final IEmployeeServiceHibernate employeeServiceHibernate;
-    private final ObjectMapper mapper = new ObjectMapper();
     private static final long LIMIT = 10;
 
-//    public ServletPosition() {
+    //    public ServletPosition() {
 //        this.positionServiceHibernate = ApplicationUtil.getContext().getBean("positionServiceHibernate", IPositionServiceHibernate.class);
 //        this.employeeServiceHibernate = ApplicationUtil.getContext().getBean("employeeServiceHibernate", IEmployeeServiceHibernate.class);
 //    }
-
     public ServletPosition(IPositionServiceHibernate positionServiceHibernate,
                            IEmployeeServiceHibernate employeeServiceHibernate) {
         this.positionServiceHibernate = positionServiceHibernate;
         this.employeeServiceHibernate = employeeServiceHibernate;
     }
+
     @RequestMapping (method = RequestMethod.GET)
     public String getPositionPage(){
         return "addPositionMapper";
@@ -48,10 +40,9 @@ public class ServletPosition /*extends HttpServlet*/ {
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public String getAllPositionPage(@RequestParam(value = "page", required = false) Long page,
                                      Model model){
-        long limit = LIMIT;
         long countAllEntries = positionServiceHibernate.getCountAllEntries();
-        long pageCount = (long) Math.ceil((double) countAllEntries / limit);
-        Collection<Position> allPositions = positionServiceHibernate.getAllPositionsLimit(limit, page);
+        long pageCount = getPageCount(countAllEntries);
+        Collection<Position> allPositions = positionServiceHibernate.getAllPositionsLimit(LIMIT, page);
         model.addAttribute("allPositions", allPositions);
         model.addAttribute("pageCount", pageCount);
         model.addAttribute("page", page);
@@ -64,9 +55,8 @@ public class ServletPosition /*extends HttpServlet*/ {
                                   Model model){
         Position position = positionServiceHibernate.getPosition(id);
         long countAllEntriesByPosition = employeeServiceHibernate.getCountAllEntriesByPosition(id);
-        long limit = LIMIT;
-        long pageCount = (long) Math.ceil((double) countAllEntriesByPosition / limit);
-        Collection<Employee> employersByPosition = employeeServiceHibernate.getEmployersByPositionLimit(id, limit, page);
+        long pageCount = getPageCount(countAllEntriesByPosition);
+        Collection<Employee> employersByPosition = employeeServiceHibernate.getEmployersByPositionLimit(id, LIMIT, page);
         if (position!=null){
             model.addAttribute("position", position);
             model.addAttribute("employersByPosition", employersByPosition);
@@ -77,6 +67,14 @@ public class ServletPosition /*extends HttpServlet*/ {
         }
         return "getPosition";
     }
+
+    private long getPageCount(long countAllEntries) {
+        return (long) Math.ceil((double) countAllEntries / ServletPosition.LIMIT);
+    }
+
+
+
+
 //
 //    @Override
 //    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -28,7 +28,6 @@ public class ServletEmployee /*extends HttpServlet*/ {
     private final IEmployeeServiceHibernate employeeServiceHibernate;
     private final IDepartmentServiceHibernate departmentServiceHibernate;
     private final IPositionServiceHibernate positionServiceHibernate;
-    private final ObjectMapper mapper = new ObjectMapper();
     private static final long LIMIT = 10;
 
     //    public ServletEmployee() {
@@ -58,7 +57,7 @@ public class ServletEmployee /*extends HttpServlet*/ {
                                      Model model) {
         long limit = LIMIT;
         long countAllEntries = employeeServiceHibernate.getCountAllEntries();
-        long pageCount = (long) Math.ceil((double) countAllEntries / limit);
+        long pageCount = getPageCount(limit,countAllEntries);
         Collection<Employee> allEmployers = employeeServiceHibernate.getALLEmployersLimit(limit, page);
         model.addAttribute("pageCount", pageCount);
         model.addAttribute("page", page);
@@ -87,6 +86,10 @@ public class ServletEmployee /*extends HttpServlet*/ {
         Employee employee = employeeServiceHibernate.getEmployee(id);
         model.addAttribute("employee", employee);
         return "aboutEmployee";
+    }
+
+    private long getPageCount(long limit, long countAllEntries) {
+        return (long) Math.ceil((double) countAllEntries / limit);
     }
 
 

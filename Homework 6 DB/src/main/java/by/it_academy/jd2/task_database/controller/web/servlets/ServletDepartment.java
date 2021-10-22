@@ -2,10 +2,8 @@ package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.model.Employee;
-import by.it_academy.jd2.task_database.view.util.ApplicationUtil;
 import by.it_academy.jd2.task_database.view.api.IDepartmentServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IEmployeeServiceHibernate;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,12 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 
 //@WebServlet(name = "ServletDepartment", urlPatterns = "/department")
@@ -49,10 +41,9 @@ public class ServletDepartment /*extends HttpServlet*/ {
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public String getAllDepartmentPage(@RequestParam(value = "page", required = false) Long page,
                                        Model model) {
-        long limit = LIMIT;
         long countAllEntries = departmentServiceHibernate.getCountAllEntries();
-        long pageCount = (long) Math.ceil((double) countAllEntries / limit);
-        Collection<Department> allDepartments = departmentServiceHibernate.getAllDepartmentsLimit(limit, page);
+        long pageCount = getPageCount(countAllEntries);
+        Collection<Department> allDepartments = departmentServiceHibernate.getAllDepartmentsLimit(LIMIT, page);
         model.addAttribute("allDepartments", allDepartments);
         model.addAttribute("pageCount", pageCount);
         model.addAttribute("page", page);
@@ -66,9 +57,8 @@ public class ServletDepartment /*extends HttpServlet*/ {
                                     Model model){
         Department department = departmentServiceHibernate.getDepartment(id);
         long countAllEntriesByDepartment = employeeServiceHibernate.getCountAllEntriesByDepartment(id);
-        long limit = LIMIT;
-        long pageCount = (long) Math.ceil((double) countAllEntriesByDepartment / limit);
-        Collection<Employee> employersByDepartmentLimit = employeeServiceHibernate.getEmployersByDepartmentLimit(id, limit, page);
+        long pageCount = getPageCount(countAllEntriesByDepartment);
+        Collection<Employee> employersByDepartmentLimit = employeeServiceHibernate.getEmployersByDepartmentLimit(id, LIMIT, page);
         if (department != null) {
             model.addAttribute("department", department);
             model.addAttribute("employersByDepartment", employersByDepartmentLimit);
@@ -78,6 +68,10 @@ public class ServletDepartment /*extends HttpServlet*/ {
             model.addAttribute("info", "Такого отдела не существует");
         }
         return "getDepartment";
+    }
+
+    private long getPageCount(long countAllEntries) {
+        return (long) Math.ceil((double) countAllEntries / ServletDepartment.LIMIT);
     }
 //
 //    @Override
