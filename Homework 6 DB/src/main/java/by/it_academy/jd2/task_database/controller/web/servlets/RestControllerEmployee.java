@@ -33,7 +33,7 @@ public class RestControllerEmployee {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/about")
-    public void getEmployee(Model model,
+    public void getInfoEmployee(Model model,
                             HttpServletResponse resp,
                             HttpServletRequest req) throws IOException {
         Long id = mapper.readValue(req.getInputStream(), Long.class);

@@ -11,10 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -83,6 +80,15 @@ public class ServletEmployee /*extends HttpServlet*/ {
             return "getEmployee";
         }
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/about")
+    public String getInfoEmployee(@ModelAttribute Long id, Model model){
+        Employee employee = employeeServiceHibernate.getEmployee(id);
+        model.addAttribute("employee", employee);
+        return "aboutEmployee";
+    }
+
+
 
 
 //    @Override
