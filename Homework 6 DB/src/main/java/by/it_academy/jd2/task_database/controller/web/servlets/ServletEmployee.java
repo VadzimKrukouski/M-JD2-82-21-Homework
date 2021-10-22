@@ -31,7 +31,7 @@ public class ServletEmployee /*extends HttpServlet*/ {
     private final ObjectMapper mapper = new ObjectMapper();
     private static final long LIMIT = 10;
 
-//    public ServletEmployee() {
+    //    public ServletEmployee() {
 //        this.employeeServiceHibernate = ApplicationUtil.getContext().getBean("employeeServiceHibernate", IEmployeeServiceHibernate.class);
 //        this.departmentServiceHibernate = ApplicationUtil.getContext().getBean("departmentServiceHibernate", IDepartmentServiceHibernate.class);
 //        this.positionServiceHibernate = ApplicationUtil.getContext().getBean("positionServiceHibernate", IPositionServiceHibernate.class);
@@ -45,17 +45,17 @@ public class ServletEmployee /*extends HttpServlet*/ {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getEmployeePage(Model model){
+    public String getEmployeePage(Model model) {
         Collection<Department> allDepartments = departmentServiceHibernate.getAllDepartments();
-            Collection<Position> allPositions = positionServiceHibernate.getAllPositions();
-            model.addAttribute("allDepartments", allDepartments);
-            model.addAttribute("allPositions", allPositions);
-            return "addEmployeeMapper";
+        Collection<Position> allPositions = positionServiceHibernate.getAllPositions();
+        model.addAttribute("allDepartments", allDepartments);
+        model.addAttribute("allPositions", allPositions);
+        return "addEmployeeMapper";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public String getAllEmployeePage(@RequestParam(value = "page", required = false) Long page,
-                                      Model model){
+                                     Model model) {
         long limit = LIMIT;
         long countAllEntries = employeeServiceHibernate.getCountAllEntries();
         long pageCount = (long) Math.ceil((double) countAllEntries / limit);
@@ -67,8 +67,8 @@ public class ServletEmployee /*extends HttpServlet*/ {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public String getEmployeeById(@PathVariable("id") Long id, Model model){
-        if (id!=0){
+    public String getEmployeeById(@PathVariable("id") Long id, Model model) {
+        if (id != 0) {
             Employee employee = employeeServiceHibernate.getEmployee(id);
             if (employee != null) {
                 model.addAttribute("employee", employee);
@@ -82,13 +82,12 @@ public class ServletEmployee /*extends HttpServlet*/ {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/about")
-    public String getInfoEmployee(@ModelAttribute Long id, Model model){
+    public String getInfoEmployee(@RequestParam(value = "id") Long id,
+                                  Model model) {
         Employee employee = employeeServiceHibernate.getEmployee(id);
         model.addAttribute("employee", employee);
         return "aboutEmployee";
     }
-
-
 
 
 //    @Override

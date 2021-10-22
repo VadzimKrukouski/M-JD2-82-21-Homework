@@ -32,13 +32,5 @@ public class RestControllerEmployee {
         resp.sendRedirect("addEmployeeMapper");
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/about")
-    public void getInfoEmployee(Model model,
-                            HttpServletResponse resp,
-                            HttpServletRequest req) throws IOException {
-        Long id = mapper.readValue(req.getInputStream(), Long.class);
-        Employee employee = employeeServiceHibernate.getEmployee(id);
-        model.addAttribute("employee", employee);
-        resp.sendRedirect("aboutEmployee");
-    }
+
 }

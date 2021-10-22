@@ -45,7 +45,7 @@
 </head>
 <body>
 <h3>Введите id сотрудника:</h3>
-<form action="employee/about" method="GET">
+<form action="about" method="GET">
 <table>
 <tbody>
 
