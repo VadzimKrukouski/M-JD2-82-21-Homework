@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
-@RequestMapping ("/position")
+@RequestMapping ("api/position")
 public class RestControllerPosition {
     private final IPositionServiceHibernate positionServiceHibernate;
     private final ObjectMapper mapper = new ObjectMapper();

@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/department")
+@RequestMapping("api/department")
 public class RestControllerDepartment {
     private final IDepartmentServiceHibernate departmentServiceHibernate;
     private final ObjectMapper mapper = new ObjectMapper();

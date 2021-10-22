@@ -32,6 +32,7 @@ public class ServletEmployee /*extends HttpServlet*/ {
     private final IDepartmentServiceHibernate departmentServiceHibernate;
     private final IPositionServiceHibernate positionServiceHibernate;
     private final ObjectMapper mapper = new ObjectMapper();
+    private static final long LIMIT = 10;
 
 //    public ServletEmployee() {
 //        this.employeeServiceHibernate = ApplicationUtil.getContext().getBean("employeeServiceHibernate", IEmployeeServiceHibernate.class);
@@ -58,7 +59,7 @@ public class ServletEmployee /*extends HttpServlet*/ {
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public String getAllEmployeePage(@RequestParam(value = "page", required = false) Long page,
                                       Model model){
-        long limit = 10;
+        long limit = LIMIT;
         long countAllEntries = employeeServiceHibernate.getCountAllEntries();
         long pageCount = (long) Math.ceil((double) countAllEntries / limit);
         Collection<Employee> allEmployers = employeeServiceHibernate.getALLEmployersLimit(limit, page);
@@ -73,14 +74,15 @@ public class ServletEmployee /*extends HttpServlet*/ {
         if (id!=0){
             Employee employee = employeeServiceHibernate.getEmployee(id);
             if (employee != null) {
-                model.addAttribute("employee", employee.toString());
+                model.addAttribute("employee", employee);
             } else {
                 model.addAttribute("info", "Такого пользователя не существует");
             }
+            return "aboutEmployee";
+        } else {
+            return "getEmployee";
         }
-        return "getEmployee";
     }
-
 
 
 //    @Override

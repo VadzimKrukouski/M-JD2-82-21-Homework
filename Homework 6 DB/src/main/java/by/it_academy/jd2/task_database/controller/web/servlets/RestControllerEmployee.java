@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("api/employee")
 public class RestControllerEmployee {
     private final IEmployeeServiceHibernate employeeServiceHibernate;
     private final ObjectMapper mapper = new ObjectMapper();
@@ -32,10 +32,13 @@ public class RestControllerEmployee {
         resp.sendRedirect("addEmployeeMapper");
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/{id}")
-    public void getEmployee(@PathVariable("id") Long id, Model model, HttpServletResponse resp) throws IOException {
+    @RequestMapping(method = RequestMethod.POST, value = "/about")
+    public void getEmployee(Model model,
+                            HttpServletResponse resp,
+                            HttpServletRequest req) throws IOException {
+        Long id = mapper.readValue(req.getInputStream(), Long.class);
         Employee employee = employeeServiceHibernate.getEmployee(id);
-        model.addAttribute("employee", employee.toString());
-        resp.sendRedirect("getEmployee");
+        model.addAttribute("employee", employee);
+        resp.sendRedirect("aboutEmployee");
     }
 }

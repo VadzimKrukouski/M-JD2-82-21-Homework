@@ -28,6 +28,7 @@ public class ServletPosition /*extends HttpServlet*/ {
     private final IPositionServiceHibernate positionServiceHibernate;
     private final IEmployeeServiceHibernate employeeServiceHibernate;
     private final ObjectMapper mapper = new ObjectMapper();
+    private static final long LIMIT = 10;
 
 //    public ServletPosition() {
 //        this.positionServiceHibernate = ApplicationUtil.getContext().getBean("positionServiceHibernate", IPositionServiceHibernate.class);
@@ -47,7 +48,7 @@ public class ServletPosition /*extends HttpServlet*/ {
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public String getAllPositionPage(@RequestParam(value = "page", required = false) Long page,
                                      Model model){
-        long limit = 10;
+        long limit = LIMIT;
         long countAllEntries = positionServiceHibernate.getCountAllEntries();
         long pageCount = (long) Math.ceil((double) countAllEntries / limit);
         Collection<Position> allPositions = positionServiceHibernate.getAllPositionsLimit(limit, page);
@@ -63,7 +64,7 @@ public class ServletPosition /*extends HttpServlet*/ {
                                   Model model){
         Position position = positionServiceHibernate.getPosition(id);
         long countAllEntriesByPosition = employeeServiceHibernate.getCountAllEntriesByPosition(id);
-        long limit = 10;
+        long limit = LIMIT;
         long pageCount = (long) Math.ceil((double) countAllEntriesByPosition / limit);
         Collection<Employee> employersByPosition = employeeServiceHibernate.getEmployersByPositionLimit(id, limit, page);
         if (position!=null){

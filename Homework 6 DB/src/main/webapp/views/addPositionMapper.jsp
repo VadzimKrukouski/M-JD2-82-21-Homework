@@ -44,7 +44,7 @@
 <p><span style='color: green;'>${info}${id}</p>
 <p><span style='color: red;'>${infoErr}</p>
 
-<form id="2" action="position" method="POST">
+<form id="2" action="api/position" method="POST">
     <p>Наименование должности: <input type="text" name="name">
 
     <p><input type="submit" class="button button1" value="Отправить данные">

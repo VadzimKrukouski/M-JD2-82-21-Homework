@@ -27,7 +27,7 @@ import java.util.Collection;
 public class ServletDepartment /*extends HttpServlet*/ {
     private final IDepartmentServiceHibernate departmentServiceHibernate;
     private final IEmployeeServiceHibernate employeeServiceHibernate;
-    private final ObjectMapper mapper = new ObjectMapper();
+    private static final long LIMIT = 10;
 
     //    public ServletDepartment() {
 //        this.departmentServiceHibernate = ApplicationUtil.getContext().getBean("departmentServiceHibernate", IDepartmentServiceHibernate.class);
@@ -40,14 +40,16 @@ public class ServletDepartment /*extends HttpServlet*/ {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getDepartmentPage() {
+    public String getDepartmentPage(Model model) {
+        Collection<Department> allDepartments = departmentServiceHibernate.getAllDepartments();
+        model.addAttribute("allDepartments", allDepartments);
         return "addDepartmentMapper";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public String getAllDepartmentPage(@RequestParam(value = "page", required = false) Long page,
                                        Model model) {
-        long limit = 10;
+        long limit = LIMIT;
         long countAllEntries = departmentServiceHibernate.getCountAllEntries();
         long pageCount = (long) Math.ceil((double) countAllEntries / limit);
         Collection<Department> allDepartments = departmentServiceHibernate.getAllDepartmentsLimit(limit, page);
@@ -64,7 +66,7 @@ public class ServletDepartment /*extends HttpServlet*/ {
                                     Model model){
         Department department = departmentServiceHibernate.getDepartment(id);
         long countAllEntriesByDepartment = employeeServiceHibernate.getCountAllEntriesByDepartment(id);
-        long limit = 10;
+        long limit = LIMIT;
         long pageCount = (long) Math.ceil((double) countAllEntriesByDepartment / limit);
         Collection<Employee> employersByDepartmentLimit = employeeServiceHibernate.getEmployersByDepartmentLimit(id, limit, page);
         if (department != null) {
