@@ -1,6 +1,7 @@
 package by.it_academy.jd2.task_database.view;
 
 import by.it_academy.jd2.task_database.model.Employee;
+import by.it_academy.jd2.task_database.model.EmployeeDTO;
 import by.it_academy.jd2.task_database.storage.EmployeesStorageHibernate;
 import by.it_academy.jd2.task_database.storage.api.IEmployeeStorageHibernate;
 import by.it_academy.jd2.task_database.view.api.IEmployeeServiceHibernate;
@@ -58,8 +59,8 @@ public class EmployeeServiceHibernate implements IEmployeeServiceHibernate {
     }
 
     @Override
-    public long getCountAllEntriesForSearch(String name, long salary1, long salary2) {
-        return employeesStorageHibernate.getCountAllEntriesForSearch(name,salary1,salary2);
+    public long getCountAllEntriesForSearch(EmployeeDTO employeeDTO) {
+        return employeesStorageHibernate.getCountAllEntriesForSearch(employeeDTO);
     }
 
     @Override

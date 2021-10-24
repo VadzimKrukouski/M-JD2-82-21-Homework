@@ -1,6 +1,7 @@
 package by.it_academy.jd2.task_database.view.api;
 
 import by.it_academy.jd2.task_database.model.Employee;
+import by.it_academy.jd2.task_database.model.EmployeeDTO;
 
 import java.util.Collection;
 
@@ -14,6 +15,6 @@ public interface IEmployeeServiceHibernate {
     Collection<Employee> getEmployersByPositionLimit(long idPosition, long limit, long page);
     long getCountAllEntriesByPosition(long id);
     Collection<Employee> getEmployeesForSearch(String name, long salary1, long salary2, long limit, long page);
-    long getCountAllEntriesForSearch(String name, long salary1, long salary2);
+    long getCountAllEntriesForSearch(EmployeeDTO employeeDTO);
 
 }

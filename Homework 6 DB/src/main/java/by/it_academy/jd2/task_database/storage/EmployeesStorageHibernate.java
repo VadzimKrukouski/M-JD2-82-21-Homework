@@ -1,11 +1,13 @@
 package by.it_academy.jd2.task_database.storage;
 
 import by.it_academy.jd2.task_database.model.Employee;
+import by.it_academy.jd2.task_database.model.EmployeeDTO;
 import by.it_academy.jd2.task_database.storage.api.IEmployeeStorageHibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
+import javax.persistence.Entity;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -161,7 +163,7 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
     }
 
     @Override
-    public long getCountAllEntriesForSearch(String name, long salary1, long salary2) {
+    public long getCountAllEntriesForSearch(EmployeeDTO employeeDTO) {
         Session session = sessionFactory.openSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
@@ -170,8 +172,8 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
         criteriaQuery.select(
                 criteriaBuilder.count(root))
                 .where(criteriaBuilder.and(
-                        criteriaBuilder.equal(root.get("name"), name),
-                        criteriaBuilder.between(root.get("salary"), salary1, salary2)
+                        criteriaBuilder.equal(root.get("name"), employeeDTO.getName()),
+                        criteriaBuilder.between(root.get("salary"), employeeDTO.getSalaryFrom(), employeeDTO.getSalaryTo())
                         )
                 );
 

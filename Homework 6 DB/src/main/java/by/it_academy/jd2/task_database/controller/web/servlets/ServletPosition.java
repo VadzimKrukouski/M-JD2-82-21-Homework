@@ -7,10 +7,7 @@ import by.it_academy.jd2.task_database.view.api.IPositionServiceHibernate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -32,12 +29,12 @@ public class ServletPosition /*extends HttpServlet*/ {
         this.employeeServiceHibernate = employeeServiceHibernate;
     }
 
-    @RequestMapping (method = RequestMethod.GET)
+    @GetMapping
     public String getPositionPage(){
         return "addPositionMapper";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/all")
+    @GetMapping( value = "/all")
     public String getAllPositionPage(@RequestParam(value = "page", required = false) Long page,
                                      Model model){
         long countAllEntries = positionServiceHibernate.getCountAllEntries();
@@ -49,7 +46,7 @@ public class ServletPosition /*extends HttpServlet*/ {
         return "allPositions";
     }
 
-    @RequestMapping (method = RequestMethod.GET, value = "/{id}")
+    @GetMapping( value = "/{id}")
     public String getPositionById(@PathVariable("id") Long id,
                                   @RequestParam(value = "page", required = false) Long page,
                                   Model model){

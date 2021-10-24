@@ -2,6 +2,7 @@ package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.model.Employee;
+import by.it_academy.jd2.task_database.model.EmployeeDTO;
 import by.it_academy.jd2.task_database.model.Position;
 import by.it_academy.jd2.task_database.view.util.ApplicationUtil;
 import by.it_academy.jd2.task_database.view.api.IDepartmentServiceHibernate;
@@ -43,7 +44,7 @@ public class ServletEmployee /*extends HttpServlet*/ {
         this.positionServiceHibernate = positionServiceHibernate;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String getEmployeePage(Model model) {
         Collection<Department> allDepartments = departmentServiceHibernate.getAllDepartments();
         Collection<Position> allPositions = positionServiceHibernate.getAllPositions();
@@ -52,7 +53,7 @@ public class ServletEmployee /*extends HttpServlet*/ {
         return "addEmployeeMapper";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/all")
+    @GetMapping(value = "/all")
     public String getAllEmployeePage(@RequestParam(value = "page", required = false) Long page,
                                      Model model) {
         long limit = LIMIT;
@@ -65,7 +66,7 @@ public class ServletEmployee /*extends HttpServlet*/ {
         return "allEmployeeLimit";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    @GetMapping(value = "/{id}")
     public String getEmployeeById(@PathVariable("id") Long id, Model model) {
         if (id != 0) {
             Employee employee = employeeServiceHibernate.getEmployee(id);
@@ -80,7 +81,7 @@ public class ServletEmployee /*extends HttpServlet*/ {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/about")
+    @GetMapping(value = "/about")
     public String getInfoEmployee(@RequestParam(value = "id") Long id,
                                   Model model) {
         Employee employee = employeeServiceHibernate.getEmployee(id);
@@ -95,9 +96,14 @@ public class ServletEmployee /*extends HttpServlet*/ {
     @GetMapping(value = "/search")
     public String getSearchEmployee(Model model, @RequestParam(value = "name") String name,
                                     @RequestParam(value = "salary1") Long salaryFrom,
-                                    @RequestParam(value = "salary2") Long salaryTo){
+                                    @RequestParam(value = "salary2") Long salaryTo) {
+        EmployeeDTO employeeDTO = new EmployeeDTO.Builder()
+                .name(name)
+                .salaryFrom(salaryFrom)
+                .salaryTo(salaryTo)
+                .build();
         int page = 1;
-        long countAllEntriesForSearch = employeeServiceHibernate.getCountAllEntriesForSearch(name, salaryFrom, salaryTo);
+        long countAllEntriesForSearch = employeeServiceHibernate.getCountAllEntriesForSearch(employeeDTO);
         long pageCount = getPageCount(LIMIT, countAllEntriesForSearch);
         Collection<Employee> employeesForSearch = employeeServiceHibernate.getEmployeesForSearch(name, salaryFrom, salaryTo, LIMIT, page);
         model.addAttribute("pageCount", pageCount);

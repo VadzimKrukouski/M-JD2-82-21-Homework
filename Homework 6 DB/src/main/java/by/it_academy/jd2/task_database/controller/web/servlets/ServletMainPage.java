@@ -20,7 +20,7 @@ public class ServletMainPage /*extends HttpServlet*/ {
 //    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        req.getRequestDispatcher("views/mainPage.jsp").forward(req,resp);
 //    }
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String getMainPage() {
         return "mainPage";
     }

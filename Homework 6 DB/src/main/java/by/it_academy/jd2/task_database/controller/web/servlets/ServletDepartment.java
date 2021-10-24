@@ -6,10 +6,7 @@ import by.it_academy.jd2.task_database.view.api.IDepartmentServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IEmployeeServiceHibernate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -31,14 +28,14 @@ public class ServletDepartment /*extends HttpServlet*/ {
         this.employeeServiceHibernate = employeeServiceHibernate;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String getDepartmentPage(Model model) {
         Collection<Department> allDepartments = departmentServiceHibernate.getAllDepartments();
         model.addAttribute("allDepartments", allDepartments);
         return "addDepartmentMapper";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/all")
+    @GetMapping(value = "/all")
     public String getAllDepartmentPage(@RequestParam(value = "page", required = false) Long page,
                                        Model model) {
         long countAllEntries = departmentServiceHibernate.getCountAllEntries();
@@ -51,10 +48,10 @@ public class ServletDepartment /*extends HttpServlet*/ {
         return "allDepartments";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    @GetMapping(value = "/{id}")
     public String getDepartmentById(@PathVariable("id") Long id,
                                     @RequestParam(value = "page", required = false) Long page,
-                                    Model model){
+                                    Model model) {
         Department department = departmentServiceHibernate.getDepartment(id);
         long countAllEntriesByDepartment = employeeServiceHibernate.getCountAllEntriesByDepartment(id);
         long pageCount = getPageCount(countAllEntriesByDepartment);

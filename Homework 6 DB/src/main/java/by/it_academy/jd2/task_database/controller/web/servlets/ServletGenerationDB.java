@@ -5,6 +5,7 @@ import by.it_academy.jd2.task_database.view.util.DataBaseGenerationByData;
 import by.it_academy.jd2.task_database.view.api.IDataBaseGenerationByData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -29,7 +30,7 @@ public class ServletGenerationDB /*extends HttpServlet*/ {
         this.dataBaseGenerationByData = dataBaseGenerationByData;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String generationDataBase(Model model){
         dataBaseGenerationByData.generationPosition();
         dataBaseGenerationByData.generationDepartment();
