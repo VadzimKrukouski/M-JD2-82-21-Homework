@@ -134,7 +134,7 @@ select {
 <p>
 Зарплата: От <input type="number" name="salary1" value="0"/>  До <input type="number" name="salary2" value="0"/>
 <p>
-<input type="submit" class="button button1" onclick="location.href='search?page=1';" value="Искать"/>
+<input type="submit" class="button button1" value="Искать"/>
 </p>
 </form>
 

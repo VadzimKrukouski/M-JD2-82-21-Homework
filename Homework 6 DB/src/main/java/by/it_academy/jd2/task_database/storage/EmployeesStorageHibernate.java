@@ -23,16 +23,9 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
     public long addEmployee(Employee employee) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
-        Employee employee1 = new Employee();
-        employee1.setName(employee.getName());
-        employee1.setSalary(employee.getSalary());
-        employee1.setDepartment(employee.getDepartment());
-        employee1.setPosition(employee.getPosition());
-
-        session.save(employee1);
+        session.save(employee);
         session.getTransaction().commit();
-        long id = employee1.getId();
+        long id = employee.getId();
         session.close();
 
         return id;
