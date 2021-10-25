@@ -5,6 +5,8 @@ public class EmployeeDTO {
     private long salaryFrom;
     private long salaryTo;
     private int page;
+    private Department department;
+    private Position position;
 
     public EmployeeDTO() {
     }
@@ -41,6 +43,22 @@ public class EmployeeDTO {
         this.page = page;
     }
 
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
     public static class Builder{
         private EmployeeDTO employeeDTO;
 
@@ -65,6 +83,16 @@ public class EmployeeDTO {
 
         public Builder page(int page){
             employeeDTO.page=page;
+            return this;
+        }
+
+        public Builder position(Position position){
+            employeeDTO.position=position;
+            return this;
+        }
+
+        public Builder department(Department department){
+            employeeDTO.department=department;
             return this;
         }
 

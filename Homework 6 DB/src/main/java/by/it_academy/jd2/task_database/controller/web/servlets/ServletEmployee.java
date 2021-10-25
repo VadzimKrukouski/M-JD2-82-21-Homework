@@ -103,7 +103,8 @@ public class ServletEmployee /*extends HttpServlet*/ {
                 .salaryTo(salaryTo)
                 .build();
         int page = 1;
-        long countAllEntriesForSearch = employeeServiceHibernate.getCountAllEntriesForSearch(employeeDTO);
+        long countAllEntriesForSearch = employeeServiceHibernate.getCountAllEntriesLastVersion(employeeDTO);
+//        long countAllEntriesForSearch = employeeServiceHibernate.getCountAllEntriesForSearch(employeeDTO);
         long pageCount = getPageCount(LIMIT, countAllEntriesForSearch);
         Collection<Employee> employeesForSearch = employeeServiceHibernate.getEmployeesForSearch(name, salaryFrom, salaryTo, LIMIT, page);
         model.addAttribute("pageCount", pageCount);

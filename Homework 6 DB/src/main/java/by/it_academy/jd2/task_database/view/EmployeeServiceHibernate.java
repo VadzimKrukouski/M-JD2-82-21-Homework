@@ -68,4 +68,9 @@ public class EmployeeServiceHibernate implements IEmployeeServiceHibernate {
         long offset=limit*(page-1);
         return employeesStorageHibernate.getEmployersByPositionLimit(idPosition,limit,offset);
     }
+
+    @Override
+    public long getCountAllEntriesLastVersion(EmployeeDTO employeeDTO) {
+        return employeesStorageHibernate.getCountAllEntriesLastVersion(employeeDTO);
+    }
 }

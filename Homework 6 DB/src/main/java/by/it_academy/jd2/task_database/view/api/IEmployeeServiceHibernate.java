@@ -16,5 +16,6 @@ public interface IEmployeeServiceHibernate {
     long getCountAllEntriesByPosition(long id);
     Collection<Employee> getEmployeesForSearch(String name, long salary1, long salary2, long limit, long page);
     long getCountAllEntriesForSearch(EmployeeDTO employeeDTO);
+    long getCountAllEntriesLastVersion(EmployeeDTO employeeDTO);
 
 }

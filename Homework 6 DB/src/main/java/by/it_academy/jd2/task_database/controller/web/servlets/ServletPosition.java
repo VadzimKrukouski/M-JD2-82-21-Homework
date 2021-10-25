@@ -1,6 +1,7 @@
 package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Employee;
+import by.it_academy.jd2.task_database.model.EmployeeDTO;
 import by.it_academy.jd2.task_database.model.Position;
 import by.it_academy.jd2.task_database.view.api.IEmployeeServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IPositionServiceHibernate;
@@ -51,7 +52,9 @@ public class ServletPosition /*extends HttpServlet*/ {
                                   @RequestParam(value = "page", required = false) Long page,
                                   Model model){
         Position position = positionServiceHibernate.getPosition(id);
-        long countAllEntriesByPosition = employeeServiceHibernate.getCountAllEntriesByPosition(id);
+        EmployeeDTO employeeDTO = new EmployeeDTO.Builder().position(position).build();
+        long countAllEntriesByPosition = employeeServiceHibernate.getCountAllEntriesLastVersion(employeeDTO);
+//        long countAllEntriesByPosition = employeeServiceHibernate.getCountAllEntriesByPosition(id);
         long pageCount = getPageCount(countAllEntriesByPosition);
         Collection<Employee> employersByPosition = employeeServiceHibernate.getEmployersByPositionLimit(id, LIMIT, page);
         if (position!=null){

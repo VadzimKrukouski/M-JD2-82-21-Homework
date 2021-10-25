@@ -2,6 +2,7 @@ package by.it_academy.jd2.task_database.controller.web.servlets;
 
 import by.it_academy.jd2.task_database.model.Department;
 import by.it_academy.jd2.task_database.model.Employee;
+import by.it_academy.jd2.task_database.model.EmployeeDTO;
 import by.it_academy.jd2.task_database.view.api.IDepartmentServiceHibernate;
 import by.it_academy.jd2.task_database.view.api.IEmployeeServiceHibernate;
 import org.springframework.stereotype.Controller;
@@ -53,7 +54,9 @@ public class ServletDepartment /*extends HttpServlet*/ {
                                     @RequestParam(value = "page", required = false) Long page,
                                     Model model) {
         Department department = departmentServiceHibernate.getDepartment(id);
-        long countAllEntriesByDepartment = employeeServiceHibernate.getCountAllEntriesByDepartment(id);
+        EmployeeDTO employeeDTO = new EmployeeDTO.Builder().department(department).build();
+        long countAllEntriesByDepartment = employeeServiceHibernate.getCountAllEntriesLastVersion(employeeDTO);
+//        long countAllEntriesByDepartment = employeeServiceHibernate.getCountAllEntriesByDepartment(id);
         long pageCount = getPageCount(countAllEntriesByDepartment);
         Collection<Employee> employersByDepartmentLimit = employeeServiceHibernate.getEmployersByDepartmentLimit(id, LIMIT, page);
         if (department != null) {

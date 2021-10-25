@@ -10,7 +10,9 @@ import org.hibernate.query.Query;
 import javax.persistence.Entity;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
     private final SessionFactory sessionFactory;
 
     public EmployeesStorageHibernate(SessionFactory sessionFactory) {
-        this.sessionFactory=sessionFactory;
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
@@ -183,6 +185,36 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
         session.close();
 
         return singleResult;
+    }
+
+    @Override
+    public long getCountAllEntriesLastVersion(EmployeeDTO employeeDTO) {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+            Root<Employee> root = criteriaQuery.from(Employee.class);
+
+            List<Predicate> predicates = new ArrayList<>();
+            if (employeeDTO.getPosition() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("position"), employeeDTO.getPosition().getId()));
+            }
+            if (employeeDTO.getDepartment() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("department"), employeeDTO.getDepartment().getId()));
+            }
+            if (employeeDTO.getName() != null && employeeDTO.getSalaryFrom() != 0 && employeeDTO.getSalaryTo() != 0) {
+                predicates.add(criteriaBuilder.equal(root.get("name"), employeeDTO.getName()));
+                predicates.add(criteriaBuilder.between(root.get("salary"), employeeDTO.getSalaryFrom(), employeeDTO.getSalaryTo()));
+            }
+            Predicate[] predicatesArray = predicates.toArray(new Predicate[0]);
+
+            criteriaQuery.select(
+                    criteriaBuilder.count(root))
+                    .where(criteriaBuilder.and(predicatesArray));
+            Query<Long> query = session.createQuery(criteriaQuery);
+            return query.getSingleResult();
+        } catch (Exception e) {
+            throw new IllegalStateException("Ошибка в работе с базой данных");
+        }
     }
 
     @Override
