@@ -73,4 +73,9 @@ public class EmployeeServiceHibernate implements IEmployeeServiceHibernate {
     public long getCountAllEntriesLastVersion(EmployeeDTO employeeDTO) {
         return employeesStorageHibernate.getCountAllEntriesLastVersion(employeeDTO);
     }
+
+    @Override
+    public Collection<Employee> getAllEmployersLastVersion(EmployeeDTO employeeDTO, long limit, long offset) {
+        return employeesStorageHibernate.getAllEmployersLastVersion(employeeDTO,limit,offset);
+    }
 }

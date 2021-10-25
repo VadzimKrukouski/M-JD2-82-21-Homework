@@ -56,7 +56,9 @@ public class ServletPosition /*extends HttpServlet*/ {
         long countAllEntriesByPosition = employeeServiceHibernate.getCountAllEntriesLastVersion(employeeDTO);
 //        long countAllEntriesByPosition = employeeServiceHibernate.getCountAllEntriesByPosition(id);
         long pageCount = getPageCount(countAllEntriesByPosition);
-        Collection<Employee> employersByPosition = employeeServiceHibernate.getEmployersByPositionLimit(id, LIMIT, page);
+        long offset=LIMIT*(page-1);
+        Collection<Employee> employersByPosition = employeeServiceHibernate.getAllEmployersLastVersion(employeeDTO, LIMIT, offset);
+//        Collection<Employee> employersByPosition = employeeServiceHibernate.getEmployersByPositionLimit(id, LIMIT, page);
         if (position!=null){
             model.addAttribute("position", position);
             model.addAttribute("employersByPosition", employersByPosition);

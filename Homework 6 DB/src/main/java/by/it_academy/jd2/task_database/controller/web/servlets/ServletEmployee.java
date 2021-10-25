@@ -106,7 +106,9 @@ public class ServletEmployee /*extends HttpServlet*/ {
         long countAllEntriesForSearch = employeeServiceHibernate.getCountAllEntriesLastVersion(employeeDTO);
 //        long countAllEntriesForSearch = employeeServiceHibernate.getCountAllEntriesForSearch(employeeDTO);
         long pageCount = getPageCount(LIMIT, countAllEntriesForSearch);
-        Collection<Employee> employeesForSearch = employeeServiceHibernate.getEmployeesForSearch(name, salaryFrom, salaryTo, LIMIT, page);
+        long offset=LIMIT*(page-1);
+        Collection<Employee> employeesForSearch = employeeServiceHibernate.getAllEmployersLastVersion(employeeDTO, LIMIT, offset);
+//        Collection<Employee> employeesForSearch = employeeServiceHibernate.getEmployeesForSearch(name, salaryFrom, salaryTo, LIMIT, page);
         model.addAttribute("pageCount", pageCount);
         model.addAttribute("page", page);
         model.addAttribute("allEmployers", employeesForSearch);

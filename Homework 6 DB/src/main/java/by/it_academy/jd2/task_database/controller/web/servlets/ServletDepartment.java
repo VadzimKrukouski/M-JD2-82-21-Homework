@@ -58,7 +58,9 @@ public class ServletDepartment /*extends HttpServlet*/ {
         long countAllEntriesByDepartment = employeeServiceHibernate.getCountAllEntriesLastVersion(employeeDTO);
 //        long countAllEntriesByDepartment = employeeServiceHibernate.getCountAllEntriesByDepartment(id);
         long pageCount = getPageCount(countAllEntriesByDepartment);
-        Collection<Employee> employersByDepartmentLimit = employeeServiceHibernate.getEmployersByDepartmentLimit(id, LIMIT, page);
+        long offset=LIMIT*(page-1);
+        Collection<Employee> employersByDepartmentLimit = employeeServiceHibernate.getAllEmployersLastVersion(employeeDTO, LIMIT, offset);
+//        Collection<Employee> employersByDepartmentLimit = employeeServiceHibernate.getEmployersByDepartmentLimit(id, LIMIT, page);
         if (department != null) {
             model.addAttribute("department", department);
             model.addAttribute("employersByDepartment", employersByDepartmentLimit);
