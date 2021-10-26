@@ -10,10 +10,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.Collection;
-import java.util.List;
 
 public class DepartmentStorageHibernate implements IDepartmentStorageHibernate {
     private final SessionFactory sessionFactory;
+    private static final String NAME_EXCEPTION = "Ошибка в работе с базой данных";
 
     public DepartmentStorageHibernate(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -21,86 +21,86 @@ public class DepartmentStorageHibernate implements IDepartmentStorageHibernate {
 
     @Override
     public long addDepartment(Department department) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+        try (Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+            session.save(department);
+            session.getTransaction().commit();
 
-        Department department1 = new Department();
-        department1.setName(department.getName());
-        department1.setParentDepartment(department.getParentDepartment());
+            return department.getId();
+        }
+        catch (Exception e){
+            throw new IllegalStateException(NAME_EXCEPTION);
+        }
 
-        session.save(department1);
-        session.getTransaction().commit();
-
-        long id = department1.getId();
-
-        session.close();
-
-        return id;
     }
 
     @Override
     public Department getDepartment(long id) {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Department> criteriaQuery = criteriaBuilder.createQuery(Department.class);
-        Root<Department> root = criteriaQuery.from(Department.class);
+        try (Session session = sessionFactory.openSession()){
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Department> criteriaQuery = criteriaBuilder.createQuery(Department.class);
+            Root<Department> root = criteriaQuery.from(Department.class);
 
-        criteriaQuery.where(criteriaBuilder.equal(root.get("id"), id));
-        Query<Department> query = session.createQuery(criteriaQuery);
-        Department singleResult = query.getSingleResult();
+            criteriaQuery.where(criteriaBuilder.equal(root.get("id"), id));
+            Query<Department> query = session.createQuery(criteriaQuery);
 
-        session.close();
-
-        return singleResult;
+            return query.getSingleResult();
+        }
+        catch (Exception e){
+            throw new IllegalStateException(NAME_EXCEPTION);
+        }
     }
 
     @Override
     public Collection<Department> getAllDepartments() {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Department> criteriaQuery = criteriaBuilder.createQuery(Department.class);
-        Root<Department> root = criteriaQuery.from(Department.class);
+        try (Session session = sessionFactory.openSession()){
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Department> criteriaQuery = criteriaBuilder.createQuery(Department.class);
+            Root<Department> root = criteriaQuery.from(Department.class);
 
-        criteriaQuery.select(root);
-        Query<Department> query = session.createQuery(criteriaQuery);
-        List<Department> list = query.list();
+            criteriaQuery.select(root);
+            Query<Department> query = session.createQuery(criteriaQuery);
 
-        session.close();
-
-        return list;
+            return query.list();
+        }
+        catch (Exception e){
+            throw new IllegalStateException(NAME_EXCEPTION);
+        }
     }
 
     @Override
     public long getCountAllEntries() {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
-        Root<Department> root = criteriaQuery.from(Department.class);
+        try (Session session = sessionFactory.openSession()){
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+            Root<Department> root = criteriaQuery.from(Department.class);
 
-        criteriaQuery.select(criteriaBuilder.count(root));
-        Query<Long> query = session.createQuery(criteriaQuery);
-        Long singleResult = query.getSingleResult();
+            criteriaQuery.select(criteriaBuilder.count(root));
+            Query<Long> query = session.createQuery(criteriaQuery);
 
-        session.close();
-
-        return singleResult;
+            return query.getSingleResult();
+        }
+        catch (Exception e){
+            throw new IllegalStateException(NAME_EXCEPTION);
+        }
     }
 
     @Override
     public Collection<Department> getAllDepartmentsLimit(long limit, long offset) {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Department> criteriaQuery = criteriaBuilder.createQuery(Department.class);
-        Root<Department> root = criteriaQuery.from(Department.class);
+        try (Session session = sessionFactory.openSession()){
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Department> criteriaQuery = criteriaBuilder.createQuery(Department.class);
+            Root<Department> root = criteriaQuery.from(Department.class);
 
-        criteriaQuery.select(root);
-        Query<Department> query = session.createQuery(criteriaQuery);
-        query.setFirstResult((int) offset);
-        query.setMaxResults((int) limit);
-        List<Department> list = query.list();
+            criteriaQuery.select(root);
+            Query<Department> query = session.createQuery(criteriaQuery);
+            query.setFirstResult((int) offset);
+            query.setMaxResults((int) limit);
 
-        session.close();
-
-        return list;
+            return query.list();
+        }
+        catch (Exception e){
+            throw new IllegalStateException(NAME_EXCEPTION);
+        }
     }
 }

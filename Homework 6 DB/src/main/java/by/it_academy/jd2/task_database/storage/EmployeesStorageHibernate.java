@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
-import javax.persistence.Entity;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -18,6 +17,7 @@ import java.util.List;
 
 public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
     private final SessionFactory sessionFactory;
+    private static final String NAME_EXCEPTION = "Ошибка работы с базой данных";
 
     public EmployeesStorageHibernate(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -25,123 +25,73 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
 
     @Override
     public long addEmployee(Employee employee) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(employee);
-        session.getTransaction().commit();
-        long id = employee.getId();
-        session.close();
+        try (Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+            session.save(employee);
+            session.getTransaction().commit();
 
-        return id;
+            return employee.getId();
+        }
+        catch (Exception e){
+            throw new IllegalStateException(NAME_EXCEPTION);
+        }
+
     }
 
     @Override
     public Employee getEmployee(long id) {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
-        Root<Employee> root = criteriaQuery.from(Employee.class);
+        try (Session session = sessionFactory.openSession()){
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+            Root<Employee> root = criteriaQuery.from(Employee.class);
 
-        criteriaQuery.where(criteriaBuilder.equal(root.get("id"), id));
-        Query<Employee> query = session.createQuery(criteriaQuery);
-        Employee singleResult = query.getSingleResult();
-        session.close();
+            criteriaQuery.where(criteriaBuilder.equal(root.get("id"), id));
+            Query<Employee> query = session.createQuery(criteriaQuery);
 
-        return singleResult;
+            return query.getSingleResult();
+        }
+        catch (Exception e){
+            throw new IllegalStateException(NAME_EXCEPTION);
+        }
+
     }
 
     @Override
     public Collection<Employee> getALLEmployersLimit(long limit, long offset) {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
-        Root<Employee> root = criteriaQuery.from(Employee.class);
+        try (Session session = sessionFactory.openSession()){
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+            Root<Employee> root = criteriaQuery.from(Employee.class);
 
-        criteriaQuery.select(root).orderBy(criteriaBuilder.asc(root.get("id")));
-        Query<Employee> query = session.createQuery(criteriaQuery);
-        query.setFirstResult((int) offset);
-        query.setMaxResults((int) limit);
-        List<Employee> list = query.list();
+            criteriaQuery.select(root).orderBy(criteriaBuilder.asc(root.get("id")));
+            Query<Employee> query = session.createQuery(criteriaQuery);
+            query.setFirstResult((int) offset);
+            query.setMaxResults((int) limit);
 
-        session.close();
-        return list;
+            return query.list();
+        }
+        catch (Exception e){
+            throw new IllegalStateException(NAME_EXCEPTION);
+        }
+
     }
 
     @Override
     public long getCountAllEntries() {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
-        Root<Employee> root = criteriaQuery.from(Employee.class);
+        try (Session session = sessionFactory.openSession()){
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+            Root<Employee> root = criteriaQuery.from(Employee.class);
 
-        criteriaQuery.select(criteriaBuilder.count(root));
-        Query<Long> query = session.createQuery(criteriaQuery);
-        Long singleResult = query.getSingleResult();
+            criteriaQuery.select(criteriaBuilder.count(root));
+            Query<Long> query = session.createQuery(criteriaQuery);
 
-        session.close();
+            return query.getSingleResult();
+        }
+        catch (Exception e){
+            throw new IllegalStateException(NAME_EXCEPTION);
+        }
 
-        return singleResult;
-    }
-
-    @Override
-    public long getCountAllEntriesByDepartment(long id) {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
-        Root<Employee> root = criteriaQuery.from(Employee.class);
-
-        criteriaQuery.select(
-                criteriaBuilder.count(root))
-                .where(criteriaBuilder.equal(root.get("department"), id));
-
-        Query<Long> query = session.createQuery(criteriaQuery);
-        Long singleResult = query.getSingleResult();
-
-        session.close();
-
-        return singleResult;
-    }
-
-    @Override
-    public long getCountAllEntriesByPosition(long id) {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
-        Root<Employee> root = criteriaQuery.from(Employee.class);
-
-        criteriaQuery.select(
-                criteriaBuilder.count(root))
-                .where(criteriaBuilder.equal(root.get("position"), id));
-
-        Query<Long> query = session.createQuery(criteriaQuery);
-        Long singleResult = query.getSingleResult();
-
-        session.close();
-
-        return singleResult;
-    }
-
-    @Override
-    public long getCountAllEntriesForSearch(EmployeeDTO employeeDTO) {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
-        Root<Employee> root = criteriaQuery.from(Employee.class);
-
-        criteriaQuery.select(
-                criteriaBuilder.count(root))
-                .where(criteriaBuilder.and(
-                        criteriaBuilder.equal(root.get("name"), employeeDTO.getName()),
-                        criteriaBuilder.between(root.get("salary"), employeeDTO.getSalaryFrom(), employeeDTO.getSalaryTo())
-                        )
-                );
-
-        Query<Long> query = session.createQuery(criteriaQuery);
-        Long singleResult = query.getSingleResult();
-
-        session.close();
-
-        return singleResult;
     }
 
     @Override
@@ -168,49 +118,11 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
                     criteriaBuilder.count(root))
                     .where(criteriaBuilder.and(predicatesArray));
             Query<Long> query = session.createQuery(criteriaQuery);
+
             return query.getSingleResult();
         } catch (Exception e) {
             throw new IllegalStateException("Ошибка в работе с базой данных");
         }
-    }
-
-    @Override
-    public Collection<Employee> getEmployersByPositionLimit(long idPosition, long limit, long offset) {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
-        Root<Employee> root = criteriaQuery.from(Employee.class);
-
-        criteriaQuery.where(criteriaBuilder.equal(root.get("position"), idPosition));
-
-        Query<Employee> query = session.createQuery(criteriaQuery);
-        query.setFirstResult((int) offset);
-        query.setMaxResults((int) limit);
-
-        List<Employee> list = query.list();
-
-        session.close();
-
-        return list;
-    }
-
-    @Override
-    public Collection<Employee> getEmployersByDepartmentLimit(long idDepartment, long limit, long offset) {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
-        Root<Employee> root = criteriaQuery.from(Employee.class);
-
-        criteriaQuery.where(criteriaBuilder.equal(root.get("department"), idDepartment));
-
-        Query<Employee> query = session.createQuery(criteriaQuery);
-        query.setFirstResult((int) offset);
-        query.setMaxResults((int) limit);
-        List<Employee> list = query.list();
-
-        session.close();
-
-        return list;
     }
 
     @Override
@@ -237,6 +149,7 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
             Query<Employee> query = session.createQuery(criteriaQuery);
             query.setFirstResult((int) offset);
             query.setMaxResults((int) limit);
+
             return query.list();
         }
         catch (Exception e){
@@ -244,27 +157,131 @@ public class EmployeesStorageHibernate implements IEmployeeStorageHibernate {
         }
     }
 
-    @Override
-    public Collection<Employee> getEmployeesForSearch(String name, long salary1, long salary2, long limit, long offset) {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
-        Root<Employee> root = criteriaQuery.from(Employee.class);
 
-        criteriaQuery.where(
-                criteriaBuilder.and(
-                        criteriaBuilder.equal(root.get("name"), name),
-                        criteriaBuilder.between(root.get("salary"), salary1, salary2)
-                )
-        );
-        Query<Employee> query = session.createQuery(criteriaQuery);
-        query.setFirstResult((int) offset);
-        query.setMaxResults((int) limit);
 
-        List<Employee> list = query.list();
+//
+//    @Override
+//    public long getCountAllEntriesByDepartment(long id) {
+//        Session session = sessionFactory.openSession();
+//        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+//        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+//        Root<Employee> root = criteriaQuery.from(Employee.class);
+//
+//        criteriaQuery.select(
+//                criteriaBuilder.count(root))
+//                .where(criteriaBuilder.equal(root.get("department"), id));
+//
+//        Query<Long> query = session.createQuery(criteriaQuery);
+//        Long singleResult = query.getSingleResult();
+//
+//        session.close();
+//
+//        return singleResult;
+//    }
+//
+//    @Override
+//    public long getCountAllEntriesByPosition(long id) {
+//        Session session = sessionFactory.openSession();
+//        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+//        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+//        Root<Employee> root = criteriaQuery.from(Employee.class);
+//
+//        criteriaQuery.select(
+//                criteriaBuilder.count(root))
+//                .where(criteriaBuilder.equal(root.get("position"), id));
+//
+//        Query<Long> query = session.createQuery(criteriaQuery);
+//        Long singleResult = query.getSingleResult();
+//
+//        session.close();
+//
+//        return singleResult;
+//    }
+//
+//    @Override
+//    public long getCountAllEntriesForSearch(EmployeeDTO employeeDTO) {
+//        Session session = sessionFactory.openSession();
+//        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+//        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+//        Root<Employee> root = criteriaQuery.from(Employee.class);
+//
+//        criteriaQuery.select(
+//                criteriaBuilder.count(root))
+//                .where(criteriaBuilder.and(
+//                        criteriaBuilder.equal(root.get("name"), employeeDTO.getName()),
+//                        criteriaBuilder.between(root.get("salary"), employeeDTO.getSalaryFrom(), employeeDTO.getSalaryTo())
+//                        )
+//                );
+//
+//        Query<Long> query = session.createQuery(criteriaQuery);
+//        Long singleResult = query.getSingleResult();
+//
+//        session.close();
+//
+//        return singleResult;
 
-        session.close();
+//    }
+//    @Override
+//    public Collection<Employee> getEmployersByPositionLimit(long idPosition, long limit, long offset) {
+//        Session session = sessionFactory.openSession();
+//        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+//        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+//        Root<Employee> root = criteriaQuery.from(Employee.class);
+//
+//        criteriaQuery.where(criteriaBuilder.equal(root.get("position"), idPosition));
+//
+//        Query<Employee> query = session.createQuery(criteriaQuery);
+//        query.setFirstResult((int) offset);
+//        query.setMaxResults((int) limit);
+//
+//        List<Employee> list = query.list();
+//
+//        session.close();
+//
+//        return list;
 
-        return list;
-    }
+//    }
+//    @Override
+//    public Collection<Employee> getEmployersByDepartmentLimit(long idDepartment, long limit, long offset) {
+//        Session session = sessionFactory.openSession();
+//        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+//        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+//        Root<Employee> root = criteriaQuery.from(Employee.class);
+//
+//        criteriaQuery.where(criteriaBuilder.equal(root.get("department"), idDepartment));
+//
+//        Query<Employee> query = session.createQuery(criteriaQuery);
+//        query.setFirstResult((int) offset);
+//        query.setMaxResults((int) limit);
+//        List<Employee> list = query.list();
+//
+//        session.close();
+//
+//        return list;
+
+//    }
+
+//    @Override
+//    public Collection<Employee> getEmployeesForSearch(String name, long salary1, long salary2, long limit, long offset) {
+//        Session session = sessionFactory.openSession();
+//        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+//        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+//        Root<Employee> root = criteriaQuery.from(Employee.class);
+//
+//        criteriaQuery.where(
+//                criteriaBuilder.and(
+//                        criteriaBuilder.equal(root.get("name"), name),
+//                        criteriaBuilder.between(root.get("salary"), salary1, salary2)
+//                )
+//        );
+//        Query<Employee> query = session.createQuery(criteriaQuery);
+//        query.setFirstResult((int) offset);
+//        query.setMaxResults((int) limit);
+//
+//        List<Employee> list = query.list();
+//
+//        session.close();
+//
+//        return list;
+//    }
 }

@@ -89,10 +89,6 @@ public class ServletEmployee /*extends HttpServlet*/ {
         return "aboutEmployee";
     }
 
-    private long getPageCount(long limit, long countAllEntries) {
-        return (long) Math.ceil((double) countAllEntries / limit);
-    }
-
     @GetMapping(value = "/search")
     public String getSearchEmployee(Model model, @RequestParam(value = "name") String name,
                                     @RequestParam(value = "salary1") Long salaryFrom,
@@ -104,15 +100,17 @@ public class ServletEmployee /*extends HttpServlet*/ {
                 .build();
         int page = 1;
         long countAllEntriesForSearch = employeeServiceHibernate.getCountAllEntriesLastVersion(employeeDTO);
-//        long countAllEntriesForSearch = employeeServiceHibernate.getCountAllEntriesForSearch(employeeDTO);
         long pageCount = getPageCount(LIMIT, countAllEntriesForSearch);
-        long offset=LIMIT*(page-1);
+        long offset = LIMIT * (page - 1);
         Collection<Employee> employeesForSearch = employeeServiceHibernate.getAllEmployersLastVersion(employeeDTO, LIMIT, offset);
-//        Collection<Employee> employeesForSearch = employeeServiceHibernate.getEmployeesForSearch(name, salaryFrom, salaryTo, LIMIT, page);
         model.addAttribute("pageCount", pageCount);
         model.addAttribute("page", page);
         model.addAttribute("allEmployers", employeesForSearch);
         return "allEmployeeLimit";
+    }
+
+    private long getPageCount(long limit, long countAllEntries) {
+        return (long) Math.ceil((double) countAllEntries / limit);
     }
 
 

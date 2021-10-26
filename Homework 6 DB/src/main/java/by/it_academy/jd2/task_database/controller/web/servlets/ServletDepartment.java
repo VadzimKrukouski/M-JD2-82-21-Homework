@@ -56,11 +56,9 @@ public class ServletDepartment /*extends HttpServlet*/ {
         Department department = departmentServiceHibernate.getDepartment(id);
         EmployeeDTO employeeDTO = new EmployeeDTO.Builder().department(department).build();
         long countAllEntriesByDepartment = employeeServiceHibernate.getCountAllEntriesLastVersion(employeeDTO);
-//        long countAllEntriesByDepartment = employeeServiceHibernate.getCountAllEntriesByDepartment(id);
         long pageCount = getPageCount(countAllEntriesByDepartment);
         long offset=LIMIT*(page-1);
         Collection<Employee> employersByDepartmentLimit = employeeServiceHibernate.getAllEmployersLastVersion(employeeDTO, LIMIT, offset);
-//        Collection<Employee> employersByDepartmentLimit = employeeServiceHibernate.getEmployersByDepartmentLimit(id, LIMIT, page);
         if (department != null) {
             model.addAttribute("department", department);
             model.addAttribute("employersByDepartment", employersByDepartmentLimit);
@@ -75,6 +73,8 @@ public class ServletDepartment /*extends HttpServlet*/ {
     private long getPageCount(long countAllEntries) {
         return (long) Math.ceil((double) countAllEntries / ServletDepartment.LIMIT);
     }
+
+
 //
 //    @Override
 //    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

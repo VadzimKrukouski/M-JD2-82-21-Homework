@@ -6,13 +6,14 @@ import java.util.Collection;
 
 public interface IPositionStorageHibernate {
     long addPosition(Position position);
+
     Position getPosition(long id);
+
     long getCountAllEntries();
+
     Collection<Position> getAllPositionsLimit(long limit, long offset);
+
     Collection<Position> getAllPositions();
-
-
-
 
 
 }
