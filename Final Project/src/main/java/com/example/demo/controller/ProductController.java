@@ -21,7 +21,7 @@ public class ProductController {
     public ResponseEntity<List<Product>> getProducts(@RequestParam (defaultValue = "0") int page,
                                                      @RequestParam (defaultValue = "10") int size,
                                                      @RequestParam String name){
-        List<Product> allProducts = productService.getAllProducts();
+        List<Product> allProducts = productService.getAllProduct();
         return new ResponseEntity<>(allProducts, HttpStatus.OK);
     }
 
@@ -33,14 +33,14 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Product> addProduct(@RequestBody Product product){
-        Product newProduct = productService.addProduct(product);
+        Product newProduct = productService.saveProduct(product);
         return new ResponseEntity<>(newProduct, HttpStatus.OK);
     }
 
     @PutMapping("/{id}/dt_update/{dt_update}")
     public ResponseEntity<Product> updateProduct(@PathVariable (name = "id") int id,
                                                  @PathVariable (name = "dt_update") Product product){
-        Product updateProduct = productService.updateProduct(id, product);
+        Product updateProduct = productService.updateProduct(product, id);
         return new ResponseEntity<>(updateProduct,HttpStatus.OK);
     }
 

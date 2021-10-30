@@ -3,11 +3,11 @@ package com.example.demo.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "products")
+//@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column
     private String name;
@@ -28,7 +28,7 @@ public class Product {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

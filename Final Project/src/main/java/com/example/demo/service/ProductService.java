@@ -1,43 +1,48 @@
 package com.example.demo.service;
 
+import com.example.demo.dao.IProductDao;
 import com.example.demo.model.Product;
-import com.example.demo.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.service.api.IProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ProductService {
-    private final ProductRepository productRepository;
+public class ProductService implements IProductService {
+    private final IProductDao productDao;
 
-    public ProductService() {
-        this.productRepository = ProductRepository.getInstance();
+    public ProductService(IProductDao productDao) {
+        this.productDao = productDao;
     }
 
-    public List<Product> getAllProducts(){
-        return productRepository.getAllProducts();
+    @Override
+    public Product getProductById(long id) {
+        return productDao.findById(id).orElse(null);
     }
 
-    public Product getProductById(int id){
-        return productRepository.getProductById(id);
+    @Override
+    public Product saveProduct(Product product) {
+        return productDao.save(product);
     }
 
-    public Product addProduct(Product product){
-        return productRepository.addProduct(product);
+    @Override
+    public List<Product> getAllProduct() {
+        return productDao.findAll();
     }
 
-    public Product updateProduct(int id, Product product){
-        Product productById = productRepository.getProductById(id);
-        productById.setName(product.getName());
-        productById.setCalories(product.getCalories());
-        productById.setProteins(product.getProteins());
-        productById.setFats(product.getFats());
-        productById.setCarbohydrates(product.getCarbohydrates());
-        return productRepository.updateProduct(id,productById);
+    @Override
+    public Product updateProduct(Product product, long id) {
+        Product updateProduct = getProductById(id);
+        updateProduct.setName(product.getName());
+        updateProduct.setCalories(product.getCalories());
+        updateProduct.setCarbohydrates(product.getCarbohydrates());
+        updateProduct.setProteins(product.getProteins());
+        updateProduct.setFats(product.getFats());
+        return saveProduct(updateProduct);
     }
 
-    public void deleteProduct(int id){
-        productRepository.deleteProduct(id);
+    @Override
+    public void deleteProduct(long id) {
+        productDao.deleteById(id);
     }
 }
