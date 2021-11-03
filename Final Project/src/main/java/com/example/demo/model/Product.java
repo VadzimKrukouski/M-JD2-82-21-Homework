@@ -3,7 +3,7 @@ package com.example.demo.model;
 import javax.persistence.*;
 
 @Entity
-//@Table(name = "products")
+@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,6 +11,9 @@ public class Product {
 
     @Column
     private String name;
+
+    @Column
+    private String brand;
 
     @Column
     private double calories;
@@ -23,6 +26,16 @@ public class Product {
 
     @Column
     private double carbohydrates;
+
+    @Column
+    private double weight;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Product() {
+    }
 
     public long getId() {
         return id;
@@ -38,6 +51,14 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public double getCalories() {
@@ -71,4 +92,15 @@ public class Product {
     public void setCarbohydrates(double carbohydrates) {
         this.carbohydrates = carbohydrates;
     }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
 }
+
+
+
