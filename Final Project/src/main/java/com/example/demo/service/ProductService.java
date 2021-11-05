@@ -1,14 +1,14 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.IProductDao;
+import com.example.demo.dao.api.IProductDao;
 import com.example.demo.model.Product;
-import com.example.demo.service.api.IProductService;
+import com.example.demo.service.api.IAppService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ProductService implements IProductService {
+public class ProductService implements IAppService<Product> {
     private final IProductDao productDao;
 
     public ProductService(IProductDao productDao) {
@@ -16,33 +16,33 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product getProductById(long id) {
+    public Product getById(long id) {
         return productDao.findById(id).orElse(null);
     }
 
     @Override
-    public Product saveProduct(Product product) {
-        return productDao.save(product);
+    public Product save(Product model) {
+        return productDao.save(model);
     }
 
     @Override
-    public List<Product> getAllProduct() {
+    public List<Product> getAll() {
         return productDao.findAll();
     }
 
     @Override
-    public Product updateProduct(Product product, long id) {
-        Product updateProduct = getProductById(id);
-        updateProduct.setName(product.getName());
-        updateProduct.setCalories(product.getCalories());
-        updateProduct.setCarbohydrates(product.getCarbohydrates());
-        updateProduct.setProteins(product.getProteins());
-        updateProduct.setFats(product.getFats());
-        return saveProduct(updateProduct);
+    public Product update(Product model, long id) {
+        Product updateProduct = getById(id);
+        updateProduct.setName(model.getName());
+        updateProduct.setCalories(model.getCalories());
+        updateProduct.setCarbohydrates(model.getCarbohydrates());
+        updateProduct.setProteins(model.getProteins());
+        updateProduct.setFats(model.getFats());
+        return save(updateProduct);
     }
 
     @Override
-    public void deleteProduct(long id) {
+    public void delete(long id) {
         productDao.deleteById(id);
     }
 }

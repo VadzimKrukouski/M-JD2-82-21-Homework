@@ -21,33 +21,33 @@ public class ProductController {
     public ResponseEntity<List<Product>> getProducts(@RequestParam (defaultValue = "0") int page,
                                                      @RequestParam (defaultValue = "10") int size,
                                                      @RequestParam String name){
-        List<Product> allProducts = productService.getAllProduct();
+        List<Product> allProducts = productService.getAll();
         return new ResponseEntity<>(allProducts, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable (name = "id") int id){
-        Product product = productService.getProductById(id);
+        Product product = productService.getById(id);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Product> addProduct(@RequestBody Product product){
-        Product newProduct = productService.saveProduct(product);
+        Product newProduct = productService.save(product);
         return new ResponseEntity<>(newProduct, HttpStatus.OK);
     }
 
     @PutMapping("/{id}/dt_update/")
     public ResponseEntity<Product> updateProduct(@PathVariable (name = "id") int id,
                                                  @RequestBody Product product){
-        Product updateProduct = productService.updateProduct(product, id);
+        Product updateProduct = productService.update(product, id);
         return new ResponseEntity<>(updateProduct,HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}/dt_update/{dt_update}")
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable (name = "id") int id,
                                                     @PathVariable (name = "dt_update") Product product){
-        productService.deleteProduct(id);
+        productService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
