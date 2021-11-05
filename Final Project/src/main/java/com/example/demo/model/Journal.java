@@ -1,8 +1,8 @@
 package com.example.demo.model;
 
+import com.example.demo.model.api.EMealTime;
+
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table (name = "journal")
@@ -12,17 +12,17 @@ public class Journal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany
-    private List<Product> product;
+    @OneToOne
+    private Product product;
 
-    @OneToMany
-    private List<Dish> dish;
+    @OneToOne
+    private Dish dish;
 
     @Column
     private double weight;
 
     @Column
-    private Date date;
+    private EMealTime mealTime;
 
     @OneToOne
     private Profile profile;
@@ -38,20 +38,28 @@ public class Journal {
         this.id = id;
     }
 
-    public List<Product> getProduct() {
+    public Product getProduct() {
         return product;
     }
 
-    public void setProduct(List<Product> product) {
+    public void setProduct(Product product) {
         this.product = product;
     }
 
-    public List<Dish> getDish() {
+    public Dish getDish() {
         return dish;
     }
 
-    public void setDish(List<Dish> dish) {
+    public void setDish(Dish dish) {
         this.dish = dish;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     public double getWeight() {
@@ -62,11 +70,11 @@ public class Journal {
         this.weight = weight;
     }
 
-    public Date getDate() {
-        return date;
+    public EMealTime getMealTime() {
+        return mealTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setMealTime(EMealTime mealTime) {
+        this.mealTime = mealTime;
     }
 }

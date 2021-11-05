@@ -4,9 +4,11 @@ import com.example.demo.dao.api.IProfileDao;
 import com.example.demo.dao.api.IUserDao;
 import com.example.demo.model.User;
 import com.example.demo.service.api.IAppService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserService implements IAppService<User> {
     private final IUserDao userDao;
 

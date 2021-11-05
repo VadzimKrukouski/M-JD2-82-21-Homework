@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.example.demo.model.api.ERole;
+
 import javax.persistence.*;
 
 @Entity
@@ -20,7 +22,7 @@ public class User {
     private String password;
 
     @Column
-    private String role;
+    private ERole role;
 
     public User() {
     }
@@ -57,11 +59,11 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
+    public ERole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(ERole role) {
         this.role = role;
     }
 }

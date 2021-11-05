@@ -3,9 +3,11 @@ package com.example.demo.service;
 import com.example.demo.dao.api.IProfileDao;
 import com.example.demo.model.Profile;
 import com.example.demo.service.api.IAppService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ProfileService implements IAppService<Profile> {
     private final IProfileDao profileDao;
 
@@ -36,6 +38,8 @@ public class ProfileService implements IAppService<Profile> {
         updateProfile.setHeight(model.getHeight());
         updateProfile.setUser(model.getUser());
         updateProfile.setWeight(model.getWeight());
+        updateProfile.setLifestyle(model.getLifestyle());
+        updateProfile.setTarget(model.getTarget());
         return save(updateProfile);
     }
 

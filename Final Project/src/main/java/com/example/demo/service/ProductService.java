@@ -38,6 +38,9 @@ public class ProductService implements IAppService<Product> {
         updateProduct.setCarbohydrates(model.getCarbohydrates());
         updateProduct.setProteins(model.getProteins());
         updateProduct.setFats(model.getFats());
+        updateProduct.setBrand(model.getBrand());
+        updateProduct.setWeight(model.getWeight());
+        updateProduct.setUser(model.getUser());
         return save(updateProduct);
     }
 

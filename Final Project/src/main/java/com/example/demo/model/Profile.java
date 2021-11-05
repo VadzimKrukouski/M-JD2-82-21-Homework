@@ -1,6 +1,11 @@
 package com.example.demo.model;
 
+import com.example.demo.model.api.EGender;
+import com.example.demo.model.api.ELifestyle;
+import com.example.demo.model.api.ETarget;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -21,12 +26,34 @@ public class Profile {
     private double weight;
 
     @Column
-    private Date dateBirthday;
+    private LocalDateTime dateBirthday;
 
     @Column
-    private String gender;
+    private EGender gender;
+
+    @Column
+    private ELifestyle lifestyle;
+
+    @Column
+    private ETarget target;
 
     public Profile() {
+    }
+
+    public ELifestyle getLifestyle() {
+        return lifestyle;
+    }
+
+    public void setLifestyle(ELifestyle lifestyle) {
+        this.lifestyle = lifestyle;
+    }
+
+    public ETarget getTarget() {
+        return target;
+    }
+
+    public void setTarget(ETarget target) {
+        this.target = target;
     }
 
     public long getId() {
@@ -61,19 +88,19 @@ public class Profile {
         this.weight = weight;
     }
 
-    public Date getDateBirthday() {
+    public LocalDateTime getDateBirthday() {
         return dateBirthday;
     }
 
-    public void setDateBirthday(Date dateBirthday) {
+    public void setDateBirthday(LocalDateTime dateBirthday) {
         this.dateBirthday = dateBirthday;
     }
 
-    public String getGender() {
+    public EGender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(EGender gender) {
         this.gender = gender;
     }
 }

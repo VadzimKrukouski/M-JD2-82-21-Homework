@@ -34,7 +34,9 @@ public class AuditService implements IAppService<Audit> {
     public Audit update(Audit model, long id) {
         Audit updateAudit= getById(id);
         updateAudit.setText(model.getText());
-        updateAudit.setUsers(model.getUsers());
+        updateAudit.setUser(model.getUser());
+        updateAudit.setEntityType(model.getEntityType());
+        updateAudit.setEntityId(model.getEntityId());
 
         return save(updateAudit);
     }

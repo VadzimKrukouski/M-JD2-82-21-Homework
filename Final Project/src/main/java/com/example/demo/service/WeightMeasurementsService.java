@@ -3,9 +3,11 @@ package com.example.demo.service;
 import com.example.demo.dao.api.IWeightMeasurements;
 import com.example.demo.model.WeightMeasurements;
 import com.example.demo.service.api.IAppService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class WeightMeasurementsService implements IAppService<WeightMeasurements> {
     private final IWeightMeasurements weightMeasurements;
 

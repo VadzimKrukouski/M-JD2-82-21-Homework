@@ -13,8 +13,7 @@ public class Dish {
     @Column
     private String name;
 
-    @ManyToOne
-    @JoinColumn (name = "user_id")
+    @OneToOne
     private User user;
 
     public Dish() {

@@ -11,13 +11,43 @@ public class Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany
-    private List<User> users;
+    @OneToOne
+    private User user;
 
     @Column
     private String text;
 
+    @Column
+    private String entityType;
+
+    @Column
+    private long entityId;
+
     public Audit() {
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getEntityType() {
+        return entityType;
+    }
+
+    public void setEntityType(String entityType) {
+        this.entityType = entityType;
+    }
+
+    public long getEntityId() {
+        return entityId;
+    }
+
+    public void setEntityId(long entityId) {
+        this.entityId = entityId;
     }
 
     public long getId() {
@@ -26,14 +56,6 @@ public class Audit {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 
     public String getText() {

@@ -30,8 +30,7 @@ public class Product {
     @Column
     private double weight;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne
     private User user;
 
     public Product() {
@@ -99,6 +98,14 @@ public class Product {
 
     public void setWeight(double weight) {
         this.weight = weight;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
 

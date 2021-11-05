@@ -33,10 +33,11 @@ public class JournalService implements IAppService<Journal> {
     @Override
     public Journal update(Journal model, long id) {
         Journal updateJournal = getById(id);
-        updateJournal.setDate(model.getDate());
         updateJournal.setDish(model.getDish());
         updateJournal.setProduct(model.getProduct());
         updateJournal.setWeight(model.getWeight());
+        updateJournal.setMealTime(model.getMealTime());
+        updateJournal.setProfile(model.getProfile());
         return save(updateJournal);
     }
 
