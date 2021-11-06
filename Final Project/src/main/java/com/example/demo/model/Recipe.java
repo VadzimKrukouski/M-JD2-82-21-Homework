@@ -1,14 +1,12 @@
 package com.example.demo.model;
 
-import com.example.demo.model.api.ERole;
-
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "users")
-public class User {
+@Table (name = "recipe")
+public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,14 +15,8 @@ public class User {
     @Column
     private String name;
 
-    @Column
-    private String login;
-
-    @Column
-    private String password;
-
-    @Column
-    private ERole role;
+    @OneToMany
+    private List<User> user;
 
     @Column
     private LocalDateTime dateCreate;
@@ -32,7 +24,15 @@ public class User {
     @Column
     private LocalDateTime dateUpdate;
 
-    public User() {
+    public Recipe() {
+    }
+
+    public List<User> getUser() {
+        return user;
+    }
+
+    public void setUser(List<User> user) {
+        this.user = user;
     }
 
     public long getId() {
@@ -49,30 +49,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public ERole getRole() {
-        return role;
-    }
-
-    public void setRole(ERole role) {
-        this.role = role;
     }
 
     public LocalDateTime getDateCreate() {

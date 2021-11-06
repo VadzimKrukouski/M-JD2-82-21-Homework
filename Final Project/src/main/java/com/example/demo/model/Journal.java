@@ -3,6 +3,7 @@ package com.example.demo.model;
 import com.example.demo.model.api.EMealTime;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table (name = "journal")
@@ -16,7 +17,7 @@ public class Journal {
     private Product product;
 
     @OneToOne
-    private Dish dish;
+    private Recipe recipe;
 
     @Column
     private double weight;
@@ -26,6 +27,12 @@ public class Journal {
 
     @OneToOne
     private Profile profile;
+
+    @Column
+    private LocalDateTime dateCreate;
+
+    @Column
+    private LocalDateTime dateUpdate;
 
     public Journal() {
     }
@@ -46,12 +53,12 @@ public class Journal {
         this.product = product;
     }
 
-    public Dish getDish() {
-        return dish;
+    public Recipe getRecipe() {
+        return recipe;
     }
 
-    public void setDish(Dish dish) {
-        this.dish = dish;
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 
     public Profile getProfile() {
@@ -76,5 +83,21 @@ public class Journal {
 
     public void setMealTime(EMealTime mealTime) {
         this.mealTime = mealTime;
+    }
+
+    public LocalDateTime getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(LocalDateTime dateCreate) {
+        this.dateCreate = dateCreate;
+    }
+
+    public LocalDateTime getDateUpdate() {
+        return dateUpdate;
+    }
+
+    public void setDateUpdate(LocalDateTime dateUpdate) {
+        this.dateUpdate = dateUpdate;
     }
 }

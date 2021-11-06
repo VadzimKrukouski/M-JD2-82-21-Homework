@@ -1,17 +1,17 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.api.IWeightMeasurements;
+import com.example.demo.dao.api.IWeightMeasurementsDao;
 import com.example.demo.model.WeightMeasurements;
-import com.example.demo.service.api.IAppService;
+import com.example.demo.service.api.IWeightMeasurementsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class WeightMeasurementsService implements IAppService<WeightMeasurements> {
-    private final IWeightMeasurements weightMeasurements;
+public class WeightMeasurementsService implements IWeightMeasurementsService {
+    private final IWeightMeasurementsDao weightMeasurements;
 
-    public WeightMeasurementsService(IWeightMeasurements weightMeasurements) {
+    public WeightMeasurementsService(IWeightMeasurementsDao weightMeasurements) {
         this.weightMeasurements = weightMeasurements;
     }
 

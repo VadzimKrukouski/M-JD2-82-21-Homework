@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,9 @@ public class Audit {
 
     @Column
     private long entityId;
+
+    @Column
+    private LocalDateTime dateCreate;
 
     public Audit() {
     }
@@ -64,5 +68,13 @@ public class Audit {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public LocalDateTime getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(LocalDateTime dateCreate) {
+        this.dateCreate = dateCreate;
     }
 }

@@ -1,15 +1,17 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.api.IWorkout;
+import com.example.demo.dao.api.IWorkoutDao;
 import com.example.demo.model.Workout;
-import com.example.demo.service.api.IAppService;
+import com.example.demo.service.api.IWorkoutService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class WorkoutService implements IAppService<Workout> {
-    private final IWorkout workout;
+@Service
+public class WorkoutService implements IWorkoutService {
+    private final IWorkoutDao workout;
 
-    public WorkoutService(IWorkout workout) {
+    public WorkoutService(IWorkoutDao workout) {
         this.workout = workout;
     }
 

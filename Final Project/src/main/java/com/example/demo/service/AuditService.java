@@ -3,12 +3,13 @@ package com.example.demo.service;
 import com.example.demo.dao.api.IAuditDao;
 import com.example.demo.model.Audit;
 import com.example.demo.service.api.IAppService;
+import com.example.demo.service.api.IAuditService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class AuditService implements IAppService<Audit> {
+public class AuditService implements IAuditService {
     private final IAuditDao auditDao;
 
     public AuditService(IAuditDao auditDao) {

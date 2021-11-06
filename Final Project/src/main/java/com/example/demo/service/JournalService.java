@@ -3,12 +3,13 @@ package com.example.demo.service;
 import com.example.demo.dao.api.IJournalDao;
 import com.example.demo.model.Journal;
 import com.example.demo.service.api.IAppService;
+import com.example.demo.service.api.IJournalService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class JournalService implements IAppService<Journal> {
+public class JournalService implements IJournalService {
     private final IJournalDao journalDao;
 
     public JournalService(IJournalDao journalDao) {
@@ -33,7 +34,7 @@ public class JournalService implements IAppService<Journal> {
     @Override
     public Journal update(Journal model, long id) {
         Journal updateJournal = getById(id);
-        updateJournal.setDish(model.getDish());
+        updateJournal.setRecipe(model.getRecipe());
         updateJournal.setProduct(model.getProduct());
         updateJournal.setWeight(model.getWeight());
         updateJournal.setMealTime(model.getMealTime());
@@ -45,4 +46,5 @@ public class JournalService implements IAppService<Journal> {
     public void delete(long id) {
         journalDao.deleteById(id);
     }
+
 }

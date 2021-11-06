@@ -3,12 +3,13 @@ package com.example.demo.service;
 import com.example.demo.dao.api.IComponentDishDao;
 import com.example.demo.model.ComponentDish;
 import com.example.demo.service.api.IAppService;
+import com.example.demo.service.api.IComponentDishService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ComponentDishService implements IAppService<ComponentDish> {
+public class ComponentDishService implements IComponentDishService {
     private final IComponentDishDao componentDishDao;
 
     public ComponentDishService(IComponentDishDao componentDishDao) {

@@ -1,41 +1,42 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.api.IDishDao;
-import com.example.demo.model.Dish;
+import com.example.demo.model.Recipe;
 import com.example.demo.service.api.IAppService;
+import com.example.demo.service.api.IRecipeService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class DishService implements IAppService<Dish> {
+public class RecipeService implements IRecipeService {
     private final IDishDao dishDao;
 
-    public DishService(IDishDao dishDao) {
+    public RecipeService(IDishDao dishDao) {
         this.dishDao = dishDao;
     }
 
     @Override
-    public Dish getById(long id) {
+    public Recipe getById(long id) {
         return dishDao.findById(id).orElse(null);
     }
 
     @Override
-    public Dish save(Dish model) {
+    public Recipe save(Recipe model) {
         return dishDao.save(model);
     }
 
     @Override
-    public List<Dish> getAll() {
+    public List<Recipe> getAll() {
         return dishDao.findAll();
     }
 
     @Override
-    public Dish update(Dish model, long id) {
-        Dish updateDish = getById(id);
-        updateDish.setName(model.getName());
-        updateDish.setUser(model.getUser());
-        return save(updateDish);
+    public Recipe update(Recipe model, long id) {
+        Recipe updateRecipe = getById(id);
+        updateRecipe.setName(model.getName());
+        updateRecipe.setUser(model.getUser());
+        return save(updateRecipe);
     }
 
     @Override

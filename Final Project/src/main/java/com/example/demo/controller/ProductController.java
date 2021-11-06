@@ -2,31 +2,33 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Product;
 import com.example.demo.service.ProductService;
+import com.example.demo.service.api.IProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/product")
 public class ProductController {
-    private final ProductService productService;
+    private final IProductService productService;
 
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getProducts(@RequestParam (defaultValue = "0") int page,
-                                                     @RequestParam (defaultValue = "10") int size,
-                                                     @RequestParam String name){
+    public ResponseEntity<List<Product>> getProducts(@RequestParam (value = "page", defaultValue = "0") int page,
+                                                     @RequestParam (value = "size", defaultValue = "10") int size,
+                                                     @RequestParam (required = false) String name ){
         List<Product> allProducts = productService.getAll();
         return new ResponseEntity<>(allProducts, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable (name = "id") int id){
+    public ResponseEntity<Product> getProduct(@PathVariable (name = "id") long id){
         Product product = productService.getById(id);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
@@ -34,18 +36,19 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<Product> addProduct(@RequestBody Product product){
         Product newProduct = productService.save(product);
-        return new ResponseEntity<>(newProduct, HttpStatus.OK);
+        return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}/dt_update/")
-    public ResponseEntity<Product> updateProduct(@PathVariable (name = "id") int id,
-                                                 @RequestBody Product product){
+    @PutMapping("/{id}/dt_update/{dt_update}")
+    public ResponseEntity<Product> updateProduct(@PathVariable (name = "id") long id,
+                                                 @RequestBody Product product,
+                                                 @PathVariable (name = "dt_update")LocalDateTime dateUpdate){
         Product updateProduct = productService.update(product, id);
         return new ResponseEntity<>(updateProduct,HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}/dt_update/{dt_update}")
-    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable (name = "id") int id,
+    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable (name = "id") long id,
                                                     @PathVariable (name = "dt_update") Product product){
         productService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

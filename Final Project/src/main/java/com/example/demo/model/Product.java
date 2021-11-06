@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "products")
@@ -32,6 +33,12 @@ public class Product {
 
     @OneToOne
     private User user;
+
+    @Column
+    private LocalDateTime dateCreate;
+
+    @Column
+    private LocalDateTime dateUpdate;
 
     public Product() {
     }
@@ -106,6 +113,22 @@ public class Product {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public LocalDateTime getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(LocalDateTime dateCreate) {
+        this.dateCreate = dateCreate;
+    }
+
+    public LocalDateTime getDateUpdate() {
+        return dateUpdate;
+    }
+
+    public void setDateUpdate(LocalDateTime dateUpdate) {
+        this.dateUpdate = dateUpdate;
     }
 }
 

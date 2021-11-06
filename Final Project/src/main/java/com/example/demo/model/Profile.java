@@ -37,6 +37,12 @@ public class Profile {
     @Column
     private ETarget target;
 
+    @Column
+    private LocalDateTime dateCreate;
+
+    @Column
+    private LocalDateTime dateUpdate;
+
     public Profile() {
     }
 
@@ -102,5 +108,21 @@ public class Profile {
 
     public void setGender(EGender gender) {
         this.gender = gender;
+    }
+
+    public LocalDateTime getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(LocalDateTime dateCreate) {
+        this.dateCreate = dateCreate;
+    }
+
+    public LocalDateTime getDateUpdate() {
+        return dateUpdate;
+    }
+
+    public void setDateUpdate(LocalDateTime dateUpdate) {
+        this.dateUpdate = dateUpdate;
     }
 }

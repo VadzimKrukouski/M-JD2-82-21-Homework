@@ -3,12 +3,13 @@ package com.example.demo.service;
 import com.example.demo.dao.api.IProductDao;
 import com.example.demo.model.Product;
 import com.example.demo.service.api.IAppService;
+import com.example.demo.service.api.IProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ProductService implements IAppService<Product> {
+public class ProductService implements IProductService {
     private final IProductDao productDao;
 
     public ProductService(IProductDao productDao) {
