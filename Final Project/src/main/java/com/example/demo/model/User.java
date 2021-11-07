@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import com.example.demo.model.api.ERole;
+import com.example.demo.model.api.EStatus;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -25,6 +26,9 @@ public class User {
 
     @Column
     private ERole role;
+
+    @Column
+    private EStatus status;
 
     @Column
     private LocalDateTime dateCreate;
@@ -73,6 +77,14 @@ public class User {
 
     public void setRole(ERole role) {
         this.role = role;
+    }
+
+    public EStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(EStatus status) {
+        this.status = status;
     }
 
     public LocalDateTime getDateCreate() {

@@ -1,8 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.api.IDishDao;
+import com.example.demo.dao.api.IRecipeDao;
 import com.example.demo.model.Recipe;
-import com.example.demo.service.api.IAppService;
 import com.example.demo.service.api.IRecipeService;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +9,9 @@ import java.util.List;
 
 @Service
 public class RecipeService implements IRecipeService {
-    private final IDishDao dishDao;
+    private final IRecipeDao dishDao;
 
-    public RecipeService(IDishDao dishDao) {
+    public RecipeService(IRecipeDao dishDao) {
         this.dishDao = dishDao;
     }
 
@@ -35,7 +34,8 @@ public class RecipeService implements IRecipeService {
     public Recipe update(Recipe model, long id) {
         Recipe updateRecipe = getById(id);
         updateRecipe.setName(model.getName());
-        updateRecipe.setUser(model.getUser());
+        updateRecipe.setProducts(model.getProducts());
+        updateRecipe.setUserName(model.getUserName());
         return save(updateRecipe);
     }
 

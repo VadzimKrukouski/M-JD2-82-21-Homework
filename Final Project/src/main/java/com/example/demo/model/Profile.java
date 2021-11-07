@@ -5,6 +5,7 @@ import com.example.demo.model.api.ELifestyle;
 import com.example.demo.model.api.ETarget;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -26,7 +27,7 @@ public class Profile {
     private double weight;
 
     @Column
-    private LocalDateTime dateBirthday;
+    private LocalDate dateBirthday;
 
     @Column
     private EGender gender;
@@ -94,11 +95,11 @@ public class Profile {
         this.weight = weight;
     }
 
-    public LocalDateTime getDateBirthday() {
+    public LocalDate getDateBirthday() {
         return dateBirthday;
     }
 
-    public void setDateBirthday(LocalDateTime dateBirthday) {
+    public void setDateBirthday(LocalDate dateBirthday) {
         this.dateBirthday = dateBirthday;
     }
 
