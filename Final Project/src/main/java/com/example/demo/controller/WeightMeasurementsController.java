@@ -38,8 +38,8 @@ public class WeightMeasurementsController {
     @PostMapping
     public ResponseEntity<WeightMeasurements> addWeightMeasurement(@PathVariable(name = "id_profile") long idProfile,
                                                                    @RequestBody WeightMeasurements weightMeasurements){
-//        todo
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        WeightMeasurements save = weightMeasurementsService.save(weightMeasurements, idProfile);
+        return new ResponseEntity<>(save, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id_weight}/dt_update/{dt_update}")
