@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.dao.api.IProfileDao;
 import com.example.demo.model.Profile;
-import com.example.demo.service.api.IAppService;
 import com.example.demo.service.api.IProfileService;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +33,7 @@ public class ProfileService implements IProfileService {
     @Override
     public Profile update(Profile model, long id) {
         Profile updateProfile = getById(id);
-        updateProfile.setDateBirthday(model.getDateBirthday());
+        updateProfile.setDateOfBirthday(model.getDateOfBirthday());
         updateProfile.setGender(model.getGender());
         updateProfile.setHeight(model.getHeight());
         updateProfile.setUser(model.getUser());
