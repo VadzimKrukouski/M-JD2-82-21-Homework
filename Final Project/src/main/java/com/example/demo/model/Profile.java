@@ -3,11 +3,11 @@ package com.example.demo.model;
 import com.example.demo.model.api.EGender;
 import com.example.demo.model.api.ELifestyle;
 import com.example.demo.model.api.ETarget;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "profile")
@@ -27,7 +27,8 @@ public class Profile {
     private double weight;
 
     @Column
-    private LocalDate dateBirthday;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
+    private LocalDate dateOfBirthday;
 
     @Column
     private EGender gender;
@@ -95,12 +96,12 @@ public class Profile {
         this.weight = weight;
     }
 
-    public LocalDate getDateBirthday() {
-        return dateBirthday;
+    public LocalDate getDateOfBirthday() {
+        return dateOfBirthday;
     }
 
-    public void setDateBirthday(LocalDate dateBirthday) {
-        this.dateBirthday = dateBirthday;
+    public void setDateOfBirthday(LocalDate dateBirthday) {
+        this.dateOfBirthday = dateBirthday;
     }
 
     public EGender getGender() {
