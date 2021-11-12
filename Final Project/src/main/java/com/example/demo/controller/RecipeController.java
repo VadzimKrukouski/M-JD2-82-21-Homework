@@ -3,6 +3,10 @@ package com.example.demo.controller;
 import com.example.demo.model.Recipe;
 import com.example.demo.service.RecipeService;
 import com.example.demo.service.api.IRecipeService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +27,17 @@ public class RecipeController {
     public ResponseEntity<List<Recipe>> getRecipe(@RequestParam(value = "page", defaultValue = "0") int page,
                                                   @RequestParam(value = "size", defaultValue = "10") int size,
                                                   @RequestParam(required = false) String name) {
-        List<Recipe> recipeList = recipeService.getAll();
-        return new ResponseEntity<>(recipeList, HttpStatus.OK);
+        if (name == null) {
+            Pageable pageRequest = PageRequest.of(page, size);
+            Page<Recipe> recipePage = recipeService.getAll(pageRequest);
+            List<Recipe> recipeList = recipePage.getContent();
+            return new ResponseEntity<>(recipeList, HttpStatus.OK);
+        } else {
+            Pageable pageRequest = PageRequest.of(page, size, Sort.by(name));
+            Page<Recipe> recipePage = recipeService.getAll(pageRequest);
+            List<Recipe> recipeList = recipePage.getContent();
+            return new ResponseEntity<>(recipeList, HttpStatus.OK);
+        }
     }
 
     @GetMapping("/{id}")

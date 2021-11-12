@@ -7,45 +7,57 @@ import com.example.demo.service.api.IProfileService;
 import com.example.demo.service.api.IWeightMeasurementsService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class WeightMeasurementsService implements IWeightMeasurementsService {
-    private final IWeightMeasurementsDao weightMeasurements;
+    private final IWeightMeasurementsDao weightMeasurementsDao;
     private final IProfileService profileService;
 
-    public WeightMeasurementsService(IWeightMeasurementsDao weightMeasurements, IProfileService profileService) {
-        this.weightMeasurements = weightMeasurements;
+    public WeightMeasurementsService(IWeightMeasurementsDao weightMeasurementsDao, IProfileService profileService) {
+        this.weightMeasurementsDao = weightMeasurementsDao;
         this.profileService = profileService;
     }
 
     @Override
     public WeightMeasurements getById(long id) {
-        return weightMeasurements.findById(id).orElse(null);
+        return weightMeasurementsDao.findById(id).orElse(null);
+    }
+
+
+    @Override
+    public WeightMeasurements getByIdProfileAndId(long idProfile, long idWeight) {
+        return weightMeasurementsDao.findAllByProfileIdAndId(idProfile, idWeight);
     }
 
     @Override
-    public WeightMeasurements save(WeightMeasurements model, long idProfile) {
+    public WeightMeasurements save(WeightMeasurements weightMeasurements, long idProfile) {
         Profile profile = profileService.getById(idProfile);
-        model.setProfile(profile);
-        return weightMeasurements.save(model);
+        weightMeasurements.setProfile(profile);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        weightMeasurements.setDateCreate(localDateTime);
+        weightMeasurements.setDateUpdate(localDateTime);
+        return weightMeasurementsDao.save(weightMeasurements);
     }
 
     @Override
     public List<WeightMeasurements> getAll() {
-        return weightMeasurements.findAll();
+        return weightMeasurementsDao.findAll();
     }
 
     @Override
-    public WeightMeasurements update(WeightMeasurements model, long id, long idProfile) {
+    public WeightMeasurements update(WeightMeasurements weightMeasurements, long id, long idProfile) {
         WeightMeasurements updateWeightMeasurement = getById(id);
-        updateWeightMeasurement.setProfile(model.getProfile());
-        updateWeightMeasurement.setWeight(model.getWeight());
+        Profile profile = profileService.getById(idProfile);
+        updateWeightMeasurement.setProfile(profile);
+        updateWeightMeasurement.setWeight(weightMeasurements.getWeight());
+        updateWeightMeasurement.setDateUpdate(LocalDateTime.now());
         return save(updateWeightMeasurement, idProfile);
     }
 
     @Override
     public void delete(long id) {
-        weightMeasurements.deleteById(id);
+        weightMeasurementsDao.deleteById(id);
     }
 }

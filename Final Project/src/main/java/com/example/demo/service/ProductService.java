@@ -23,8 +23,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product save(Product model) {
-        return productDao.save(model);
+    public Product save(Product product) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        product.setDateCreate(localDateTime);
+        product.setDateUpdate(localDateTime);
+        return productDao.save(product);
     }
 
     @Override
@@ -33,17 +36,17 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product update(Product model, long id) {
+    public Product update(Product product, long id) {
         Product updateProduct = getById(id);
 
-        updateProduct.setName(model.getName());
-        updateProduct.setCalories(model.getCalories());
-        updateProduct.setCarbohydrates(model.getCarbohydrates());
-        updateProduct.setProteins(model.getProteins());
-        updateProduct.setFats(model.getFats());
-        updateProduct.setBrand(model.getBrand());
-        updateProduct.setWeight(model.getWeight());
-        updateProduct.setUser(model.getUser());
+        updateProduct.setName(product.getName());
+        updateProduct.setCalories(product.getCalories());
+        updateProduct.setCarbohydrates(product.getCarbohydrates());
+        updateProduct.setProteins(product.getProteins());
+        updateProduct.setFats(product.getFats());
+        updateProduct.setBrand(product.getBrand());
+        updateProduct.setWeight(product.getWeight());
+        updateProduct.setUser(product.getUser());
         updateProduct.setDateUpdate(LocalDateTime.now());
 
         return save(updateProduct);

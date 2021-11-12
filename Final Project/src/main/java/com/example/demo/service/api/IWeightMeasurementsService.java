@@ -6,8 +6,9 @@ import java.util.List;
 
 public interface IWeightMeasurementsService {
     WeightMeasurements getById(long id);
-    WeightMeasurements save(WeightMeasurements model, long idProfile);
+    WeightMeasurements getByIdProfileAndId(long idProfile, long idWeight);
+    WeightMeasurements save(WeightMeasurements weightMeasurements, long idProfile);
     List<WeightMeasurements> getAll();
-    WeightMeasurements update(WeightMeasurements model, long id, long idProfile);
+    WeightMeasurements update(WeightMeasurements weightMeasurements, long id, long idProfile);
     void delete(long id);
 }

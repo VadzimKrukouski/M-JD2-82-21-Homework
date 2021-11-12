@@ -31,15 +31,15 @@ public class WeightMeasurementsController {
     @GetMapping("/{id_weight}")
     public ResponseEntity<WeightMeasurements> getWeightMeasurementsById(@PathVariable(name = "id_profile") long idProfile,
                                                                         @PathVariable(name = "id_weight") long idWeightMeasurements){
-//        todo
-        return new ResponseEntity<>(HttpStatus.OK);
+        WeightMeasurements weightMeasurements = weightMeasurementsService.getByIdProfileAndId(idProfile, idWeightMeasurements);
+                return new ResponseEntity<>(weightMeasurements, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<WeightMeasurements> addWeightMeasurement(@PathVariable(name = "id_profile") long idProfile,
                                                                    @RequestBody WeightMeasurements weightMeasurements){
-        WeightMeasurements save = weightMeasurementsService.save(weightMeasurements, idProfile);
-        return new ResponseEntity<>(save, HttpStatus.CREATED);
+        WeightMeasurements newMeasurements = weightMeasurementsService.save(weightMeasurements, idProfile);
+        return new ResponseEntity<>(newMeasurements, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id_weight}/dt_update/{dt_update}")

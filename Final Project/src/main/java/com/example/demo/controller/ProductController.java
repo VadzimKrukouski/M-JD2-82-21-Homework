@@ -62,7 +62,7 @@ public class ProductController {
 
     @DeleteMapping("/{id}/dt_update/{dt_update}")
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable (name = "id") long id,
-                                                    @PathVariable (name = "dt_update") Product product){
+                                                    @PathVariable (name = "dt_update") LocalDateTime dateUpdate){
         productService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

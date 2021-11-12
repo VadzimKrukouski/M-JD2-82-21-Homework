@@ -6,8 +6,9 @@ import java.util.List;
 
 public interface IWorkoutService {
     Workout getById(long id);
-    Workout save(Workout model);
+    Workout findAllByProfileIdAndId(long idProfile, long idWorkout);
+    Workout save(Workout workout, long idProfile);
     List<Workout> getAll();
-    Workout update(Workout model, long id);
+    Workout update(Workout workout, long idWorkout, long idProfile);
     void delete(long id);
 }

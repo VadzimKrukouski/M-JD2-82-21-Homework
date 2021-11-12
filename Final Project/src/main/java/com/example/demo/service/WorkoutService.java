@@ -1,47 +1,62 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.api.IWorkoutDao;
+import com.example.demo.model.Profile;
 import com.example.demo.model.Workout;
+import com.example.demo.service.api.IProfileService;
 import com.example.demo.service.api.IWorkoutService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class WorkoutService implements IWorkoutService {
-    private final IWorkoutDao workout;
+    private final IWorkoutDao workoutDao;
+    private final IProfileService profileService;
 
-    public WorkoutService(IWorkoutDao workout) {
-        this.workout = workout;
+    public WorkoutService(IWorkoutDao workoutDao, IProfileService profileService) {
+        this.workoutDao = workoutDao;
+        this.profileService = profileService;
     }
 
     @Override
     public Workout getById(long id) {
-        return workout.findById(id).orElse(null);
+        return workoutDao.findById(id).orElse(null);
     }
 
     @Override
-    public Workout save(Workout model) {
-        return workout.save(model);
+    public Workout findAllByProfileIdAndId(long idProfile, long idWorkout) {
+        return workoutDao.findAllByProfileIdAndId(idProfile, idWorkout);
+    }
+
+    @Override
+    public Workout save(Workout workout, long idProfile) {
+        Profile profile = profileService.getById(idProfile);
+        workout.setProfile(profile);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        workout.setDateCreate(localDateTime);
+        workout.setDateUpdate(localDateTime);
+        return workoutDao.save(workout);
     }
 
     @Override
     public List<Workout> getAll() {
-        return workout.findAll();
+        return workoutDao.findAll();
     }
 
     @Override
-    public Workout update(Workout model, long id) {
-        Workout updateWorkout = getById(id);
-        updateWorkout.setName(model.getName());
-        updateWorkout.setProfile(model.getProfile());
-        updateWorkout.setCalories(model.getCalories());
-        return save(updateWorkout);
+    public Workout update(Workout workout, long idWorkout, long idProfile) {
+        Workout updateWorkout = getById(idWorkout);
+        updateWorkout.setName(workout.getName());
+        updateWorkout.setProfile(workout.getProfile());
+        updateWorkout.setCalories(workout.getCalories());
+        return save(updateWorkout, idProfile);
     }
 
     @Override
     public void delete(long id) {
-        workout.deleteById(id);
+        workoutDao.deleteById(id);
 
     }
 }

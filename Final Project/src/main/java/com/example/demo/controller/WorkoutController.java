@@ -20,42 +20,42 @@ public class WorkoutController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Workout>> getListWorkouts (@PathVariable(name = "id_profile") long idProfile,
-                                                          @RequestParam(value = "page", defaultValue = "0") int page,
-                                                          @RequestParam(value = "size", defaultValue = "10") int size,
-                                                          @RequestParam(value = "dt_start", required = false) LocalDateTime dateStart,
-                                                          @RequestParam(value = "dt_end", required = false)LocalDateTime dateEnd){
+    public ResponseEntity<List<Workout>> getListWorkouts(@PathVariable(name = "id_profile") long idProfile,
+                                                         @RequestParam(value = "page", defaultValue = "0") int page,
+                                                         @RequestParam(value = "size", defaultValue = "10") int size,
+                                                         @RequestParam(value = "dt_start", required = false) LocalDateTime dateStart,
+                                                         @RequestParam(value = "dt_end", required = false) LocalDateTime dateEnd) {
 //        todo
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("{id_active}")
     public ResponseEntity<Workout> getWorkoutById(@PathVariable(name = "id_profile") long idProfile,
-                                                  @PathVariable(name = "id_active") long idWorkout){
-//        todo
-        return new ResponseEntity<>(HttpStatus.OK);
+                                                  @PathVariable(name = "id_active") long idWorkout) {
+        Workout workout = workoutService.findAllByProfileIdAndId(idProfile, idWorkout);
+        return new ResponseEntity<>(workout, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Workout> addWorkout(@PathVariable(name = "id_profile") long idProfile,
-                                              @RequestBody Workout workout){
-//        todo
-        return new ResponseEntity<>(HttpStatus.CREATED);
+                                              @RequestBody Workout workout) {
+        Workout newWorkout = workoutService.save(workout, idProfile);
+        return new ResponseEntity<>(newWorkout, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id_active}/dt_update/{dt_update}")
     public ResponseEntity<Workout> updateWorkout(@PathVariable(name = "id_profile") long idProfile,
                                                  @RequestBody Workout workout,
-                                                 @PathVariable (name = "id_active") long idActive,
-                                                 @PathVariable (name = "dt_update") LocalDateTime dateUpdate){
-//        todo
-        return new ResponseEntity<>(HttpStatus.OK);
+                                                 @PathVariable(name = "id_active") long idWorkout,
+                                                 @PathVariable(name = "dt_update") LocalDateTime dateUpdate) {
+        Workout updateWorkout = workoutService.update(workout, idWorkout, idProfile);
+        return new ResponseEntity<>(updateWorkout, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id_active}/dt_update/{dt_update}")
-    public ResponseEntity<HttpStatus> deleteWorkout (@PathVariable(name = "id_profile") long idProfile,
-                                                     @PathVariable(name = "id_active") long idWorkout,
-                                                     @PathVariable (name = "dt_update") LocalDateTime dateUpdate){
+    public ResponseEntity<HttpStatus> deleteWorkout(@PathVariable(name = "id_profile") long idProfile,
+                                                    @PathVariable(name = "id_active") long idWorkout,
+                                                    @PathVariable(name = "dt_update") LocalDateTime dateUpdate) {
 //        todo
         return new ResponseEntity<>(HttpStatus.OK);
     }
