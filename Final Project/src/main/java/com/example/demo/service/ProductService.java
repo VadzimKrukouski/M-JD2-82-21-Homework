@@ -2,11 +2,12 @@ package com.example.demo.service;
 
 import com.example.demo.dao.api.IProductDao;
 import com.example.demo.model.Product;
-import com.example.demo.service.api.IAppService;
 import com.example.demo.service.api.IProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Service
 public class ProductService implements IProductService {
@@ -27,13 +28,14 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> getAll() {
-        return productDao.findAll();
+    public Page<Product> getAll(Pageable pageable) {
+        return productDao.findAll(pageable);
     }
 
     @Override
     public Product update(Product model, long id) {
         Product updateProduct = getById(id);
+
         updateProduct.setName(model.getName());
         updateProduct.setCalories(model.getCalories());
         updateProduct.setCarbohydrates(model.getCarbohydrates());
@@ -42,6 +44,8 @@ public class ProductService implements IProductService {
         updateProduct.setBrand(model.getBrand());
         updateProduct.setWeight(model.getWeight());
         updateProduct.setUser(model.getUser());
+        updateProduct.setDateUpdate(LocalDateTime.now());
+
         return save(updateProduct);
     }
 

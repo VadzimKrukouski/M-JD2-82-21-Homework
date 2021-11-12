@@ -2,7 +2,6 @@ package com.example.demo.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table (name = "audit")
@@ -16,13 +15,13 @@ public class Audit {
     private User user;
 
     @Column
-    private String text;
+    private String description;
 
     @Column
-    private String entityType;
+    private String essenceName;
 
     @Column
-    private long entityId;
+    private long essenceId;
 
     @Column
     private LocalDateTime dateCreate;
@@ -38,20 +37,20 @@ public class Audit {
         this.user = user;
     }
 
-    public String getEntityType() {
-        return entityType;
+    public String getEssenceName() {
+        return essenceName;
     }
 
-    public void setEntityType(String entityType) {
-        this.entityType = entityType;
+    public void setEssenceName(String entityType) {
+        this.essenceName = entityType;
     }
 
-    public long getEntityId() {
-        return entityId;
+    public long getEssenceId() {
+        return essenceId;
     }
 
-    public void setEntityId(long entityId) {
-        this.entityId = entityId;
+    public void setEssenceId(long entityId) {
+        this.essenceId = entityId;
     }
 
     public long getId() {
@@ -62,12 +61,12 @@ public class Audit {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getDescription() {
+        return description;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setDescription(String text) {
+        this.description = text;
     }
 
     public LocalDateTime getDateCreate() {

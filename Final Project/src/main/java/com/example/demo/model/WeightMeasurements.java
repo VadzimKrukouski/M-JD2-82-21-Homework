@@ -14,7 +14,7 @@ public class WeightMeasurements {
     private Profile profile;
 
     @Column
-    private double value;
+    private double weight;
 
     @Column
     private LocalDateTime dateCreate;
@@ -41,12 +41,12 @@ public class WeightMeasurements {
         this.profile = profile;
     }
 
-    public double getValue() {
-        return value;
+    public double getWeight() {
+        return weight;
     }
 
-    public void setValue(double value) {
-        this.value = value;
+    public void setWeight(double value) {
+        this.weight = value;
     }
 
     public LocalDateTime getDateCreate() {

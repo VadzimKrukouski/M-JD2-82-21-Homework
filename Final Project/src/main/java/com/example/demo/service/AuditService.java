@@ -33,10 +33,10 @@ public class AuditService implements IAuditService {
     @Override
     public Audit update(Audit model, long id) {
         Audit updateAudit= getById(id);
-        updateAudit.setText(model.getText());
+        updateAudit.setDescription(model.getDescription());
         updateAudit.setUser(model.getUser());
-        updateAudit.setEntityType(model.getEntityType());
-        updateAudit.setEntityId(model.getEntityId());
+        updateAudit.setEssenceName(model.getEssenceName());
+        updateAudit.setEssenceId(model.getEssenceId());
 
         return save(updateAudit);
     }

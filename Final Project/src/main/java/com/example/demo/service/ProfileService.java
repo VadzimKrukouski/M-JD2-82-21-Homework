@@ -37,7 +37,7 @@ public class ProfileService implements IProfileService {
         updateProfile.setGender(model.getGender());
         updateProfile.setHeight(model.getHeight());
         updateProfile.setUser(model.getUser());
-        updateProfile.setWeight(model.getWeight());
+        updateProfile.setWeightTarget(model.getWeightTarget());
         updateProfile.setLifestyle(model.getLifestyle());
         updateProfile.setTarget(model.getTarget());
         return save(updateProfile);

@@ -32,7 +32,7 @@ public class UserAuditService {
 
             Audit audit = new Audit();
             audit.setDateCreate(user.getDateUpdate());
-            audit.setText("Create User " + user.getId());
+            audit.setDescription("Create User " + user.getId());
             audit.setUser(user);
             auditService.save(audit);
         } catch (Throwable e) {

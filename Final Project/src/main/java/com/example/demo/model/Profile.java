@@ -24,7 +24,10 @@ public class Profile {
     private double height;
 
     @Column
-    private double weight;
+    private double weightTarget;
+
+    @Column
+    private double weightFromWeightMeasurement;
 
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
@@ -88,12 +91,12 @@ public class Profile {
         this.height = height;
     }
 
-    public double getWeight() {
-        return weight;
+    public double getWeightTarget() {
+        return weightTarget;
     }
 
-    public void setWeight(double weight) {
-        this.weight = weight;
+    public void setWeightTarget(double weight) {
+        this.weightTarget = weight;
     }
 
     public LocalDate getDateOfBirthday() {
@@ -126,5 +129,13 @@ public class Profile {
 
     public void setDateUpdate(LocalDateTime dateUpdate) {
         this.dateUpdate = dateUpdate;
+    }
+
+    public double getWeightFromWeightMeasurement() {
+        return weightFromWeightMeasurement;
+    }
+
+    public void setWeightFromWeightMeasurement(double weightFromWeightMeasurement) {
+        this.weightFromWeightMeasurement = weightFromWeightMeasurement;
     }
 }

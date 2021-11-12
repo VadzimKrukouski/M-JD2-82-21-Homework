@@ -40,7 +40,7 @@ public class WeightMeasurementsService implements IWeightMeasurementsService {
     public WeightMeasurements update(WeightMeasurements model, long id, long idProfile) {
         WeightMeasurements updateWeightMeasurement = getById(id);
         updateWeightMeasurement.setProfile(model.getProfile());
-        updateWeightMeasurement.setValue(model.getValue());
+        updateWeightMeasurement.setWeight(model.getWeight());
         return save(updateWeightMeasurement, idProfile);
     }
 
