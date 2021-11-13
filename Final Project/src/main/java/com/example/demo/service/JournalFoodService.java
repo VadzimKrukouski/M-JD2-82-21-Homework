@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-public class JournalService implements IJournalService {
+public class JournalFoodService implements IJournalService {
     private final IJournalDao journalDao;
     private final IProfileService profileService;
 
-    public JournalService(IJournalDao journalDao, IProfileService profileService) {
+    public JournalFoodService(IJournalDao journalDao, IProfileService profileService) {
         this.journalDao = journalDao;
         this.profileService = profileService;
     }

@@ -16,10 +16,10 @@ public class Recipe {
     private String name;
 
     @OneToMany
-    private List<Product> products;
+    private List<ComponentDish> componentDishes;
 
-    @Column
-    private String userName;
+    @OneToOne
+    private User user;
 
     @Column
     private LocalDateTime dateCreate;
@@ -46,20 +46,20 @@ public class Recipe {
         this.name = name;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<ComponentDish> getComponentDishes() {
+        return componentDishes;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setComponentDishes(List<ComponentDish> componentDishes) {
+        this.componentDishes = componentDishes;
     }
 
-    public String getUserName() {
-        return userName;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public LocalDateTime getDateCreate() {

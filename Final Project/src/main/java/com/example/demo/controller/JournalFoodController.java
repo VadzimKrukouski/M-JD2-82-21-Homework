@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Journal;
-import com.example.demo.service.JournalService;
+import com.example.demo.service.JournalFoodService;
 import com.example.demo.service.api.IJournalService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,11 +15,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/profile")
-public class JournalController {
+public class JournalFoodController {
     private final IJournalService journalService;
 
-    public JournalController(JournalService journalService) {
-        this.journalService = journalService;
+    public JournalFoodController(JournalFoodService journalFoodService) {
+        this.journalService = journalFoodService;
     }
 
     @GetMapping("/{id_profile}/journal/food")

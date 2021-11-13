@@ -40,8 +40,8 @@ public class RecipeService implements IRecipeService {
     public Recipe update(Recipe recipe, long id) {
         Recipe updateRecipe = getById(id);
         updateRecipe.setName(recipe.getName());
-        updateRecipe.setProducts(recipe.getProducts());
-        updateRecipe.setUserName(recipe.getUserName());
+        updateRecipe.setComponentDishes(recipe.getComponentDishes());
+        updateRecipe.setUser(recipe.getUser());
         updateRecipe.setDateUpdate(LocalDateTime.now());
         return save(updateRecipe);
     }

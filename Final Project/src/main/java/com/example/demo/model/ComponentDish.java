@@ -12,9 +12,6 @@ public class ComponentDish {
     private long id;
 
     @OneToOne
-    private Recipe recipe;
-
-    @OneToOne
     private Product product;
 
     @Column
@@ -37,14 +34,6 @@ public class ComponentDish {
         this.id = id;
     }
 
-    public Recipe getDish() {
-        return recipe;
-    }
-
-    public void setDish(Recipe recipe) {
-        this.recipe = recipe;
-    }
-
     public Product getProduct() {
         return product;
     }
@@ -59,14 +48,6 @@ public class ComponentDish {
 
     public void setWeightProduct(double weight) {
         this.weightProduct = weight;
-    }
-
-    public Recipe getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
     }
 
     public LocalDateTime getDateCreate() {

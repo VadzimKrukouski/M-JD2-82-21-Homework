@@ -38,7 +38,7 @@ public class UserController {
                 .builder()
                 .setId("softtekJWT")
                 .setSubject(username)
-                .claim("autorities", grantedAuthorities.stream()
+                .claim("authorities", grantedAuthorities.stream()
                         .map(GrantedAuthority::getAuthority)
                         .collect(Collectors.toList()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
