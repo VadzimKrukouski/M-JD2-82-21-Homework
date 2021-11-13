@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.example.demo.model.api.EEssenceName;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -18,7 +20,7 @@ public class Audit {
     private String description;
 
     @Column
-    private String essenceName;
+    private EEssenceName essenceName;
 
     @Column
     private long essenceId;
@@ -37,12 +39,12 @@ public class Audit {
         this.user = user;
     }
 
-    public String getEssenceName() {
+    public EEssenceName getEssenceName() {
         return essenceName;
     }
 
-    public void setEssenceName(String entityType) {
-        this.essenceName = entityType;
+    public void setEssenceName(EEssenceName essenceName) {
+        this.essenceName = essenceName;
     }
 
     public long getEssenceId() {

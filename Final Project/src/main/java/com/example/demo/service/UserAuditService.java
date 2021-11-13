@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.model.Audit;
 import com.example.demo.model.User;
+import com.example.demo.model.api.EEssenceName;
 import com.example.demo.security.UserHolder;
 import com.example.demo.service.api.IAuditService;
 import org.aspectj.lang.JoinPoint;
@@ -30,8 +31,8 @@ public class UserAuditService {
             Audit audit = new Audit();
             audit.setDateCreate(user.getDateUpdate());
             audit.setDescription("Create User " + user.getId());
-//            audit.setUser(userHolder.getAuthentication());
-            audit.setEssenceName("User");
+//            audit.setUser(userHolder.getAuthentication().);
+            audit.setEssenceName(EEssenceName.USER);
             audit.setEssenceId(user.getId());
             auditService.save(audit);
         } catch (Throwable e) {
@@ -50,7 +51,7 @@ public class UserAuditService {
             audit.setDateCreate(user.getDateUpdate());
             audit.setDescription("Update User " + user.getId());
 //            audit.setUser(userHolder.getAuthentication());
-            audit.setEssenceName("User");
+            audit.setEssenceName(EEssenceName.USER);
             audit.setEssenceId(user.getId());
             auditService.save(audit);
         } catch (Throwable e) {

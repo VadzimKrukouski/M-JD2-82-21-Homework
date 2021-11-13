@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.model.Audit;
 import com.example.demo.model.Product;
+import com.example.demo.model.api.EEssenceName;
 import com.example.demo.security.UserHolder;
 import com.example.demo.service.api.IAuditService;
 import org.aspectj.lang.JoinPoint;
@@ -31,7 +32,7 @@ public class ProductAuditService {
             audit.setDateCreate(product.getDateUpdate());
             audit.setDescription("Create Product " + product.getId());
 //            audit.setUser(userHolder.getAuthentication());
-            audit.setEssenceName("Product");
+            audit.setEssenceName(EEssenceName.PRODUCT);
             audit.setEssenceId(product.getId());
             auditService.save(audit);
         } catch (Throwable e) {
@@ -50,7 +51,7 @@ public class ProductAuditService {
             audit.setDateCreate(product.getDateUpdate());
             audit.setDescription("Update Product " + product.getId());
 //            audit.setUser(userHolder.getAuthentication());
-            audit.setEssenceName("Product");
+            audit.setEssenceName(EEssenceName.PRODUCT);
             audit.setEssenceId(product.getId());
             auditService.save(audit);
         } catch (Throwable e) {

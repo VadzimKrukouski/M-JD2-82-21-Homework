@@ -32,7 +32,7 @@ public class JournalController {
         return new ResponseEntity<>(journalList, HttpStatus.OK);
     }
 
-    @GetMapping("/{id_profile}/journal/food/{day}")
+    @GetMapping("/{id_profile}/journal/food/byDay/{day}")
     public ResponseEntity<List<Journal>> getListJournalDay(@PathVariable(name = "id_profile") long idProfile,
                                                            @PathVariable(name = "day") int day) {
 //        todo

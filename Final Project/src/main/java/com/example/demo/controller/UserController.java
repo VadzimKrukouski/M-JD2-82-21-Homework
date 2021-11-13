@@ -20,13 +20,13 @@ import java.util.stream.Collectors;
 public class UserController {
 
     @PostMapping("user")
-    public User login(@RequestBody LoginDTO loginDTO) {
+    public String login(@RequestBody LoginDTO loginDTO) {
         String token = getJWTToken(loginDTO.getLogin());
         User user = new User();
         user.setLogin(loginDTO.getLogin());
-        user.setToken(token);
+        user.setPassword(loginDTO.getPassword());
 
-        return user;
+        return token;
 
     }
 
