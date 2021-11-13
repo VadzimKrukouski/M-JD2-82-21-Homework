@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.dao.api.IComponentDishDao;
 import com.example.demo.dao.api.IRecipeDao;
+import com.example.demo.model.ComponentDish;
 import com.example.demo.model.Recipe;
 import com.example.demo.service.api.IRecipeService;
 import org.springframework.data.domain.Page;
@@ -13,9 +15,11 @@ import java.util.List;
 @Service
 public class RecipeService implements IRecipeService {
     private final IRecipeDao dishDao;
+    private final IComponentDishDao componentDishDao;
 
-    public RecipeService(IRecipeDao dishDao) {
+    public RecipeService(IRecipeDao dishDao, IComponentDishDao componentDishDao) {
         this.dishDao = dishDao;
+        this.componentDishDao = componentDishDao;
     }
 
     @Override
@@ -28,6 +32,12 @@ public class RecipeService implements IRecipeService {
         LocalDateTime localDateTime = LocalDateTime.now();
         recipe.setDateCreate(localDateTime);
         recipe.setDateUpdate(localDateTime);
+        List<ComponentDish> componentDishes = recipe.getComponentDishes();
+        for (ComponentDish componentDish : componentDishes) {
+            componentDish.setDateCreate(recipe.getDateCreate());
+            componentDish.setDateUpdate(recipe.getDateUpdate());
+            componentDishDao.save(componentDish);
+        }
         return dishDao.save(recipe);
     }
 

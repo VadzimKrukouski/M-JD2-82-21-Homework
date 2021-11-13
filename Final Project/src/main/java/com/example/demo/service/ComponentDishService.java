@@ -34,7 +34,6 @@ public class ComponentDishService implements IComponentDishService {
     @Override
     public ComponentDish update(ComponentDish model, long id) {
         ComponentDish updateComponentDish = getById(id);
-        updateComponentDish.setDish(model.getDish());
         updateComponentDish.setProduct(model.getProduct());
         updateComponentDish.setWeightProduct(model.getWeightProduct());
         return save(updateComponentDish);
