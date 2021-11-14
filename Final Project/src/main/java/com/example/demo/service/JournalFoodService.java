@@ -55,7 +55,7 @@ public class JournalFoodService implements IJournalService {
         updateJournal.setMealTime(journal.getMealTime());
         updateJournal.setDateUpdate(LocalDateTime.now());
 
-        return save(updateJournal, idProfile);
+        return journalDao.save(updateJournal);
     }
 
     @Override

@@ -53,7 +53,7 @@ public class WeightMeasurementsService implements IWeightMeasurementsService {
         updateWeightMeasurement.setProfile(profile);
         updateWeightMeasurement.setWeight(weightMeasurements.getWeight());
         updateWeightMeasurement.setDateUpdate(LocalDateTime.now());
-        return save(updateWeightMeasurement, idProfile);
+        return weightMeasurementsDao.save(updateWeightMeasurement);
     }
 
     @Override

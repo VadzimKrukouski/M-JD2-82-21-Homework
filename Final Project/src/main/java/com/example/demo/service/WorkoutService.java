@@ -51,7 +51,7 @@ public class WorkoutService implements IWorkoutService {
         updateWorkout.setName(workout.getName());
         updateWorkout.setProfile(workout.getProfile());
         updateWorkout.setCalories(workout.getCalories());
-        return save(updateWorkout, idProfile);
+        return workoutDao.save(updateWorkout);
     }
 
     @Override

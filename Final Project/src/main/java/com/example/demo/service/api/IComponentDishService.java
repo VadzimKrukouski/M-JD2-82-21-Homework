@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface IComponentDishService {
     ComponentDish getById(long id);
-    ComponentDish save(ComponentDish model);
+    ComponentDish save(ComponentDish componentDish);
     List<ComponentDish> getAll();
-    ComponentDish update(ComponentDish model, long id);
+    ComponentDish update(ComponentDish componentDish, long id);
     void delete(long id);
 }

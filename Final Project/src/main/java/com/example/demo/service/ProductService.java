@@ -49,7 +49,7 @@ public class ProductService implements IProductService {
         updateProduct.setUser(product.getUser());
         updateProduct.setDateUpdate(LocalDateTime.now());
 
-        return save(updateProduct);
+        return productDao.save(updateProduct);
     }
 
     @Override

@@ -39,7 +39,7 @@ public class UserService implements IUserService {
         updateUser.setName(model.getName());
         updateUser.setPassword(model.getPassword());
         updateUser.setRole(model.getRole());
-        return save(updateUser);
+        return userDao.save(updateUser);
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.example.demo.service.api.IAppService;
 import com.example.demo.service.api.IComponentDishService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,8 +23,11 @@ public class ComponentDishService implements IComponentDishService {
     }
 
     @Override
-    public ComponentDish save(ComponentDish model) {
-        return componentDishDao.save(model);
+    public ComponentDish save(ComponentDish componentDish) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        componentDish.setDateCreate(localDateTime);
+        componentDish.setDateUpdate(localDateTime);
+        return componentDishDao.save(componentDish);
     }
 
     @Override
@@ -32,11 +36,11 @@ public class ComponentDishService implements IComponentDishService {
     }
 
     @Override
-    public ComponentDish update(ComponentDish model, long id) {
+    public ComponentDish update(ComponentDish componentDish, long id) {
         ComponentDish updateComponentDish = getById(id);
-        updateComponentDish.setProduct(model.getProduct());
-        updateComponentDish.setWeightProduct(model.getWeightProduct());
-        return save(updateComponentDish);
+        updateComponentDish.setProduct(componentDish.getProduct());
+        updateComponentDish.setWeightProduct(componentDish.getWeightProduct());
+        return componentDishDao.save(updateComponentDish);
     }
 
     @Override

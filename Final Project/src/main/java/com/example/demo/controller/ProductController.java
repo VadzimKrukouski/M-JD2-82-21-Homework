@@ -52,10 +52,10 @@ public class ProductController {
         return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}/dt_update/{dt_update}")
+    @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable (name = "id") long id,
-                                                 @RequestBody Product product,
-                                                 @PathVariable (name = "dt_update")LocalDateTime dateUpdate){
+                                                 @RequestBody Product product
+                                                 /*@PathVariable (name = "dt_update")LocalDateTime dateUpdate*/){
         Product updateProduct = productService.update(product, id);
         return new ResponseEntity<>(updateProduct,HttpStatus.OK);
     }

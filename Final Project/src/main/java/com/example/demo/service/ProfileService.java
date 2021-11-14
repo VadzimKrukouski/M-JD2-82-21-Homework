@@ -40,7 +40,7 @@ public class ProfileService implements IProfileService {
         updateProfile.setWeightTarget(model.getWeightTarget());
         updateProfile.setLifestyle(model.getLifestyle());
         updateProfile.setTarget(model.getTarget());
-        return save(updateProfile);
+        return profileDao.save(updateProfile);
     }
 
     @Override

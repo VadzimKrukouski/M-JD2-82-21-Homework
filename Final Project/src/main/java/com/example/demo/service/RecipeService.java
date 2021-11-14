@@ -4,6 +4,7 @@ import com.example.demo.dao.api.IComponentDishDao;
 import com.example.demo.dao.api.IRecipeDao;
 import com.example.demo.model.ComponentDish;
 import com.example.demo.model.Recipe;
+import com.example.demo.service.api.IComponentDishService;
 import com.example.demo.service.api.IRecipeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,11 +16,11 @@ import java.util.List;
 @Service
 public class RecipeService implements IRecipeService {
     private final IRecipeDao dishDao;
-    private final IComponentDishDao componentDishDao;
+    private final IComponentDishService componentDishService;
 
-    public RecipeService(IRecipeDao dishDao, IComponentDishDao componentDishDao) {
+    public RecipeService(IRecipeDao dishDao, IComponentDishDao componentDishDao, IComponentDishService componentDishService) {
         this.dishDao = dishDao;
-        this.componentDishDao = componentDishDao;
+        this.componentDishService = componentDishService;
     }
 
     @Override
@@ -36,7 +37,7 @@ public class RecipeService implements IRecipeService {
         for (ComponentDish componentDish : componentDishes) {
             componentDish.setDateCreate(recipe.getDateCreate());
             componentDish.setDateUpdate(recipe.getDateUpdate());
-            componentDishDao.save(componentDish);
+            componentDishService.save(componentDish);
         }
         return dishDao.save(recipe);
     }
@@ -50,10 +51,15 @@ public class RecipeService implements IRecipeService {
     public Recipe update(Recipe recipe, long id) {
         Recipe updateRecipe = getById(id);
         updateRecipe.setName(recipe.getName());
-        updateRecipe.setComponentDishes(recipe.getComponentDishes());
+        List<ComponentDish> componentDishes = recipe.getComponentDishes();
+        for (ComponentDish componentDish : componentDishes) {
+            componentDish.setDateCreate(recipe.getDateCreate());
+            componentDish.setDateUpdate(recipe.getDateUpdate());
+            componentDishService.save(componentDish);
+        }
         updateRecipe.setUser(recipe.getUser());
         updateRecipe.setDateUpdate(LocalDateTime.now());
-        return save(updateRecipe);
+        return dishDao.save(updateRecipe);
     }
 
     @Override
