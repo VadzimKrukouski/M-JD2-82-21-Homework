@@ -37,12 +37,17 @@ public class Product {
     private User user;
 
     @Column
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dateCreate;
 
+
+    @Version
     @Column
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dateUpdate;
+
+//    @Version
+//    protected Long version;
 
     public Product() {
     }
@@ -134,6 +139,14 @@ public class Product {
     public void setDateUpdate(LocalDateTime dateUpdate) {
         this.dateUpdate = dateUpdate;
     }
+
+//    public Long getVersion() {
+//        return version;
+//    }
+//
+//    public void setVersion(Long version) {
+//        this.version = version;
+//    }
 }
 
 

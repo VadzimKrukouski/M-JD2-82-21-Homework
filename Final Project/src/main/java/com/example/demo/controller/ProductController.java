@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -67,8 +68,10 @@ public class ProductController {
     @PutMapping("/{id}/dt_update/{dt_update}")
     public ResponseEntity<Product> updateProduct(@PathVariable(name = "id") long id,
                                                  @RequestBody Product product,
-                                                 @PathVariable(name = "dt_update") LocalDateTime dateUpdate) {
+                                                 @PathVariable(name = "dt_update") @DateTimeFormat (pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime dateUpdate) {
         try {
+//            product.setVersion(version);
+            product.setDateUpdate(dateUpdate);
             Product updateProduct = productService.update(product, id);
             return new ResponseEntity<>(updateProduct, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
@@ -78,9 +81,10 @@ public class ProductController {
 
     @DeleteMapping("/{id}/dt_update/{dt_update}")
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable(name = "id") long id,
-                                                    @PathVariable(name = "dt_update") LocalDateTime dateUpdate) {
+                                                    @PathVariable(name = "dt_update") String dateUpdate) {
         try {
-            productService.delete(id);
+            LocalDateTime dateTime = LocalDateTime.parse(dateUpdate);
+            productService.delete(id, dateTime);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

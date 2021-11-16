@@ -47,27 +47,32 @@ public class ProductService implements IProductService {
 
     @Override
     public Product update(Product product, long id) {
-        Product updateProduct = getById(id);
+        try{
+            Product updateProduct = getById(id);
 
-        updateProduct.setName(product.getName());
-        updateProduct.setCalories(product.getCalories());
-        updateProduct.setCarbohydrates(product.getCarbohydrates());
-        updateProduct.setProteins(product.getProteins());
-        updateProduct.setFats(product.getFats());
-        updateProduct.setBrand(product.getBrand());
-        updateProduct.setWeight(product.getWeight());
+            updateProduct.setName(product.getName());
+            updateProduct.setCalories(product.getCalories());
+            updateProduct.setCarbohydrates(product.getCarbohydrates());
+            updateProduct.setProteins(product.getProteins());
+            updateProduct.setFats(product.getFats());
+            updateProduct.setBrand(product.getBrand());
+            updateProduct.setWeight(product.getWeight());
+//            updateProduct.setVersion(product.getVersion());
 
-        String loginUser = userHolder.getAuthentication().getName();
-        User user = userService.findUserByLogin(loginUser);
-        updateProduct.setUser(user);
+            String loginUser = userHolder.getAuthentication().getName();
+            User user = userService.findUserByLogin(loginUser);
+            updateProduct.setUser(user);
 
-        updateProduct.setDateUpdate(LocalDateTime.now());
+            updateProduct.setDateUpdate(product.getDateUpdate());
 
-        return productDao.save(updateProduct);
+            return productDao.save(updateProduct);
+        } catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Error update Product");
+        }
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(long id, LocalDateTime dateTime) {
         productDao.deleteById(id);
     }
 }
