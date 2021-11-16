@@ -2,7 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.dao.api.IProductDao;
 import com.example.demo.model.Product;
+import com.example.demo.model.User;
+import com.example.demo.security.UserHolder;
 import com.example.demo.service.api.IProductService;
+import com.example.demo.service.api.IUserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,9 +15,13 @@ import java.time.LocalDateTime;
 @Service
 public class ProductService implements IProductService {
     private final IProductDao productDao;
+    private final UserHolder userHolder;
+    private final IUserService userService;
 
-    public ProductService(IProductDao productDao) {
+    public ProductService(IProductDao productDao, UserHolder userHolder, IUserService userService) {
         this.productDao = productDao;
+        this.userHolder = userHolder;
+        this.userService = userService;
     }
 
     @Override
@@ -24,6 +31,9 @@ public class ProductService implements IProductService {
 
     @Override
     public Product save(Product product) {
+        String loginUser = userHolder.getAuthentication().getName();
+        User user = userService.findUserByLogin(loginUser);
+        product.setUser(user);
         LocalDateTime localDateTime = LocalDateTime.now();
         product.setDateCreate(localDateTime);
         product.setDateUpdate(localDateTime);
@@ -46,7 +56,11 @@ public class ProductService implements IProductService {
         updateProduct.setFats(product.getFats());
         updateProduct.setBrand(product.getBrand());
         updateProduct.setWeight(product.getWeight());
-        updateProduct.setUser(product.getUser());
+
+        String loginUser = userHolder.getAuthentication().getName();
+        User user = userService.findUserByLogin(loginUser);
+        updateProduct.setUser(user);
+
         updateProduct.setDateUpdate(LocalDateTime.now());
 
         return productDao.save(updateProduct);

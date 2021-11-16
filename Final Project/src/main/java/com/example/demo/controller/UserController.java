@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.LoginDTO;
 import com.example.demo.model.User;
+import com.example.demo.service.api.IUserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +19,11 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping()
 public class UserController {
+    private final IUserService userService;
+
+    public UserController(IUserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("user")
     public String login(@RequestBody LoginDTO loginDTO) {
@@ -25,6 +31,8 @@ public class UserController {
         User user = new User();
         user.setLogin(loginDTO.getLogin());
         user.setPassword(loginDTO.getPassword());
+        //переделать, временный вариант
+        userService.save(user);
 
         return token;
 

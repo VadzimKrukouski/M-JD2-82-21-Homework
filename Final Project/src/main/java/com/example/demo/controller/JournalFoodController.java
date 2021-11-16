@@ -1,8 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Journal;
+import com.example.demo.dto.CalculationCaloriesDTO;
+import com.example.demo.model.JournalFood;
 import com.example.demo.service.JournalFoodService;
-import com.example.demo.service.api.IJournalService;
+import com.example.demo.service.api.IJournalFoodService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,47 +17,47 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/profile")
 public class JournalFoodController {
-    private final IJournalService journalService;
+    private final IJournalFoodService journalService;
 
     public JournalFoodController(JournalFoodService journalFoodService) {
         this.journalService = journalFoodService;
     }
 
     @GetMapping("/{id_profile}/journal/food")
-    public ResponseEntity<List<Journal>> getListJournals(@PathVariable(name = "id_profile") long idProfile,
-                                                         @RequestParam(value = "page", defaultValue = "0") int page,
-                                                         @RequestParam(value = "size", defaultValue = "10") int size) {
+    public ResponseEntity<List<JournalFood>> getListJournals(@PathVariable(name = "id_profile") long idProfile,
+                                                             @RequestParam(value = "page", defaultValue = "0") int page,
+                                                             @RequestParam(value = "size", defaultValue = "10") int size) {
         Pageable pageRequest = PageRequest.of(page, size);
-        Page<Journal> journalPage = journalService.getAll(idProfile, pageRequest);
-        List<Journal> journalList = journalPage.getContent();
-        return new ResponseEntity<>(journalList, HttpStatus.OK);
+        Page<JournalFood> journalPage = journalService.getAll(idProfile, pageRequest);
+        List<JournalFood> journalFoodList = journalPage.getContent();
+        return new ResponseEntity<>(journalFoodList, HttpStatus.OK);
     }
 
     @GetMapping("/{id_profile}/journal/food/byDay/{day}")
-    public ResponseEntity<List<Journal>> getListJournalDay(@PathVariable(name = "id_profile") long idProfile,
-                                                           @PathVariable(name = "day") int day) {
+    public ResponseEntity<List<JournalFood>> getListJournalDay(@PathVariable(name = "id_profile") long idProfile,
+                                                               @PathVariable(name = "day") int day) {
 //        todo
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/{id_profile}/journal/food/{id_food}")
-    public ResponseEntity<Journal> getJournal(@PathVariable(name = "id_profile") long idProfile,
-                                              @PathVariable(name = "id_food") long idFood) {
-        Journal journal = journalService.getByIdAndProfileId(idProfile, idFood);
-        return new ResponseEntity<>(journal, HttpStatus.OK);
+    public ResponseEntity<CalculationCaloriesDTO> getJournal(@PathVariable(name = "id_profile") long idProfile,
+                                                  @PathVariable(name = "id_food") long idFood) {
+        CalculationCaloriesDTO journalFood = journalService.getByIdAndProfileId(idProfile, idFood);
+        return new ResponseEntity<>(journalFood, HttpStatus.OK);
     }
 
     @PostMapping("/{id_profile}/journal/food")
-    public ResponseEntity<Journal> addJournal(@PathVariable(name = "id_profile") long idProfile,
-                                              @RequestBody Journal journal) {
-        Journal newJournal = journalService.save(journal, idProfile);
-        return new ResponseEntity<>(newJournal, HttpStatus.CREATED);
+    public ResponseEntity<JournalFood> addJournal(@PathVariable(name = "id_profile") long idProfile,
+                                                  @RequestBody JournalFood journalFood) {
+        JournalFood newJournalFood = journalService.save(journalFood, idProfile);
+        return new ResponseEntity<>(newJournalFood, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id_profile}/journal/food/{id_food}/dt_update/{dt_update}")
-    public ResponseEntity<Journal> updateJournal(@PathVariable(name = "id_profile") long idProfile,
-                                                 @PathVariable(name = "id_food") long idFood,
-                                                 @PathVariable(name = "dt_update") LocalDateTime dateUpdate) {
+    public ResponseEntity<JournalFood> updateJournal(@PathVariable(name = "id_profile") long idProfile,
+                                                     @PathVariable(name = "id_food") long idFood,
+                                                     @PathVariable(name = "dt_update") LocalDateTime dateUpdate) {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

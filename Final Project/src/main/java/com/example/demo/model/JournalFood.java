@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table (name = "journal")
-public class Journal {
+@Table (name = "journalFood")
+public class JournalFood {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,7 @@ public class Journal {
     @Column
     private LocalDateTime dateUpdate;
 
-    public Journal() {
+    public JournalFood() {
     }
 
     public long getId() {

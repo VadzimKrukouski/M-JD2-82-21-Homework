@@ -4,7 +4,6 @@ import com.example.demo.model.api.ERole;
 import com.example.demo.model.api.EStatus;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,7 +17,7 @@ public class User {
     @Column
     private String name;
 
-    @Column
+    @Column (unique = true)
     private String login;
 
     @Column

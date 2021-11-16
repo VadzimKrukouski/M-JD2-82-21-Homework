@@ -7,6 +7,7 @@ import com.example.demo.service.api.IAppService;
 import com.example.demo.service.api.IUserService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,8 +24,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User save(User model) {
-        return userDao.save(model);
+    public User save(User user) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        user.setDateCreate(localDateTime);
+        user.setDateUpdate(localDateTime);
+        return userDao.save(user);
     }
 
     @Override
@@ -33,17 +37,22 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User update(User model, long id) {
+    public User update(User user, long id) {
         User updateUser = getById(id);
-        updateUser.setLogin(model.getLogin());
-        updateUser.setName(model.getName());
-        updateUser.setPassword(model.getPassword());
-        updateUser.setRole(model.getRole());
+        updateUser.setLogin(user.getLogin());
+        updateUser.setName(user.getName());
+        updateUser.setPassword(user.getPassword());
+        updateUser.setRole(user.getRole());
         return userDao.save(updateUser);
     }
 
     @Override
     public void delete(long id) {
         userDao.deleteById(id);
+    }
+
+    @Override
+    public User findUserByLogin(String login) {
+        return userDao.findUserByLogin(login);
     }
 }
