@@ -27,10 +27,14 @@ public class JournalFoodController {
     public ResponseEntity<List<JournalFood>> getListJournals(@PathVariable(name = "id_profile") long idProfile,
                                                              @RequestParam(value = "page", defaultValue = "0") int page,
                                                              @RequestParam(value = "size", defaultValue = "10") int size) {
-        Pageable pageRequest = PageRequest.of(page, size);
-        Page<JournalFood> journalPage = journalService.getAll(idProfile, pageRequest);
-        List<JournalFood> journalFoodList = journalPage.getContent();
-        return new ResponseEntity<>(journalFoodList, HttpStatus.OK);
+        try {
+            Pageable pageRequest = PageRequest.of(page, size);
+            Page<JournalFood> journalPage = journalService.getAll(idProfile, pageRequest);
+            List<JournalFood> journalFoodList = journalPage.getContent();
+            return new ResponseEntity<>(journalFoodList, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/{id_profile}/journal/food/byDay/{day}")
@@ -42,24 +46,37 @@ public class JournalFoodController {
 
     @GetMapping("/{id_profile}/journal/food/{id_food}")
     public ResponseEntity<CalculationCaloriesDTO> getJournal(@PathVariable(name = "id_profile") long idProfile,
-                                                  @PathVariable(name = "id_food") long idFood) {
-        CalculationCaloriesDTO journalFood = journalService.getByIdAndProfileId(idProfile, idFood);
-        return new ResponseEntity<>(journalFood, HttpStatus.OK);
+                                                             @PathVariable(name = "id_food") long idFood) {
+        try {
+            CalculationCaloriesDTO journalFood = journalService.getByIdAndProfileId(idProfile, idFood);
+            return new ResponseEntity<>(journalFood, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/{id_profile}/journal/food")
     public ResponseEntity<JournalFood> addJournal(@PathVariable(name = "id_profile") long idProfile,
                                                   @RequestBody JournalFood journalFood) {
-        JournalFood newJournalFood = journalService.save(journalFood, idProfile);
-        return new ResponseEntity<>(newJournalFood, HttpStatus.CREATED);
+        try {
+            JournalFood newJournalFood = journalService.save(journalFood, idProfile);
+            return new ResponseEntity<>(newJournalFood, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 
     @PutMapping("/{id_profile}/journal/food/{id_food}/dt_update/{dt_update}")
     public ResponseEntity<JournalFood> updateJournal(@PathVariable(name = "id_profile") long idProfile,
                                                      @PathVariable(name = "id_food") long idFood,
                                                      @PathVariable(name = "dt_update") LocalDateTime dateUpdate) {
+        try {
 
-        return new ResponseEntity<>(HttpStatus.OK);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 
     @DeleteMapping("/{id_profile}/journal/food/{id_food}/dt_update/{dt_update}")

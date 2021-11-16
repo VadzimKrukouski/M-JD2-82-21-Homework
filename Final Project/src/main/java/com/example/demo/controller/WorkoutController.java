@@ -26,21 +26,36 @@ public class WorkoutController {
                                                          @RequestParam(value = "dt_start", required = false) LocalDateTime dateStart,
                                                          @RequestParam(value = "dt_end", required = false) LocalDateTime dateEnd) {
 //        todo
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("{id_active}")
     public ResponseEntity<Workout> getWorkoutById(@PathVariable(name = "id_profile") long idProfile,
                                                   @PathVariable(name = "id_active") long idWorkout) {
-        Workout workout = workoutService.findAllByProfileIdAndId(idProfile, idWorkout);
-        return new ResponseEntity<>(workout, HttpStatus.OK);
+        try {
+            Workout workout = workoutService.findAllByProfileIdAndId(idProfile, idWorkout);
+            return new ResponseEntity<>(workout, HttpStatus.OK);
+        } catch (IllegalArgumentException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
     public ResponseEntity<Workout> addWorkout(@PathVariable(name = "id_profile") long idProfile,
                                               @RequestBody Workout workout) {
-        Workout newWorkout = workoutService.save(workout, idProfile);
-        return new ResponseEntity<>(newWorkout, HttpStatus.CREATED);
+        try {
+            Workout newWorkout = workoutService.save(workout, idProfile);
+            return new ResponseEntity<>(newWorkout, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
     }
 
     @PutMapping("/{id_active}/dt_update/{dt_update}")
@@ -48,8 +63,13 @@ public class WorkoutController {
                                                  @RequestBody Workout workout,
                                                  @PathVariable(name = "id_active") long idWorkout,
                                                  @PathVariable(name = "dt_update") LocalDateTime dateUpdate) {
-        Workout updateWorkout = workoutService.update(workout, idWorkout, idProfile);
-        return new ResponseEntity<>(updateWorkout, HttpStatus.OK);
+        try {
+            Workout updateWorkout = workoutService.update(workout, idWorkout, idProfile);
+            return new ResponseEntity<>(updateWorkout, HttpStatus.OK);
+        } catch (IllegalArgumentException e){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
     }
 
     @DeleteMapping("/{id_active}/dt_update/{dt_update}")
@@ -57,6 +77,12 @@ public class WorkoutController {
                                                     @PathVariable(name = "id_active") long idWorkout,
                                                     @PathVariable(name = "dt_update") LocalDateTime dateUpdate) {
 //        todo
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

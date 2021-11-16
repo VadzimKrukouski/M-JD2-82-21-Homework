@@ -24,46 +24,66 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getProducts(@RequestParam (value = "page", defaultValue = "0") int page,
-                                                     @RequestParam (value = "size", defaultValue = "10") int size,
-                                                     @RequestParam (required = false) String name ){
-        if (name!=null){
-            Pageable pageRequest = PageRequest.of(page, size, Sort.by(name));
-            Page<Product> productPage = productService.getAll(pageRequest);
-            List<Product> products = productPage.getContent();
-            return new ResponseEntity<>(products, HttpStatus.OK);
-        } else {
-            Pageable pageRequest = PageRequest.of(page, size);
-            Page<Product> productPage = productService.getAll(pageRequest);
-            List<Product> products = productPage.getContent();
-            return new ResponseEntity<>(products, HttpStatus.OK);
+    public ResponseEntity<List<Product>> getProducts(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                     @RequestParam(value = "size", defaultValue = "10") int size,
+                                                     @RequestParam(required = false) String name) {
+        try {
+            if (name != null) {
+                Pageable pageRequest = PageRequest.of(page, size, Sort.by(name));
+                Page<Product> productPage = productService.getAll(pageRequest);
+                List<Product> products = productPage.getContent();
+                return new ResponseEntity<>(products, HttpStatus.OK);
+            } else {
+                Pageable pageRequest = PageRequest.of(page, size);
+                Page<Product> productPage = productService.getAll(pageRequest);
+                List<Product> products = productPage.getContent();
+                return new ResponseEntity<>(products, HttpStatus.OK);
+            }
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable (name = "id") long id){
-        Product product = productService.getById(id);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+    public ResponseEntity<Product> getProduct(@PathVariable(name = "id") long id) {
+        try {
+            Product product = productService.getById(id);
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
-    public ResponseEntity<Product> addProduct(@RequestBody Product product){
-        Product newProduct = productService.save(product);
-        return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+        try {
+            Product newProduct = productService.save(product);
+            return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable (name = "id") long id,
-                                                 @RequestBody Product product
-                                                 /*@PathVariable (name = "dt_update")LocalDateTime dateUpdate*/){
-        Product updateProduct = productService.update(product, id);
-        return new ResponseEntity<>(updateProduct,HttpStatus.OK);
+    @PutMapping("/{id}/dt_update/{dt_update}")
+    public ResponseEntity<Product> updateProduct(@PathVariable(name = "id") long id,
+                                                 @RequestBody Product product,
+                                                 @PathVariable(name = "dt_update") LocalDateTime dateUpdate) {
+        try {
+            Product updateProduct = productService.update(product, id);
+            return new ResponseEntity<>(updateProduct, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 
     @DeleteMapping("/{id}/dt_update/{dt_update}")
-    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable (name = "id") long id,
-                                                    @PathVariable (name = "dt_update") LocalDateTime dateUpdate){
-        productService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable(name = "id") long id,
+                                                    @PathVariable(name = "dt_update") LocalDateTime dateUpdate) {
+        try {
+            productService.delete(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

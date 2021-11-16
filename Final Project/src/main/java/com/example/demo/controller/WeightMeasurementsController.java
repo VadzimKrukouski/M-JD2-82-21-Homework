@@ -22,40 +22,67 @@ public class WeightMeasurementsController {
     public ResponseEntity<List<WeightMeasurements>> getListWeightMeasurements(@PathVariable(name = "id_profile") long idProfile,
                                                                               @RequestParam(value = "page", defaultValue = "0") int page,
                                                                               @RequestParam(value = "size", defaultValue = "10") int size,
-                                                                              @RequestParam(value = "dt_start", required = false)LocalDateTime dateStart,
-                                                                              @RequestParam(value = "dt_end", required = false)LocalDateTime dateEnd){
+                                                                              @RequestParam(value = "dt_start", required = false) LocalDateTime dateStart,
+                                                                              @RequestParam(value = "dt_end", required = false) LocalDateTime dateEnd) {
 //        todo
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/{id_weight}")
     public ResponseEntity<WeightMeasurements> getWeightMeasurementsById(@PathVariable(name = "id_profile") long idProfile,
-                                                                        @PathVariable(name = "id_weight") long idWeightMeasurements){
-        WeightMeasurements weightMeasurements = weightMeasurementsService.getByIdProfileAndId(idProfile, idWeightMeasurements);
-                return new ResponseEntity<>(weightMeasurements, HttpStatus.OK);
+                                                                        @PathVariable(name = "id_weight") long idWeightMeasurements) {
+        try {
+            WeightMeasurements weightMeasurements = weightMeasurementsService.getByIdProfileAndId(idProfile, idWeightMeasurements);
+            return new ResponseEntity<>(weightMeasurements, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
     public ResponseEntity<WeightMeasurements> addWeightMeasurement(@PathVariable(name = "id_profile") long idProfile,
-                                                                   @RequestBody WeightMeasurements weightMeasurements){
-        WeightMeasurements newMeasurements = weightMeasurementsService.save(weightMeasurements, idProfile);
-        return new ResponseEntity<>(newMeasurements, HttpStatus.CREATED);
+                                                                   @RequestBody WeightMeasurements weightMeasurements) {
+
+        try {
+            WeightMeasurements newMeasurements = weightMeasurementsService.save(weightMeasurements, idProfile);
+            return new ResponseEntity<>(newMeasurements, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 
     @PutMapping("/{id_weight}/dt_update/{dt_update}")
-    public ResponseEntity<WeightMeasurements> updateWeightMeasurement (@PathVariable(name = "id_profile") long idProfile,
-                                                                       @RequestBody WeightMeasurements weightMeasurements,
-                                                                       @PathVariable (name = "id_weight") long idWeight,
-                                                                       @PathVariable (name = "dt_update") LocalDateTime dateUpdate){
+    public ResponseEntity<WeightMeasurements> updateWeightMeasurement(@PathVariable(name = "id_profile") long idProfile,
+                                                                      @RequestBody WeightMeasurements weightMeasurements,
+                                                                      @PathVariable(name = "id_weight") long idWeight,
+                                                                      @PathVariable(name = "dt_update") LocalDateTime dateUpdate) {
 //        todo
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 
     @DeleteMapping("/{id_weight}/dt_update/{dt_update}")
-    public ResponseEntity<HttpStatus> deleteWeightMeasurement (@PathVariable(name = "id_profile") long idProfile,
-                                                               @PathVariable(name = "id_weight") long idWeightMeasurement,
-                                                               @PathVariable (name = "dt_update") LocalDateTime dateUpdate){
+    public ResponseEntity<HttpStatus> deleteWeightMeasurement(@PathVariable(name = "id_profile") long idProfile,
+                                                              @PathVariable(name = "id_weight") long idWeightMeasurement,
+                                                              @PathVariable(name = "dt_update") LocalDateTime dateUpdate) {
 //        todo
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
