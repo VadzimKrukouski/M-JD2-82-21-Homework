@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.LoginDTO;
+import com.example.demo.model.Profile;
 import com.example.demo.model.User;
+import com.example.demo.service.api.IProfileService;
 import com.example.demo.service.api.IUserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,9 +22,11 @@ import java.util.stream.Collectors;
 @RequestMapping()
 public class UserController {
     private final IUserService userService;
+    private final IProfileService profileService;
 
-    public UserController(IUserService userService) {
+    public UserController(IUserService userService, IProfileService profileService) {
         this.userService = userService;
+        this.profileService = profileService;
     }
 
     @PostMapping("user")
@@ -31,8 +35,11 @@ public class UserController {
         User user = new User();
         user.setLogin(loginDTO.getLogin());
         user.setPassword(loginDTO.getPassword());
+
         //переделать, временный вариант
+        Profile profile = new Profile();
         userService.save(user);
+        profileService.save(profile);
 
         return token;
 

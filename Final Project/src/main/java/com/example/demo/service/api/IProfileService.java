@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface IProfileService {
     Profile getById(long id);
-    Profile save(Profile model);
+    Profile save(Profile profile);
     List<Profile> getAll();
-    Profile update(Profile model, long id);
+    Profile update(Profile profile, long id);
     void delete(long id);
 }

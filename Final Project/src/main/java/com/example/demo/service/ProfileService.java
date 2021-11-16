@@ -5,6 +5,7 @@ import com.example.demo.model.Profile;
 import com.example.demo.service.api.IProfileService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -21,8 +22,11 @@ public class ProfileService implements IProfileService {
     }
 
     @Override
-    public Profile save(Profile model) {
-        return profileDao.save(model);
+    public Profile save(Profile profile) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        profile.setDateCreate(localDateTime);
+        profile.setDateUpdate(localDateTime);
+        return profileDao.save(profile);
     }
 
     @Override
@@ -31,15 +35,15 @@ public class ProfileService implements IProfileService {
     }
 
     @Override
-    public Profile update(Profile model, long id) {
+    public Profile update(Profile profile, long id) {
         Profile updateProfile = getById(id);
-        updateProfile.setDateOfBirthday(model.getDateOfBirthday());
-        updateProfile.setGender(model.getGender());
-        updateProfile.setHeight(model.getHeight());
-        updateProfile.setUser(model.getUser());
-        updateProfile.setWeightTarget(model.getWeightTarget());
-        updateProfile.setLifestyle(model.getLifestyle());
-        updateProfile.setTarget(model.getTarget());
+        updateProfile.setDateOfBirthday(profile.getDateOfBirthday());
+        updateProfile.setGender(profile.getGender());
+        updateProfile.setHeight(profile.getHeight());
+        updateProfile.setUser(profile.getUser());
+        updateProfile.setWeightTarget(profile.getWeightTarget());
+        updateProfile.setLifestyle(profile.getLifestyle());
+        updateProfile.setTarget(profile.getTarget());
         return profileDao.save(updateProfile);
     }
 

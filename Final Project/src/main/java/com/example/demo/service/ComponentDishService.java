@@ -2,8 +2,9 @@ package com.example.demo.service;
 
 import com.example.demo.dao.api.IComponentDishDao;
 import com.example.demo.model.ComponentDish;
-import com.example.demo.service.api.IAppService;
+import com.example.demo.model.Product;
 import com.example.demo.service.api.IComponentDishService;
+import com.example.demo.service.api.IProductService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,9 +13,11 @@ import java.util.List;
 @Service
 public class ComponentDishService implements IComponentDishService {
     private final IComponentDishDao componentDishDao;
+    private final IProductService productService;
 
-    public ComponentDishService(IComponentDishDao componentDishDao) {
+    public ComponentDishService(IComponentDishDao componentDishDao, IProductService productService) {
         this.componentDishDao = componentDishDao;
+        this.productService = productService;
     }
 
     @Override
@@ -24,6 +27,8 @@ public class ComponentDishService implements IComponentDishService {
 
     @Override
     public ComponentDish save(ComponentDish componentDish) {
+        Product product = productService.getById(componentDish.getProduct().getId());
+        componentDish.setProduct(product);
         LocalDateTime localDateTime = LocalDateTime.now();
         componentDish.setDateCreate(localDateTime);
         componentDish.setDateUpdate(localDateTime);

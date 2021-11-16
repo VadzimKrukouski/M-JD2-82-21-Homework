@@ -5,10 +5,8 @@ import com.example.demo.dto.CalculationCaloriesDTO;
 import com.example.demo.model.JournalFood;
 import com.example.demo.model.Product;
 import com.example.demo.model.Profile;
-import com.example.demo.service.api.ICalculationCaloriesService;
-import com.example.demo.service.api.IJournalFoodService;
-import com.example.demo.service.api.IProductService;
-import com.example.demo.service.api.IProfileService;
+import com.example.demo.model.Recipe;
+import com.example.demo.service.api.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,12 +21,18 @@ public class JournalFoodService implements IJournalFoodService {
     private final IProfileService profileService;
     private final ICalculationCaloriesService calculationCaloriesService;
     private final IProductService productService;
+    private final IRecipeService recipeService;
 
-    public JournalFoodService(IJournalFoodDao journalDao, IProfileService profileService, ICalculationCaloriesService calculationCaloriesService, IProductService productService) {
+    public JournalFoodService(IJournalFoodDao journalDao,
+                              IProfileService profileService,
+                              ICalculationCaloriesService calculationCaloriesService,
+                              IProductService productService,
+                              IRecipeService recipeService) {
         this.journalDao = journalDao;
         this.profileService = profileService;
         this.calculationCaloriesService = calculationCaloriesService;
         this.productService = productService;
+        this.recipeService = recipeService;
     }
 
     @Override
@@ -40,6 +44,9 @@ public class JournalFoodService implements IJournalFoodService {
     public CalculationCaloriesDTO getByIdAndProfileId(long idProfile, long idFood) {
         List<JournalFood> journalFoodList = new ArrayList<>();
         JournalFood journal = journalDao.findJournalByProfileIdAndId(idProfile, idFood);
+        if (journal==null){
+            throw new IllegalArgumentException("Journal not found");
+        }
         journalFoodList.add(journal);
         return calculationCaloriesService.calculation(journalFoodList);
     }
@@ -48,8 +55,14 @@ public class JournalFoodService implements IJournalFoodService {
     public JournalFood save(JournalFood journalFood, long idProfile) {
         Profile profile = profileService.getById(idProfile);
         journalFood.setProfile(profile);
-        Product product = productService.getById(journalFood.getProduct().getId());
-        journalFood.setProduct(product);
+        if(journalFood.getProduct()!=null){
+            Product product = productService.getById(journalFood.getProduct().getId());
+            journalFood.setProduct(product);
+        }
+        if(journalFood.getRecipe()!=null){
+            Recipe recipe = recipeService.getById(journalFood.getRecipe().getId());
+            journalFood.setRecipe(recipe);
+        }
         LocalDateTime localDateTime = LocalDateTime.now();
         journalFood.setDateCreate(localDateTime);
         journalFood.setDateUpdate(localDateTime);
