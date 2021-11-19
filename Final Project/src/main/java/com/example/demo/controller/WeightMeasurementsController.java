@@ -24,8 +24,8 @@ public class WeightMeasurementsController {
                                                                               @RequestParam(value = "size", defaultValue = "10") int size,
                                                                               @RequestParam(value = "dt_start", required = false) LocalDateTime dateStart,
                                                                               @RequestParam(value = "dt_end", required = false) LocalDateTime dateEnd) {
-//        todo
         try {
+
 
 
             return new ResponseEntity<>(HttpStatus.OK);

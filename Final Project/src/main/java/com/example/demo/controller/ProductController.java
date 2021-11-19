@@ -81,10 +81,9 @@ public class ProductController {
 
     @DeleteMapping("/{id}/dt_update/{dt_update}")
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable(name = "id") long id,
-                                                    @PathVariable(name = "dt_update") String dateUpdate) {
+                                                    @PathVariable(name = "dt_update") @DateTimeFormat (pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime dateUpdate) {
         try {
-            LocalDateTime dateTime = LocalDateTime.parse(dateUpdate);
-            productService.delete(id, dateTime);
+            productService.delete(id, dateUpdate);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

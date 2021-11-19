@@ -99,8 +99,11 @@ public class JournalFoodService implements IJournalFoodService {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(long id, LocalDateTime dateUpdate) {
+        JournalFood journalFood = getById(id);
+        if (journalFood==null){
+            throw new IllegalArgumentException("JournalFood is not found by ID");
+        }
         journalDao.deleteById(id);
     }
-
 }

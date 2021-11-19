@@ -84,9 +84,11 @@ public class JournalFoodController {
     public ResponseEntity<HttpStatus> deleteJournal(@PathVariable(name = "id_profile") long idProfile,
                                                     @PathVariable(name = "id_food") long idFood,
                                                     @PathVariable(name = "dt_update") LocalDateTime dateUpdate) {
-//        todo
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            journalFoodService.delete(idFood,dateUpdate);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
-
-
 }

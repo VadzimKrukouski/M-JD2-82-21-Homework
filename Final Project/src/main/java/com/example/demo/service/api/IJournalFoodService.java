@@ -13,5 +13,5 @@ public interface IJournalFoodService {
     JournalFood save(JournalFood journalFood, long idProfile);
     Page<JournalFood> getAll(long idProfile, Pageable pageable);
     JournalFood update(JournalFood journalFood, long idFood, long idProfile, LocalDateTime dateUpdate);
-    void delete(long id);
+    void delete(long id, LocalDateTime dateUpdate);
 }

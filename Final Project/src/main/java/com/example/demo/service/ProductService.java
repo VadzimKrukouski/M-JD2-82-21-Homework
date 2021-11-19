@@ -77,6 +77,10 @@ public class ProductService implements IProductService {
 
     @Override
     public void delete(long id, LocalDateTime dateTime) {
+        Product product = getById(id);
+        if (product==null){
+            throw new IllegalArgumentException("Product is not found by ID");
+        }
         productDao.deleteById(id);
     }
 }
