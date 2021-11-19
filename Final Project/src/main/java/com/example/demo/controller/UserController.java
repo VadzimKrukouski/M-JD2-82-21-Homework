@@ -1,37 +1,32 @@
 package com.example.demo.controller;
 
+import com.example.demo.config.jwt.JwtProvider;
 import com.example.demo.dto.LoginDTO;
 import com.example.demo.model.Profile;
 import com.example.demo.model.User;
 import com.example.demo.service.api.IProfileService;
 import com.example.demo.service.api.IUserService;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping()
 public class UserController {
     private final IUserService userService;
     private final IProfileService profileService;
+    private final JwtProvider jwtProvider;
 
-    public UserController(IUserService userService, IProfileService profileService) {
+
+    public UserController(IUserService userService, IProfileService profileService, JwtProvider jwtProvider) {
         this.userService = userService;
         this.profileService = profileService;
+        this.jwtProvider = jwtProvider;
     }
 
-    @PostMapping("user")
+    @PostMapping("/register")
     public String login(@RequestBody LoginDTO loginDTO) {
-        String token = getJWTToken(loginDTO.getLogin());
         User user = new User();
         user.setLogin(loginDTO.getLogin());
         user.setPassword(loginDTO.getPassword());
@@ -41,26 +36,12 @@ public class UserController {
         userService.save(user);
         profileService.save(profile);
 
-        return token;
-
+        return "Ok";
     }
 
-    private String getJWTToken(String username) {
-        String secretKey = "mySecretKey";
-        List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
-
-        String token = Jwts
-                .builder()
-                .setId("softtekJWT")
-                .setSubject(username)
-                .claim("authorities", grantedAuthorities.stream()
-                        .map(GrantedAuthority::getAuthority)
-                        .collect(Collectors.toList()))
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 600000000))
-                .signWith(SignatureAlgorithm.HS512, secretKey.getBytes())
-                .compact();
-
-        return "Bearer " + token;
+    @PostMapping("/auth")
+    public String auth(@RequestBody LoginDTO loginDTO){
+        User user = userService.findByLoginAndPassword(loginDTO.getLogin(), loginDTO.getPassword());
+        return jwtProvider.generateToken(user.getLogin());
     }
 }

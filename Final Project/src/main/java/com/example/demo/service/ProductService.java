@@ -50,6 +50,10 @@ public class ProductService implements IProductService {
         try{
             Product updateProduct = getById(id);
 
+            if (updateProduct==null){
+                throw new IllegalArgumentException("Product is not found by ID");
+            }
+
             updateProduct.setName(product.getName());
             updateProduct.setCalories(product.getCalories());
             updateProduct.setCarbohydrates(product.getCarbohydrates());

@@ -11,4 +11,5 @@ public interface IUserService {
     User update(User user, long id);
     void delete(long id);
     User findUserByLogin(String login);
+    User findByLoginAndPassword(String login, String password);
 }
