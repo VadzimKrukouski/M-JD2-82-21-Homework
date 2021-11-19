@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @RestController
@@ -64,12 +66,13 @@ public class RecipeController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/dt_update/{dt_update}")
     public ResponseEntity<Recipe> updateRecipe(@PathVariable(name = "id") long id,
-                                               @RequestBody Recipe recipe
-            /*@PathVariable (name = "dt_update") LocalDateTime dateUpdate*/) {
+                                               @RequestBody Recipe recipe,
+                                               @PathVariable(name = "dt_update") long dateUpdate) {
         try {
-            Recipe updateRecipe = recipeService.update(recipe, id);
+            LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(dateUpdate), ZoneId.systemDefault());
+            Recipe updateRecipe = recipeService.update(recipe, id,date);
             return new ResponseEntity<>(updateRecipe, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -78,9 +81,10 @@ public class RecipeController {
 
     @DeleteMapping("/{id}/dt_update/{dt_update}")
     public ResponseEntity<HttpStatus> deleteRecipe(@PathVariable(name = "id") long id,
-                                                   @PathVariable(name = "dt_update") LocalDateTime dateUpdate) {
+                                                   @PathVariable(name = "dt_update") long dateUpdate) {
         try {
-            recipeService.delete(id);
+            LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(dateUpdate), ZoneId.systemDefault());
+            recipeService.delete(id, date);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

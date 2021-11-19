@@ -24,7 +24,7 @@ public class UserAuditService {
         this.userService = userService;
     }
 
-    @After("execution(* com.example.demo.service.UserService.save(..))")
+    @After("execution(* com.example.demo.service.UserService.saveRegister(..))")
     public void saveMethod(JoinPoint joinPoint) {
         try {
             Object[] args = joinPoint.getArgs();

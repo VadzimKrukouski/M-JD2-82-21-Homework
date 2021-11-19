@@ -6,28 +6,32 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Weight_measurements")
-public class WeightMeasurements {
+@Table (name = "workout")
+public class JournalActive {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne
-    private Profile profile;
+    @Column
+    private String name;
 
     @Column
-    private double weight;
+    private double calories;
+
+    @OneToOne
+    private Profile profile;
 
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dateCreate;
 
     @Column
-    @Version
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @Version
     private LocalDateTime dateUpdate;
 
-    public WeightMeasurements() {
+    public JournalActive() {
     }
 
     public long getId() {
@@ -38,20 +42,28 @@ public class WeightMeasurements {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getCalories() {
+        return calories;
+    }
+
+    public void setCalories(double calories) {
+        this.calories = calories;
+    }
+
     public Profile getProfile() {
         return profile;
     }
 
     public void setProfile(Profile profile) {
         this.profile = profile;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double value) {
-        this.weight = value;
     }
 
     public LocalDateTime getDateCreate() {

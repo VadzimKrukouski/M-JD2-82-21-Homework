@@ -25,9 +25,6 @@ public class User {
     private String password;
 
     @Column
-    private String token;
-
-    @Column
     private ERole role;
 
     @Column
@@ -108,11 +105,4 @@ public class User {
         this.dateUpdate = dateUpdate;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }

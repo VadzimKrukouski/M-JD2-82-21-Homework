@@ -1,8 +1,11 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.api.IUserDao;
+import com.example.demo.dto.LoginDTO;
+import com.example.demo.dto.UserAuthDTO;
 import com.example.demo.model.User;
 import com.example.demo.model.api.ERole;
+import com.example.demo.model.api.EStatus;
 import com.example.demo.service.api.IUserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,10 +29,10 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User save(User user) {
+    public User saveRegister(User user) {
         user.setRole(ERole.ROLE_USER);
-        user.setPassword(user.getPassword());
-        LocalDateTime localDateTime = LocalDateTime.now();
+        user.setStatus(EStatus.NOT_ACTIVE);
+        LocalDateTime localDateTime = LocalDateTime.now().withNano(0);
         user.setDateCreate(localDateTime);
         user.setDateUpdate(localDateTime);
         return userDao.save(user);
@@ -43,6 +46,10 @@ public class UserService implements IUserService {
     @Override
     public User update(User user, long id) {
         User updateUser = getById(id);
+
+        if (updateUser == null) {
+            throw new IllegalArgumentException("User is not found by ID");
+        }
         updateUser.setLogin(user.getLogin());
         updateUser.setName(user.getName());
         updateUser.setPassword(user.getPassword());
@@ -63,11 +70,22 @@ public class UserService implements IUserService {
     @Override
     public User findByLoginAndPassword(String login, String password) {
         User userByLogin = findUserByLogin(login);
-        if (userByLogin!=null){
+        if (userByLogin != null) {
 //            if (passwordEncoder.matches(password, userByLogin.getPassword())){
             return userByLogin;
 //            }
         }
         return null;
+    }
+
+    @Override
+    public void authUser(UserAuthDTO userAuthDTO) {
+        User userByLogin = findUserByLogin(userAuthDTO.getLogin());
+        if (userByLogin == null) {
+            throw new IllegalArgumentException("User is not found by ID");
+        }
+        userByLogin.setStatus(EStatus.ACTIVE);
+        userByLogin.setName(userAuthDTO.getName());
+        userDao.save(userByLogin);
     }
 }

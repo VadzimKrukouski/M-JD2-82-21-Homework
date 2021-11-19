@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ProductDTO;
 import com.example.demo.model.Product;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.api.IProductService;
@@ -12,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @RestController
@@ -56,8 +59,16 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> addProduct(@RequestBody ProductDTO productDTO) {
         try {
+            Product product = new Product();
+            product.setName(productDTO.getName());
+            product.setBrand(productDTO.getBrand());
+            product.setCalories(product.getCalories());
+            product.setProteins(productDTO.getProteins());
+            product.setFats(productDTO.getFats());
+            product.setCarbohydrates(productDTO.getCarbohydrates());
+            product.setWeight(productDTO.getWeight());
             Product newProduct = productService.save(product);
             return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
@@ -68,11 +79,10 @@ public class ProductController {
     @PutMapping("/{id}/dt_update/{dt_update}")
     public ResponseEntity<Product> updateProduct(@PathVariable(name = "id") long id,
                                                  @RequestBody Product product,
-                                                 @PathVariable(name = "dt_update") @DateTimeFormat (pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime dateUpdate) {
+                                                 @PathVariable(name = "dt_update") long dateUpdate) {
         try {
-//            product.setVersion(version);
-            product.setDateUpdate(dateUpdate);
-            Product updateProduct = productService.update(product, id);
+            LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(dateUpdate), ZoneId.systemDefault());
+            Product updateProduct = productService.update(product, id, date);
             return new ResponseEntity<>(updateProduct, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -81,9 +91,10 @@ public class ProductController {
 
     @DeleteMapping("/{id}/dt_update/{dt_update}")
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable(name = "id") long id,
-                                                    @PathVariable(name = "dt_update") @DateTimeFormat (pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime dateUpdate) {
+                                                    @PathVariable(name = "dt_update") long dateUpdate) {
         try {
-            productService.delete(id, dateUpdate);
+            LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(dateUpdate), ZoneId.systemDefault());
+            productService.delete(id, date);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

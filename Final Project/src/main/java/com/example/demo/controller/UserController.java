@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.config.jwt.JwtProvider;
 import com.example.demo.dto.LoginDTO;
+import com.example.demo.dto.UserAuthDTO;
 import com.example.demo.model.Profile;
 import com.example.demo.model.User;
 import com.example.demo.service.api.IProfileService;
@@ -30,18 +31,22 @@ public class UserController {
         User user = new User();
         user.setLogin(loginDTO.getLogin());
         user.setPassword(loginDTO.getPassword());
-
         //переделать, временный вариант
-        Profile profile = new Profile();
-        userService.save(user);
-        profileService.save(profile);
+        userService.saveRegister(user);
 
         return "Ok";
     }
 
     @PostMapping("/auth")
-    public String auth(@RequestBody LoginDTO loginDTO){
-        User user = userService.findByLoginAndPassword(loginDTO.getLogin(), loginDTO.getPassword());
-        return jwtProvider.generateToken(user.getLogin());
+    public String auth(@RequestBody UserAuthDTO userAuthDTO){
+        User user = userService.findByLoginAndPassword(userAuthDTO.getLogin(), userAuthDTO.getPassword());
+        if (user!=null){
+            userService.authUser(userAuthDTO);
+            profileService.save(userAuthDTO);
+
+            return jwtProvider.generateToken(user.getLogin());
+        }else {
+            return "User not found";
+        }
     }
 }

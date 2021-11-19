@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @RestController
@@ -71,9 +73,10 @@ public class JournalFoodController {
     public ResponseEntity<JournalFood> updateJournal(@PathVariable(name = "id_profile") long idProfile,
                                                      @RequestBody JournalFood journalFood,
                                                      @PathVariable(name = "id_food") long idFood,
-                                                     @PathVariable(name = "dt_update") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime dateUpdate) {
+                                                     @PathVariable(name = "dt_update") long dateUpdate) {
         try {
-            JournalFood updateJournalFood = journalFoodService.update(journalFood, idFood, idProfile, dateUpdate);
+            LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(dateUpdate), ZoneId.systemDefault());
+            JournalFood updateJournalFood = journalFoodService.update(journalFood, idFood, idProfile, date);
             return new ResponseEntity<>(updateJournalFood, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -83,9 +86,10 @@ public class JournalFoodController {
     @DeleteMapping("/{id_profile}/journal/food/{id_food}/dt_update/{dt_update}")
     public ResponseEntity<HttpStatus> deleteJournal(@PathVariable(name = "id_profile") long idProfile,
                                                     @PathVariable(name = "id_food") long idFood,
-                                                    @PathVariable(name = "dt_update") LocalDateTime dateUpdate) {
+                                                    @PathVariable(name = "dt_update") long dateUpdate) {
         try {
-            journalFoodService.delete(idFood,dateUpdate);
+            LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(dateUpdate), ZoneId.systemDefault());
+            journalFoodService.delete(idFood,date);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e){
             return new ResponseEntity<>(HttpStatus.CONFLICT);

@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.api.IProductDao;
+import com.example.demo.dto.ProductDTO;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import com.example.demo.security.UserHolder;
@@ -34,7 +35,7 @@ public class ProductService implements IProductService {
         String loginUser = userHolder.getAuthentication().getName();
         User user = userService.findUserByLogin(loginUser);
         product.setUser(user);
-        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDateTime localDateTime = LocalDateTime.now().withNano(0);
         product.setDateCreate(localDateTime);
         product.setDateUpdate(localDateTime);
         return productDao.save(product);
@@ -46,11 +47,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product update(Product product, long id) {
-        try{
+    public Product update(Product product, long id, LocalDateTime dateUpdate) {
+        try {
             Product updateProduct = getById(id);
 
-            if (updateProduct==null){
+            if (updateProduct == null) {
                 throw new IllegalArgumentException("Product is not found by ID");
             }
 
@@ -61,16 +62,17 @@ public class ProductService implements IProductService {
             updateProduct.setFats(product.getFats());
             updateProduct.setBrand(product.getBrand());
             updateProduct.setWeight(product.getWeight());
-//            updateProduct.setVersion(product.getVersion());
 
             String loginUser = userHolder.getAuthentication().getName();
             User user = userService.findUserByLogin(loginUser);
             updateProduct.setUser(user);
 
-            updateProduct.setDateUpdate(product.getDateUpdate());
-
-            return productDao.save(updateProduct);
-        } catch (IllegalArgumentException e){
+            if (updateProduct.getDateUpdate().isEqual(dateUpdate)) {
+                return productDao.save(updateProduct);
+            } else {
+                throw new IllegalArgumentException("Optimistic lock. Product already updated");
+            }
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Error update Product");
         }
     }
@@ -78,7 +80,7 @@ public class ProductService implements IProductService {
     @Override
     public void delete(long id, LocalDateTime dateTime) {
         Product product = getById(id);
-        if (product==null){
+        if (product == null) {
             throw new IllegalArgumentException("Product is not found by ID");
         }
         productDao.deleteById(id);

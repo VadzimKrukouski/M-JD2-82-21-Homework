@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.api.IComponentDishDao;
 import com.example.demo.dao.api.IRecipeDao;
 import com.example.demo.model.ComponentDish;
 import com.example.demo.model.Recipe;
@@ -23,7 +22,7 @@ public class RecipeService implements IRecipeService {
     private final IUserService userService;
     private final UserHolder userHolder;
 
-    public RecipeService(IRecipeDao dishDao, IComponentDishDao componentDishDao, IComponentDishService componentDishService, IUserService userService, UserHolder userHolder) {
+    public RecipeService(IRecipeDao dishDao, IComponentDishService componentDishService, IUserService userService, UserHolder userHolder) {
         this.dishDao = dishDao;
         this.componentDishService = componentDishService;
         this.userService = userService;
@@ -46,7 +45,7 @@ public class RecipeService implements IRecipeService {
             componentDish.setDateUpdate(recipe.getDateUpdate());
             componentDishService.save(componentDish);
         }
-        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDateTime localDateTime = LocalDateTime.now().withNano(0);
         recipe.setDateCreate(localDateTime);
         recipe.setDateUpdate(localDateTime);
         return dishDao.save(recipe);
@@ -58,8 +57,13 @@ public class RecipeService implements IRecipeService {
     }
 
     @Override
-    public Recipe update(Recipe recipe, long id) {
+    public Recipe update(Recipe recipe, long id, LocalDateTime date) {
         Recipe updateRecipe = getById(id);
+
+        if (updateRecipe==null){
+            throw new IllegalArgumentException("Recipe is not found by ID");
+        }
+
         updateRecipe.setName(recipe.getName());
         List<ComponentDish> componentDishes = recipe.getComponentDishes();
         for (ComponentDish componentDish : componentDishes) {
@@ -67,13 +71,24 @@ public class RecipeService implements IRecipeService {
             componentDish.setDateUpdate(recipe.getDateUpdate());
             componentDishService.save(componentDish);
         }
-        updateRecipe.setUser(recipe.getUser());
-        updateRecipe.setDateUpdate(LocalDateTime.now());
-        return dishDao.save(updateRecipe);
+
+        String loginUser = userHolder.getAuthentication().getName();
+        User user = userService.findUserByLogin(loginUser);
+        updateRecipe.setUser(user);
+
+        if (updateRecipe.getDateUpdate().isEqual(date)) {
+            return dishDao.save(updateRecipe);
+        } else {
+            throw new IllegalArgumentException("Optimistic lock. Product already updated");
+        }
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(long id, LocalDateTime date) {
+        Recipe recipe = getById(id);
+        if (recipe == null) {
+            throw new IllegalArgumentException("Product is not found by ID");
+        }
         dishDao.deleteById(id);
     }
 }

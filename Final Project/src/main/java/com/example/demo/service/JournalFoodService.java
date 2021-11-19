@@ -63,7 +63,7 @@ public class JournalFoodService implements IJournalFoodService {
             Recipe recipe = recipeService.getById(journalFood.getRecipe().getId());
             journalFood.setRecipe(recipe);
         }
-        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDateTime localDateTime = LocalDateTime.now().withNano(0);
         journalFood.setDateCreate(localDateTime);
         journalFood.setDateUpdate(localDateTime);
         return journalDao.save(journalFood);
@@ -84,24 +84,27 @@ public class JournalFoodService implements IJournalFoodService {
 
         if (journalFood.getProduct() != null) {
             Product product = productService.getById(journalFood.getProduct().getId());
-            journalFood.setProduct(product);
+            updateJournalFood.setProduct(product);
         }
         if (journalFood.getRecipe() != null) {
             Recipe recipe = recipeService.getById(journalFood.getRecipe().getId());
-            journalFood.setRecipe(recipe);
+            updateJournalFood.setRecipe(recipe);
         }
 
         updateJournalFood.setWeight(journalFood.getWeight());
         updateJournalFood.setMealTime(journalFood.getMealTime());
-        updateJournalFood.setDateUpdate(LocalDateTime.now());
 
-        return journalDao.save(updateJournalFood);
+        if (updateJournalFood.getDateUpdate().isEqual(dateUpdate)) {
+            return journalDao.save(updateJournalFood);
+        } else {
+            throw new IllegalArgumentException("Optimistic lock. JournalFood already updated");
+        }
     }
 
     @Override
     public void delete(long id, LocalDateTime dateUpdate) {
         JournalFood journalFood = getById(id);
-        if (journalFood==null){
+        if (journalFood == null) {
             throw new IllegalArgumentException("JournalFood is not found by ID");
         }
         journalDao.deleteById(id);
