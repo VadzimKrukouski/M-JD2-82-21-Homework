@@ -30,16 +30,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
 //                .antMatchers("/api/audit/*").hasRole("ADMIN")
-//                .antMatchers("/api/**").hasAuthority("ROLE_USER")
-                .antMatchers("/register", "/auth").permitAll()
+//                .antMatchers("/api/recipe/*").hasRole("USER")
+                .antMatchers("/register", "/auth").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 }

@@ -109,4 +109,9 @@ public class JournalFoodService implements IJournalFoodService {
         }
         journalDao.deleteById(id);
     }
+
+    @Override
+    public List<JournalFood> findAllByProfileIdAndDateCreateBetween(long idProfile, LocalDateTime dateStart, LocalDateTime dateEnd) {
+        return journalDao.findAllByProfileIdAndDateCreateBetween(idProfile,dateStart,dateEnd);
+    }
 }

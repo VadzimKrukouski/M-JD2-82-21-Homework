@@ -42,9 +42,17 @@ public class JournalFoodController {
 
     @GetMapping("/{id_profile}/journal/food/byDay/{day}")
     public ResponseEntity<List<JournalFood>> getListJournalDay(@PathVariable(name = "id_profile") long idProfile,
-                                                               @PathVariable(name = "day") int day) {
-//        todo
-        return new ResponseEntity<>(HttpStatus.OK);
+                                                               @PathVariable(name = "day") long day) {
+        try {
+            LocalDateTime dateStart = LocalDateTime.ofInstant(Instant.ofEpochMilli(day), ZoneId.systemDefault());
+            LocalDateTime dateEnd = LocalDateTime.ofInstant(Instant.ofEpochMilli(day), ZoneId.systemDefault());
+            List<JournalFood> journalFoodList = journalFoodService.findAllByProfileIdAndDateCreateBetween(idProfile, dateStart, dateEnd);
+
+            return new ResponseEntity<>(journalFoodList, HttpStatus.OK);
+        } catch (IllegalArgumentException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @GetMapping("/{id_profile}/journal/food/{id_food}")

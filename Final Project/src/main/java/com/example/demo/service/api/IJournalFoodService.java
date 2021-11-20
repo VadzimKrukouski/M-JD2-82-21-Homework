@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface IJournalFoodService {
     CalculationCaloriesDTO getByIdAndProfileId(long idProfile, long idFood);
@@ -14,4 +15,6 @@ public interface IJournalFoodService {
     Page<JournalFood> getAll(long idProfile, Pageable pageable);
     JournalFood update(JournalFood journalFood, long idFood, long idProfile, LocalDateTime dateUpdate);
     void delete(long id, LocalDateTime dateUpdate);
+    List<JournalFood> findAllByProfileIdAndDateCreateBetween(long idProfile, LocalDateTime dateStart, LocalDateTime dateEnd);
+
 }

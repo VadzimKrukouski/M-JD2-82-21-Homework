@@ -2,6 +2,7 @@ package com.example.demo.config;
 
 import com.example.demo.model.User;
 import com.example.demo.service.api.IUserService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class CustomUserDetailsService implements UserDetailsService {
     private final IUserService userService;
 
-    public CustomUserDetailsService(IUserService userService) {
+    public CustomUserDetailsService(@Lazy IUserService userService) {
         this.userService = userService;
     }
 

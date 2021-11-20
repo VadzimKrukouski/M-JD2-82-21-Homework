@@ -16,11 +16,11 @@ import java.util.List;
 @Service
 public class UserService implements IUserService {
     private final IUserDao userDao;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(IUserDao userDao) {
+    public UserService(IUserDao userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
-//        this.passwordEncoder = passwordEncoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -32,6 +32,7 @@ public class UserService implements IUserService {
     public User saveRegister(User user) {
         user.setRole(ERole.ROLE_USER);
         user.setStatus(EStatus.NOT_ACTIVE);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         LocalDateTime localDateTime = LocalDateTime.now().withNano(0);
         user.setDateCreate(localDateTime);
         user.setDateUpdate(localDateTime);
@@ -71,21 +72,19 @@ public class UserService implements IUserService {
     public User findByLoginAndPassword(String login, String password) {
         User userByLogin = findUserByLogin(login);
         if (userByLogin != null) {
-//            if (passwordEncoder.matches(password, userByLogin.getPassword())){
+            if (passwordEncoder.matches(password, userByLogin.getPassword())){
             return userByLogin;
-//            }
+            }
         }
         return null;
     }
 
     @Override
-    public void authUser(UserAuthDTO userAuthDTO) {
-        User userByLogin = findUserByLogin(userAuthDTO.getLogin());
+    public void authUser(User user) {
+        User userByLogin = findUserByLogin(user.getLogin());
         if (userByLogin == null) {
             throw new IllegalArgumentException("User is not found by ID");
         }
-        userByLogin.setStatus(EStatus.ACTIVE);
-        userByLogin.setName(userAuthDTO.getName());
         userDao.save(userByLogin);
     }
 }
