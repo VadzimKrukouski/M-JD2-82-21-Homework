@@ -64,7 +64,7 @@ public class ProductController {
             Product product = new Product();
             product.setName(productDTO.getName());
             product.setBrand(productDTO.getBrand());
-            product.setCalories(product.getCalories());
+            product.setCalories(productDTO.getCalories());
             product.setProteins(productDTO.getProteins());
             product.setFats(productDTO.getFats());
             product.setCarbohydrates(productDTO.getCarbohydrates());

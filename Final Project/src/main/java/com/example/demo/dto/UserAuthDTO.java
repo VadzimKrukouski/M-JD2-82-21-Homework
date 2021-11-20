@@ -13,7 +13,7 @@ public class UserAuthDTO {
     private double height;
     private double weightTarget;
     private double weightFromWeightMeasurement;
-    private LocalDate dateOfBirthday;
+    private long dateOfBirthday;
     private EGender gender;
     private ELifestyle lifestyle;
     private ETarget target;
@@ -58,11 +58,11 @@ public class UserAuthDTO {
         this.weightTarget = weightTarget;
     }
 
-    public LocalDate getDateOfBirthday() {
+    public long getDateOfBirthday() {
         return dateOfBirthday;
     }
 
-    public void setDateOfBirthday(LocalDate dateOfBirthday) {
+    public void setDateOfBirthday(long dateOfBirthday) {
         this.dateOfBirthday = dateOfBirthday;
     }
 

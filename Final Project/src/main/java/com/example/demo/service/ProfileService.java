@@ -9,7 +9,10 @@ import com.example.demo.service.api.IProfileService;
 import com.example.demo.service.api.IUserService;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -39,7 +42,11 @@ public class ProfileService implements IProfileService {
         profile.setWeightTarget(userAuthDTO.getWeightTarget());
         profile.setWeightTarget(userAuthDTO.getWeightTarget());
         profile.setWeightFromWeightMeasurement(userAuthDTO.getWeightFromWeightMeasurement());
-        profile.setDateOfBirthday(userAuthDTO.getDateOfBirthday());
+
+        long dateOfBirthdayInMilliseconds = userAuthDTO.getDateOfBirthday();
+        LocalDate dateOfBirthdayLocalDate = Instant.ofEpochMilli(dateOfBirthdayInMilliseconds).atZone(ZoneId.systemDefault()).toLocalDate();
+        profile.setDateOfBirthday(dateOfBirthdayLocalDate);
+
         profile.setGender(userAuthDTO.getGender());
         profile.setLifestyle(userAuthDTO.getLifestyle());
         profile.setTarget(userAuthDTO.getTarget());

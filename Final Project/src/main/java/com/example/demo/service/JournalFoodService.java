@@ -2,10 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.dao.api.IJournalFoodDao;
 import com.example.demo.dto.CalculationCaloriesDTO;
-import com.example.demo.model.JournalFood;
-import com.example.demo.model.Product;
-import com.example.demo.model.Profile;
-import com.example.demo.model.Recipe;
+import com.example.demo.model.*;
+import com.example.demo.security.UserHolder;
 import com.example.demo.service.api.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,17 +20,21 @@ public class JournalFoodService implements IJournalFoodService {
     private final ICalculationCaloriesService calculationCaloriesService;
     private final IProductService productService;
     private final IRecipeService recipeService;
+    private final UserHolder userHolder;
+    private final UserService userService;
 
     public JournalFoodService(IJournalFoodDao journalDao,
                               IProfileService profileService,
                               ICalculationCaloriesService calculationCaloriesService,
                               IProductService productService,
-                              IRecipeService recipeService) {
+                              IRecipeService recipeService, UserHolder userHolder, UserService userService) {
         this.journalDao = journalDao;
         this.profileService = profileService;
         this.calculationCaloriesService = calculationCaloriesService;
         this.productService = productService;
         this.recipeService = recipeService;
+        this.userHolder = userHolder;
+        this.userService = userService;
     }
 
     @Override
@@ -53,20 +55,25 @@ public class JournalFoodService implements IJournalFoodService {
 
     @Override
     public JournalFood save(JournalFood journalFood, long idProfile) {
-        Profile profile = profileService.getById(idProfile);
-        journalFood.setProfile(profile);
-        if (journalFood.getProduct() != null) {
-            Product product = productService.getById(journalFood.getProduct().getId());
-            journalFood.setProduct(product);
+        if (checkProfileId(idProfile)){
+            Profile profile = profileService.getById(idProfile);
+            journalFood.setProfile(profile);
+            if (journalFood.getProduct() != null) {
+                Product product = productService.getById(journalFood.getProduct().getId());
+                journalFood.setProduct(product);
+            }
+            if (journalFood.getRecipe() != null) {
+                Recipe recipe = recipeService.getById(journalFood.getRecipe().getId());
+                journalFood.setRecipe(recipe);
+            }
+            LocalDateTime localDateTime = LocalDateTime.now().withNano(0);
+            journalFood.setDateCreate(localDateTime);
+            journalFood.setDateUpdate(localDateTime);
+            return journalDao.save(journalFood);
+        } else {
+            throw new IllegalArgumentException("No access rights to this profile");
         }
-        if (journalFood.getRecipe() != null) {
-            Recipe recipe = recipeService.getById(journalFood.getRecipe().getId());
-            journalFood.setRecipe(recipe);
-        }
-        LocalDateTime localDateTime = LocalDateTime.now().withNano(0);
-        journalFood.setDateCreate(localDateTime);
-        journalFood.setDateUpdate(localDateTime);
-        return journalDao.save(journalFood);
+
     }
 
     @Override
@@ -111,7 +118,18 @@ public class JournalFoodService implements IJournalFoodService {
     }
 
     @Override
-    public List<JournalFood> findAllByProfileIdAndDateCreateBetween(long idProfile, LocalDateTime dateStart, LocalDateTime dateEnd) {
-        return journalDao.findAllByProfileIdAndDateCreateBetween(idProfile,dateStart,dateEnd);
+    public CalculationCaloriesDTO findAllByProfileIdAndDateCreateBetween(long idProfile, LocalDateTime dateStart, LocalDateTime dateEnd) {
+        List<JournalFood> journalFoodList = journalDao.findAllByProfileIdAndDateCreateBetween(idProfile, dateStart, dateEnd);
+        return calculationCaloriesService.calculation(journalFoodList);
+    }
+
+    private boolean checkProfileId(long idProfile){
+        String login = userHolder.getAuthentication().getName();
+        User user = userService.findUserByLogin(login);
+        Profile profile = profileService.getById(idProfile);
+        if (profile==null){
+            throw new IllegalArgumentException("Profile is not found");
+        }
+        return user.getId()==profile.getUser().getId();
     }
 }

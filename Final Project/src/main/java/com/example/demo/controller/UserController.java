@@ -57,5 +57,4 @@ public class UserController {
         return "Successfully save personal data";
     }
 
-    //убрать 48 строку, сделать отдельный урл
 }
