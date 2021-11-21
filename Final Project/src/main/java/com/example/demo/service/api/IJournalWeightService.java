@@ -14,5 +14,5 @@ public interface IJournalWeightService {
     JournalWeight save(JournalWeight journalWeight, long idProfile);
     List<JournalWeight> getAll();
     JournalWeight update(JournalWeight journalWeight, long id, long idProfile, LocalDateTime date);
-    void delete(long id, LocalDateTime date);
+    void delete(long id, LocalDateTime date, long idProfile);
 }

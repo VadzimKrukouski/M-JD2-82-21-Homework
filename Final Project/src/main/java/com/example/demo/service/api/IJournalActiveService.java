@@ -15,5 +15,5 @@ public interface IJournalActiveService {
     JournalActive save(JournalActive journalActive, long idProfile);
     List<JournalActive> getAll();
     JournalActive update(JournalActive journalActive, long idWorkout, long idProfile, LocalDateTime date);
-    void delete(long id, LocalDateTime date);
+    void delete(long id, LocalDateTime date, long idProfile);
 }

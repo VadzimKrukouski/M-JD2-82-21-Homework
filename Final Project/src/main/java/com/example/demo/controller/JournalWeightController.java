@@ -84,7 +84,7 @@ public class JournalWeightController {
                                                               @PathVariable(name = "dt_update") long dateUpdate) {
         try {
             LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(dateUpdate), ZoneId.systemDefault());
-            journalWeightService.delete(idWeightMeasurement, date);
+            journalWeightService.delete(idWeightMeasurement, date, idProfile);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);

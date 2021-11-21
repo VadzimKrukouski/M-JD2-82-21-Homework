@@ -14,7 +14,7 @@ public interface IJournalFoodService {
     JournalFood save(JournalFood journalFood, long idProfile);
     Page<JournalFood> getAll(long idProfile, Pageable pageable);
     JournalFood update(JournalFood journalFood, long idFood, long idProfile, LocalDateTime dateUpdate);
-    void delete(long id, LocalDateTime dateUpdate);
+    void delete(long id, LocalDateTime dateUpdate, long idProfile);
     CalculationCaloriesDTO findAllByProfileIdAndDateCreateBetween(long idProfile, LocalDateTime dateStart, LocalDateTime dateEnd);
 
 }

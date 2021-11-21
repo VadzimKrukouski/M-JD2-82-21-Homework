@@ -97,7 +97,7 @@ public class JournalFoodController {
                                                     @PathVariable(name = "dt_update") long dateUpdate) {
         try {
             LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(dateUpdate), ZoneId.systemDefault());
-            journalFoodService.delete(idFood,date);
+            journalFoodService.delete(idFood,date,idProfile);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e){
             return new ResponseEntity<>(HttpStatus.CONFLICT);

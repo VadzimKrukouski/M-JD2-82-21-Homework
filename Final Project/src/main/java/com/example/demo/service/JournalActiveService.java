@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dao.api.IJournalActiveDao;
 import com.example.demo.model.JournalActive;
 import com.example.demo.model.Profile;
+import com.example.demo.security.CheckUserAndProfile;
 import com.example.demo.service.api.IJournalActiveService;
 import com.example.demo.service.api.IProfileService;
 import org.springframework.data.domain.Page;
@@ -16,15 +17,21 @@ import java.util.List;
 public class JournalActiveService implements IJournalActiveService {
     private final IJournalActiveDao journalActiveDao;
     private final IProfileService profileService;
+    private final CheckUserAndProfile checkUserAndProfile;
 
-    public JournalActiveService(IJournalActiveDao journalActiveDao, IProfileService profileService) {
+    public JournalActiveService(IJournalActiveDao journalActiveDao, IProfileService profileService, CheckUserAndProfile checkUserAndProfile) {
         this.journalActiveDao = journalActiveDao;
         this.profileService = profileService;
+        this.checkUserAndProfile = checkUserAndProfile;
     }
 
     @Override
     public Page<JournalActive> findAllByProfileIdAndDateCreateBetween(long idProfile, LocalDateTime dateStart, LocalDateTime dateEnd, Pageable pageable) {
-        return journalActiveDao.findAllByProfileIdAndDateCreateBetween(idProfile, dateStart, dateEnd, pageable);
+        if (checkUserAndProfile.checkProfileId(idProfile)){
+            return journalActiveDao.findAllByProfileIdAndDateCreateBetween(idProfile, dateStart, dateEnd, pageable);
+        } else {
+            throw new IllegalArgumentException("No access rights to this profile");
+        }
     }
 
     @Override
@@ -34,17 +41,25 @@ public class JournalActiveService implements IJournalActiveService {
 
     @Override
     public JournalActive findAllByProfileIdAndId(long idProfile, long idWorkout) {
-        return journalActiveDao.findAllByProfileIdAndId(idProfile, idWorkout);
+        if (checkUserAndProfile.checkProfileId(idProfile)){
+            return journalActiveDao.findAllByProfileIdAndId(idProfile, idWorkout);
+        } else {
+            throw new IllegalArgumentException("No access rights to this profile");
+        }
     }
 
     @Override
-    public JournalActive save(com.example.demo.model.JournalActive journalActive, long idProfile) {
-        Profile profile = profileService.getById(idProfile);
-        journalActive.setProfile(profile);
-        LocalDateTime localDateTime = LocalDateTime.now().withNano(0);
-        journalActive.setDateCreate(localDateTime);
-        journalActive.setDateUpdate(localDateTime);
-        return journalActiveDao.save(journalActive);
+    public JournalActive save(JournalActive journalActive, long idProfile) {
+        if (checkUserAndProfile.checkProfileId(idProfile)){
+            Profile profile = profileService.getById(idProfile);
+            journalActive.setProfile(profile);
+            LocalDateTime localDateTime = LocalDateTime.now().withNano(0);
+            journalActive.setDateCreate(localDateTime);
+            journalActive.setDateUpdate(localDateTime);
+            return journalActiveDao.save(journalActive);
+        } else {
+            throw new IllegalArgumentException("No access rights to this profile");
+        }
     }
 
     @Override
@@ -54,30 +69,41 @@ public class JournalActiveService implements IJournalActiveService {
 
     @Override
     public JournalActive update(JournalActive journalActive, long idWorkout, long idProfile, LocalDateTime date) {
-        JournalActive updateJournalActive = getById(idWorkout);
+        if (checkUserAndProfile.checkProfileId(idProfile)){
+            JournalActive updateJournalActive = getById(idWorkout);
 
-        if (updateJournalActive == null) {
-            throw new IllegalArgumentException("JournalActive is not found by ID");
-        }
-        updateJournalActive.setName(journalActive.getName());
-        Profile profile = profileService.getById(idProfile);
-        updateJournalActive.setProfile(profile);
-        updateJournalActive.setCalories(journalActive.getCalories());
+            if (updateJournalActive == null) {
+                throw new IllegalArgumentException("JournalActive is not found by ID");
+            }
+            updateJournalActive.setName(journalActive.getName());
+            Profile profile = profileService.getById(idProfile);
+            updateJournalActive.setProfile(profile);
+            updateJournalActive.setCalories(journalActive.getCalories());
 
-        if (updateJournalActive.getDateUpdate().isEqual(date)) {
-            return journalActiveDao.save(updateJournalActive);
+            if (updateJournalActive.getDateUpdate().isEqual(date)) {
+                return journalActiveDao.save(updateJournalActive);
+            } else {
+                throw new IllegalArgumentException("Optimistic lock. JournalActive already updated");
+            }
         } else {
-            throw new IllegalArgumentException("Optimistic lock. JournalActive already updated");
+            throw new IllegalArgumentException("No access rights to this profile");
         }
     }
 
     @Override
-    public void delete(long id, LocalDateTime date) {
-        JournalActive journalActive = getById(id);
-        if (journalActive == null) {
-            throw new IllegalArgumentException("JournalFood is not found by ID");
+    public void delete(long id, LocalDateTime date, long idProfile) {
+        if (checkUserAndProfile.checkProfileId(idProfile)){
+            JournalActive journalActive = getById(id);
+            if (journalActive == null) {
+                throw new IllegalArgumentException("JournalFood is not found by ID");
+            }
+            if (journalActive.getDateUpdate().isEqual(date)){
+                journalActiveDao.deleteById(id);
+            } else {
+                throw new IllegalArgumentException("Optimistic lock. JournalActive already updated");
+            }
+        } else {
+            throw new IllegalArgumentException("No access rights to this profile");
         }
-        journalActiveDao.deleteById(id);
-
     }
 }

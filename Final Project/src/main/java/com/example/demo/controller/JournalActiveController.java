@@ -85,7 +85,7 @@ public class JournalActiveController {
                                                     @PathVariable(name = "dt_update") long dateUpdate) {
         try {
             LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(dateUpdate), ZoneId.systemDefault());
-            journalActive.delete(idWorkout, date);
+            journalActive.delete(idWorkout, date, idProfile);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
