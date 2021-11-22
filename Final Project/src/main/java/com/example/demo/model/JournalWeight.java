@@ -3,6 +3,7 @@ package com.example.demo.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,6 +17,7 @@ public class JournalWeight {
     private Profile profile;
 
     @Column
+    @Min(value = 0, message = "weight should be greater than 0")
     private double weight;
 
     @Column

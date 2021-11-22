@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -54,7 +55,7 @@ public class JournalWeightController {
 
     @PostMapping
     public ResponseEntity<JournalWeight> addWeightMeasurement(@PathVariable(name = "id_profile") long idProfile,
-                                                              @RequestBody JournalWeight journalWeight) {
+                                                              @RequestBody @Valid JournalWeight journalWeight) {
 
         try {
             JournalWeight newMeasurements = journalWeightService.save(journalWeight, idProfile);
@@ -66,7 +67,7 @@ public class JournalWeightController {
 
     @PutMapping("/{id_weight}/dt_update/{dt_update}")
     public ResponseEntity<JournalWeight> updateWeightMeasurement(@PathVariable(name = "id_profile") long idProfile,
-                                                                 @RequestBody JournalWeight journalWeight,
+                                                                 @RequestBody @Valid JournalWeight journalWeight,
                                                                  @PathVariable(name = "id_weight") long idWeight,
                                                                  @PathVariable(name = "dt_update") long dateUpdate) {
         try {

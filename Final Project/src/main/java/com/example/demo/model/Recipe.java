@@ -3,6 +3,7 @@ package com.example.demo.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Recipe {
     private long id;
 
     @Column
+    @NotEmpty (message = "Name should not be empty")
     private String name;
 
     @OneToMany

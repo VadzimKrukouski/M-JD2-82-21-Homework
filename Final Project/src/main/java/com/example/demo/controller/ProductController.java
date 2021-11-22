@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -59,7 +60,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> addProduct(@RequestBody ProductDTO productDTO) {
+    public ResponseEntity<Product> addProduct(@RequestBody @Valid ProductDTO productDTO) {
         try {
             Product product = new Product();
             product.setName(productDTO.getName());
@@ -78,7 +79,7 @@ public class ProductController {
 
     @PutMapping("/{id}/dt_update/{dt_update}")
     public ResponseEntity<Product> updateProduct(@PathVariable(name = "id") long id,
-                                                 @RequestBody Product product,
+                                                 @RequestBody @Valid Product product,
                                                  @PathVariable(name = "dt_update") long dateUpdate) {
         try {
             LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(dateUpdate), ZoneId.systemDefault());

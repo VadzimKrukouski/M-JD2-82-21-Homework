@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -68,7 +69,7 @@ public class JournalFoodController {
 
     @PostMapping("/{id_profile}/journal/food")
     public ResponseEntity<JournalFood> addJournal(@PathVariable(name = "id_profile") long idProfile,
-                                                  @RequestBody JournalFood journalFood) {
+                                                  @RequestBody @Valid JournalFood journalFood) {
         try {
             JournalFood newJournalFood = journalFoodService.save(journalFood, idProfile);
             return new ResponseEntity<>(newJournalFood, HttpStatus.CREATED);
@@ -79,7 +80,7 @@ public class JournalFoodController {
 
     @PutMapping("/{id_profile}/journal/food/{id_food}/dt_update/{dt_update}")
     public ResponseEntity<JournalFood> updateJournal(@PathVariable(name = "id_profile") long idProfile,
-                                                     @RequestBody JournalFood journalFood,
+                                                     @RequestBody @Valid JournalFood journalFood,
                                                      @PathVariable(name = "id_food") long idFood,
                                                      @PathVariable(name = "dt_update") long dateUpdate) {
         try {

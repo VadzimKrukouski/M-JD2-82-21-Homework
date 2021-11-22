@@ -1,12 +1,28 @@
 package com.example.demo.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+
 public class ProductDTO {
+
+    @NotEmpty (message = "Name should not be empty")
     private String name;
+
     private String brand;
+
+    @Min(value = 0, message = "calories should be greater than 0")
     private double calories;
+
+    @Min(value = 0, message = "proteins should be greater than 0")
     private double proteins;
+
+    @Min(value = 0, message = "fats should be greater than 0")
     private double fats;
+
+    @Min(value = 0, message = "carbohydrates should be greater than 0")
     private double carbohydrates;
+
+    @Min(value = 0, message = "weight should be greater than 0")
     private double weight;
 
     public String getName() {

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -54,7 +55,7 @@ public class JournalActiveController {
 
     @PostMapping
     public ResponseEntity<JournalActive> addWorkout(@PathVariable(name = "id_profile") long idProfile,
-                                                    @RequestBody JournalActive journalActive) {
+                                                    @RequestBody @Valid JournalActive journalActive) {
         try {
             JournalActive newJournalActive = this.journalActive.save(journalActive, idProfile);
             return new ResponseEntity<>(newJournalActive, HttpStatus.CREATED);
@@ -66,7 +67,7 @@ public class JournalActiveController {
 
     @PutMapping("/{id_active}/dt_update/{dt_update}")
     public ResponseEntity<JournalActive> updateWorkout(@PathVariable(name = "id_profile") long idProfile,
-                                                       @RequestBody JournalActive journalActive,
+                                                       @RequestBody @Valid JournalActive journalActive,
                                                        @PathVariable(name = "id_active") long idWorkout,
                                                        @PathVariable(name = "dt_update") long dateUpdate) {
         try {

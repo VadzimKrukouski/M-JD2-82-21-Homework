@@ -3,6 +3,8 @@ package com.example.demo.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,9 +16,11 @@ public class JournalActive {
     private long id;
 
     @Column
+    @NotEmpty (message = "Name should not be empty")
     private String name;
 
     @Column
+    @Min(value = 0 , message = "calories should be greater than 0 ")
     private double calories;
 
     @OneToOne

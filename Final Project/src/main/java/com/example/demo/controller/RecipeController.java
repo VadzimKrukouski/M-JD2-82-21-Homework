@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -57,7 +58,7 @@ public class RecipeController {
     }
 
     @PostMapping
-    public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe recipe) {
+    public ResponseEntity<Recipe> addRecipe(@RequestBody @Valid Recipe recipe) {
         try {
             Recipe newRecipe = recipeService.save(recipe);
             return new ResponseEntity<>(newRecipe, HttpStatus.CREATED);
@@ -68,7 +69,7 @@ public class RecipeController {
 
     @PutMapping("/{id}/dt_update/{dt_update}")
     public ResponseEntity<Recipe> updateRecipe(@PathVariable(name = "id") long id,
-                                               @RequestBody Recipe recipe,
+                                               @RequestBody @Valid Recipe recipe,
                                                @PathVariable(name = "dt_update") long dateUpdate) {
         try {
             LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(dateUpdate), ZoneId.systemDefault());

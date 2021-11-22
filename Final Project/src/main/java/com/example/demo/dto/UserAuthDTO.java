@@ -4,14 +4,30 @@ import com.example.demo.model.api.EGender;
 import com.example.demo.model.api.ELifestyle;
 import com.example.demo.model.api.ETarget;
 
-import java.time.LocalDate;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 public class UserAuthDTO {
+
+    @NotEmpty(message = "Login should not be empty")
+    @Email(message = "Email should be valid")
     private String login;
+
+    @Size(min = 6)
     private String password;
+
+    @NotEmpty (message = "Name should not be empty" )
     private String name;
+
+    @Min(value = 0, message = "height should be greater than 0 ")
     private double height;
+
+    @Min(value = 0, message = "weightTarget should be greater than 0 ")
     private double weightTarget;
+
+    @Min(value = 0, message = "weightFromWeightMeasurement should be greater than 0 ")
     private double weightFromWeightMeasurement;
     private long dateOfBirthday;
     private EGender gender;
