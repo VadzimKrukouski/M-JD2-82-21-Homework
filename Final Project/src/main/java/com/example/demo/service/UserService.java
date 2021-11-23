@@ -1,8 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.api.IUserDao;
-import com.example.demo.dto.LoginDTO;
-import com.example.demo.dto.UserAuthDTO;
 import com.example.demo.model.User;
 import com.example.demo.model.api.ERole;
 import com.example.demo.model.api.EStatus;
@@ -29,7 +27,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User saveRegister(User user) {
+    public User saveNewUser(User user) {
         user.setRole(ERole.ROLE_USER);
         user.setStatus(EStatus.NOT_ACTIVE);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -80,11 +78,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void authUser(User user) {
+    public User checkAndUpdateDataUser(User user) {
         User userByLogin = findUserByLogin(user.getLogin());
         if (userByLogin == null) {
             throw new IllegalArgumentException("User is not found by ID");
         }
-        userDao.save(userByLogin);
+        return userDao.save(userByLogin);
     }
 }

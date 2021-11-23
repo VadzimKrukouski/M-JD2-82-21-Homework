@@ -67,4 +67,25 @@ public class RecipeAuditService {
             e.printStackTrace();
         }
     }
+
+    @After("execution(* com.example.demo.service.RecipeService.delete(..))")
+    public void deleteMethod(JoinPoint joinPoint) {
+        try {
+            Object[] args = joinPoint.getArgs();
+
+            Recipe recipe = (Recipe) args[0];
+
+            Audit audit = new Audit();
+            audit.setDateCreate(recipe.getDateUpdate());
+            audit.setDescription("Delete Recipe " + recipe.getId());
+            String login = userHolder.getAuthentication().getName();
+            User userByLogin = userService.findUserByLogin(login);
+            audit.setUser(userByLogin);
+            audit.setEssenceName(EEssenceName.RECIPE);
+            audit.setEssenceId(recipe.getId());
+            auditService.save(audit);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
 }

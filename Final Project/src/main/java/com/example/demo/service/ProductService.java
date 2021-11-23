@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Service
 public class ProductService implements IProductService {
@@ -83,6 +84,10 @@ public class ProductService implements IProductService {
         if (product == null) {
             throw new IllegalArgumentException("Product is not found by ID");
         }
-        productDao.deleteById(id);
+        if (Objects.equals(product.getDateUpdate(), dateTime)) {
+            productDao.deleteById(id);
+        } else {
+            throw new IllegalArgumentException("Optimistic lock. Product already updated");
+        }
     }
 }

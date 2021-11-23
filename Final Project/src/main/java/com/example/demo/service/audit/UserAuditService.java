@@ -8,6 +8,7 @@ import com.example.demo.service.api.IAuditService;
 import com.example.demo.service.api.IUserService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Service;
 
@@ -24,26 +25,26 @@ public class UserAuditService {
         this.userService = userService;
     }
 
-//    @After("execution(* com.example.demo.service.UserService.authUser(..))")
-//    public void saveMethod(JoinPoint joinPoint) {
-//        try {
-//            Object[] args = joinPoint.getArgs();
-//
-//            User user = (User) args[0];
-//
-//            Audit audit = new Audit();
-//            audit.setDateCreate(user.getDateUpdate());
-//            audit.setDescription("Create User " + user.getId());
+    @AfterReturning("execution(* com.example.demo.service.UserService.checkAndUpdateDataUser(..))")
+    public void saveMethod(JoinPoint joinPoint) {
+        try {
+            Object[] args = joinPoint.getArgs();
+
+            User user = (User) args[0];
+
+            Audit audit = new Audit();
+            audit.setDateCreate(user.getDateUpdate());
+            audit.setDescription("Create User " + user.getId());
 //            String login = userHolder.getAuthentication().getName();
 //            User userByLogin = userService.findUserByLogin(login);
-//            audit.setUser(userByLogin);
-//            audit.setEssenceName(EEssenceName.USER);
-//            audit.setEssenceId(user.getId());
-//            auditService.save(audit);
-//        } catch (Throwable e) {
-//            e.printStackTrace();
-//        }
-//    }
+            audit.setUser(user);
+            audit.setEssenceName(EEssenceName.USER);
+            audit.setEssenceId(user.getId());
+            auditService.save(audit);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
 
     @After("execution(* com.example.demo.service.UserService.update(..))")
     public void updateMethod(JoinPoint joinPoint) {

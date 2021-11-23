@@ -45,4 +45,9 @@ public class AuditService implements IAuditService {
     public void delete(long id) {
         auditDao.deleteById(id);
     }
+
+    @Override
+    public List<Audit> findAllByUserId(long id) {
+        return auditDao.findAllByUserId(id);
+    }
 }

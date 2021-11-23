@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.api.IProfileDao;
-import com.example.demo.dto.UserAuthDTO;
+import com.example.demo.dto.PersonalDataDTO;
 import com.example.demo.model.Profile;
 import com.example.demo.model.User;
 import com.example.demo.security.UserHolder;
@@ -33,23 +33,23 @@ public class ProfileService implements IProfileService {
     }
 
     @Override
-    public Profile save(UserAuthDTO userAuthDTO) {
+    public Profile save(PersonalDataDTO personalDataDTO) {
         Profile profile = new Profile();
         String loginUser = userHolder.getAuthentication().getName();
         User user = userService.findUserByLogin(loginUser);
         profile.setUser(user);
-        profile.setHeight(userAuthDTO.getHeight());
-        profile.setWeightTarget(userAuthDTO.getWeightTarget());
-        profile.setWeightTarget(userAuthDTO.getWeightTarget());
-        profile.setWeightFromWeightMeasurement(userAuthDTO.getWeightFromWeightMeasurement());
+        profile.setHeight(personalDataDTO.getHeight());
+        profile.setWeightTarget(personalDataDTO.getWeightTarget());
+        profile.setWeightTarget(personalDataDTO.getWeightTarget());
+        profile.setWeightFromWeightMeasurement(personalDataDTO.getWeightFromWeightMeasurement());
 
-        long dateOfBirthdayInMilliseconds = userAuthDTO.getDateOfBirthday();
+        long dateOfBirthdayInMilliseconds = personalDataDTO.getDateOfBirthday();
         LocalDate dateOfBirthdayLocalDate = Instant.ofEpochMilli(dateOfBirthdayInMilliseconds).atZone(ZoneId.systemDefault()).toLocalDate();
         profile.setDateOfBirthday(dateOfBirthdayLocalDate);
 
-        profile.setGender(userAuthDTO.getGender());
-        profile.setLifestyle(userAuthDTO.getLifestyle());
-        profile.setTarget(userAuthDTO.getTarget());
+        profile.setGender(personalDataDTO.getGender());
+        profile.setLifestyle(personalDataDTO.getLifestyle());
+        profile.setTarget(personalDataDTO.getTarget());
         LocalDateTime localDateTime = LocalDateTime.now();
         profile.setDateCreate(localDateTime);
         profile.setDateUpdate(localDateTime);

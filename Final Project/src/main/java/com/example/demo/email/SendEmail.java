@@ -9,10 +9,10 @@ import java.util.Properties;
 
 @Component
 public class SendEmail {
-    private final String username="vadzimkrukouski@gmail.com";
-    private final String password="9JbZAFGqrxQkxTHmwVSV";
+    private final String username = "vadzimkrukouski@gmail.com";
+    private final String password = "9JbZAFGqrxQkxTHmwVSV";
 
-    public void send(String subject, String text, String toEmail){
+    public void send(String subject, String text, String toEmail) {
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");

@@ -10,5 +10,7 @@ public interface IAuditService {
     List<Audit> getAll();
     Audit update(Audit model, long id);
     void delete(long id);
+    List<Audit> findAllByUserId (long id);
+
 }
 

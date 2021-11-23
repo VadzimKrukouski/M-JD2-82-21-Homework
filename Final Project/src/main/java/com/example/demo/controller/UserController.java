@@ -1,23 +1,24 @@
 package com.example.demo.controller;
 
 import com.example.demo.config.jwt.JwtProvider;
+import com.example.demo.dto.AuthDTO;
 import com.example.demo.dto.LoginDTO;
-import com.example.demo.dto.UserAuthDTO;
+import com.example.demo.dto.PersonalDataDTO;
 import com.example.demo.email.SendEmail;
 import com.example.demo.model.User;
 import com.example.demo.model.api.EStatus;
 import com.example.demo.service.api.IProfileService;
 import com.example.demo.service.api.IUserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/users")
 public class UserController {
     private final IUserService userService;
     private final IProfileService profileService;
@@ -32,30 +33,44 @@ public class UserController {
         this.sendEmail = sendEmail;
     }
 
-    @PostMapping("/register")
-    public String login(@Valid @RequestBody LoginDTO loginDTO, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
-            return "Error"; //тут должен быть возврат на форму заполнения и с помощью Thymeleaf вывести ошибки
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers(){
+        try {
+            List<User> userList = userService.getAll();
+            return new ResponseEntity<>(userList, HttpStatus.OK);
+        } catch (IllegalArgumentException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping("/register")
+    public String login(@RequestBody @Valid LoginDTO loginDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return "Incorrect login or password!";
+        }
+        User userByLogin = userService.findUserByLogin(loginDTO.getLogin());
+        if (userByLogin!=null){
+            return "This user already exist";
+        }
+
         User user = new User();
         user.setLogin(loginDTO.getLogin());
         user.setPassword(loginDTO.getPassword());
-        //переделать, временный вариант
-        userService.saveRegister(user);
+        userService.saveNewUser(user);
 
         return "Ok";
     }
 
     @PostMapping("/auth")
-    public String auth(@RequestBody @Valid UserAuthDTO userAuthDTO, BindingResult bindingResult) {
+    public String auth(@RequestBody @Valid AuthDTO authDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()){
-            return "Error"; //тут должен быть возврат на форму заполнения и с помощью Thymeleaf вывести ошибки
+            return "Incorrect fields!";
         }
-        User user = userService.findByLoginAndPassword(userAuthDTO.getLogin(), userAuthDTO.getPassword());
+        User user = userService.findByLoginAndPassword(authDTO.getLogin(), authDTO.getPassword());
         if (user != null) {
             user.setStatus(EStatus.ACTIVE);
-            user.setName(userAuthDTO.getName());
-            userService.authUser(user);
+            user.setName(authDTO.getName());
+            userService.checkAndUpdateDataUser(user);
 
             sendEmail.send("Registration in FoodApp", "You success registration!", user.getLogin());
 
@@ -66,10 +81,11 @@ public class UserController {
     }
 
     @PostMapping("/personalData")
-    public String savePersonalData(@RequestBody UserAuthDTO userAuthDTO) {
-        profileService.save(userAuthDTO);
+    public String savePersonalData(@RequestBody @Valid PersonalDataDTO personalDataDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return "Incorrect fields!";
+        }
+        profileService.save(personalDataDTO);
         return "Successfully save personal data";
     }
-
-    //убрать 48 строку, сделать отдельный урл
 }

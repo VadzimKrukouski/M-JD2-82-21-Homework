@@ -3,11 +3,12 @@ package com.example.demo.controller;
 import com.example.demo.dto.CalculationCaloriesDTO;
 import com.example.demo.model.JournalFood;
 import com.example.demo.service.JournalFoodService;
+import com.example.demo.service.api.ICalculationCaloriesService;
 import com.example.demo.service.api.IJournalFoodService;
+import com.example.demo.service.api.IProfileService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +23,15 @@ import java.util.List;
 @RequestMapping("/api/profile")
 public class JournalFoodController {
     private final IJournalFoodService journalFoodService;
+    private final ICalculationCaloriesService calculationCaloriesService;
+    private final IProfileService profileService;
 
-    public JournalFoodController(JournalFoodService journalFoodService) {
+    public JournalFoodController(JournalFoodService journalFoodService,
+                                 ICalculationCaloriesService calculationCaloriesService,
+                                 IProfileService profileService) {
         this.journalFoodService = journalFoodService;
+        this.calculationCaloriesService = calculationCaloriesService;
+        this.profileService = profileService;
     }
 
     @GetMapping("/{id_profile}/journal/food")
@@ -48,6 +55,9 @@ public class JournalFoodController {
             LocalDateTime dateStart = LocalDateTime.ofInstant(Instant.ofEpochMilli(day), ZoneId.systemDefault());
             LocalDateTime dateEnd = dateStart.plusDays(1L);
             CalculationCaloriesDTO calculationCaloriesDTO = journalFoodService.findAllByProfileIdAndDateCreateBetween(idProfile, dateStart, dateEnd);
+
+            Double caloriesTarget = calculationCaloriesService.getCaloriesTarget(profileService.getById(idProfile));
+            calculationCaloriesDTO.setCaloriesTarget(caloriesTarget);
 
             return new ResponseEntity<>(calculationCaloriesDTO, HttpStatus.OK);
         } catch (IllegalArgumentException e){

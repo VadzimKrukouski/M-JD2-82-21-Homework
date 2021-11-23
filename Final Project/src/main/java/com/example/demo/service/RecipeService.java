@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class RecipeService implements IRecipeService {
@@ -89,6 +90,11 @@ public class RecipeService implements IRecipeService {
         if (recipe == null) {
             throw new IllegalArgumentException("Product is not found by ID");
         }
-        dishDao.deleteById(id);
+
+        if (Objects.equals(recipe.getDateUpdate(), date)) {
+            dishDao.deleteById(id);
+        } else {
+            throw new IllegalArgumentException("Optimistic lock. Product already updated");
+        }
     }
 }

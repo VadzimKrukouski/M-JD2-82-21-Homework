@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface IUserService {
     User getById(long id);
-    User saveRegister(User user);
-    void authUser(User user);
+    User saveNewUser(User user);
+    User checkAndUpdateDataUser(User user);
     List<User> getAll();
     User update(User user, long id);
     void delete(long id);

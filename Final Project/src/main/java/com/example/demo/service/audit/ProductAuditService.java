@@ -67,5 +67,24 @@ public class ProductAuditService {
         }
     }
 
+    @After("execution(* com.example.demo.service.ProductService.delete(..))")
+    public void deleteMethod(JoinPoint joinPoint) {
+        try {
+            Object[] args = joinPoint.getArgs();
 
+            Product product = (Product) args[0];
+
+            Audit audit = new Audit();
+            audit.setDateCreate(product.getDateUpdate());
+            audit.setDescription("Delete Product " + product.getId());
+            String login = userHolder.getAuthentication().getName();
+            User userByLogin = userService.findUserByLogin(login);
+            audit.setUser(userByLogin);
+            audit.setEssenceName(EEssenceName.PRODUCT);
+            audit.setEssenceId(product.getId());
+            auditService.save(audit);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
 }
