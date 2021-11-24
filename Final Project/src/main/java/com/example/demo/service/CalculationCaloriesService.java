@@ -91,16 +91,16 @@ public class CalculationCaloriesService implements ICalculationCaloriesService {
             return caloriesNorm;
         }
         if (profile.getTarget().equals(ETarget.WEIGHT_GAIN_025)){
-            return caloriesNorm+=caloriesNorm*0.15;
+            caloriesNorm+=caloriesNorm*0.15;
         }
         if (profile.getTarget().equals(ETarget.WEIGHT_GAIN_05)){
-            return caloriesNorm+=caloriesNorm*0.3;
+            caloriesNorm+=caloriesNorm*0.3;
         }
         if (profile.getTarget().equals(ETarget.WEIGHT_LOSS_05)){
-            return caloriesNorm-=caloriesNorm*0.2;
+            caloriesNorm-=caloriesNorm*0.2;
         }
         if (profile.getTarget().equals(ETarget.WEIGHT_LOSS_1)){
-            return caloriesNorm-=caloriesNorm*0.4;
+            caloriesNorm-=caloriesNorm*0.4;
         }
 
         return caloriesNorm;

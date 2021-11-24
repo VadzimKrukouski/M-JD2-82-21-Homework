@@ -2,7 +2,6 @@ package com.example.demo.service.audit;
 
 import com.example.demo.model.Audit;
 import com.example.demo.model.JournalFood;
-import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import com.example.demo.model.api.EEssenceName;
 import com.example.demo.security.UserHolder;

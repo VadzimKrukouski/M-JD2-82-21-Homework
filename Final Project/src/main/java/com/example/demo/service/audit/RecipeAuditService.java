@@ -1,7 +1,6 @@
 package com.example.demo.service.audit;
 
 import com.example.demo.model.Audit;
-import com.example.demo.model.Product;
 import com.example.demo.model.Recipe;
 import com.example.demo.model.User;
 import com.example.demo.model.api.EEssenceName;

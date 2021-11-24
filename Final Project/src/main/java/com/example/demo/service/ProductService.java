@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.api.IProductDao;
-import com.example.demo.dto.ProductDTO;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import com.example.demo.security.UserHolder;

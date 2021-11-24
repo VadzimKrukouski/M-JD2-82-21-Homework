@@ -1,6 +1,5 @@
 package com.example.demo.service.api;
 
-import com.example.demo.dto.ProductDTO;
 import com.example.demo.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

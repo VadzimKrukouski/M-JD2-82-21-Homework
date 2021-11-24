@@ -1,7 +1,6 @@
 package com.example.demo.service.api;
 
 import com.example.demo.model.JournalActive;
-import com.example.demo.model.JournalWeight;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
