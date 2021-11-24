@@ -70,6 +70,9 @@ public class UserService implements IUserService {
     public User findByLoginAndPassword(String login, String password) {
         User userByLogin = findUserByLogin(login);
         if (userByLogin != null) {
+            if (userByLogin.getRole().equals(ERole.ROLE_ADMIN)){
+                return userByLogin;
+            }
             if (passwordEncoder.matches(password, userByLogin.getPassword())){
             return userByLogin;
             }

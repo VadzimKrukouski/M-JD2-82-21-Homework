@@ -6,6 +6,7 @@ import com.example.demo.dto.LoginDTO;
 import com.example.demo.dto.PersonalDataDTO;
 import com.example.demo.email.SendEmail;
 import com.example.demo.model.User;
+import com.example.demo.model.api.ERole;
 import com.example.demo.model.api.EStatus;
 import com.example.demo.service.api.IProfileService;
 import com.example.demo.service.api.IUserService;
@@ -64,16 +65,17 @@ public class UserController {
     }
 
     @PostMapping("/auth")
-    public String auth(@RequestBody @Valid AuthDTO authDTO, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
-            return "Incorrect fields!";
-        }
+    public String auth(@RequestBody AuthDTO authDTO) {
+
         User user = userService.findByLoginAndPassword(authDTO.getLogin(), authDTO.getPassword());
+
         if (user != null) {
+            if (user.getRole().equals(ERole.ROLE_ADMIN)){
+                return jwtProvider.generateToken(user.getLogin());
+            }
             user.setStatus(EStatus.ACTIVE);
             user.setName(authDTO.getName());
             userService.checkAndUpdateDataUser(user);
-
 
             return jwtProvider.generateToken(user.getLogin());
         } else {

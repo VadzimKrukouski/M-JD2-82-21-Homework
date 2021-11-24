@@ -7,6 +7,15 @@ public class CalculationCaloriesDTO {
     private double fats;
     private double carbohydrates;
     private double weight;
+    private double caloriesTarget;
+
+    public double getCaloriesTarget() {
+        return caloriesTarget;
+    }
+
+    public void setCaloriesTarget(double caloriesTarget) {
+        this.caloriesTarget = caloriesTarget;
+    }
 
     public String getName() {
         return name;
