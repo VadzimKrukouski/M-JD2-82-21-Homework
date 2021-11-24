@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 public class UserController {
     private final IUserService userService;
     private final IProfileService profileService;
@@ -33,7 +33,7 @@ public class UserController {
         this.sendEmail = sendEmail;
     }
 
-    @GetMapping
+    @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers(){
         try {
             List<User> userList = userService.getAll();
@@ -58,7 +58,9 @@ public class UserController {
         user.setPassword(loginDTO.getPassword());
         userService.saveNewUser(user);
 
-        return "Ok";
+        sendEmail.send("Registration in FoodApp", "You success registration!", user.getLogin());
+
+        return "You have successfully registered. An email has been sent to your mail to activate your account";
     }
 
     @PostMapping("/auth")
@@ -72,7 +74,6 @@ public class UserController {
             user.setName(authDTO.getName());
             userService.checkAndUpdateDataUser(user);
 
-            sendEmail.send("Registration in FoodApp", "You success registration!", user.getLogin());
 
             return jwtProvider.generateToken(user.getLogin());
         } else {

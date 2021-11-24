@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-//                .antMatchers("/api/users/**").hasRole("ADMIN")
+//                .antMatchers("/api/users").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.GET,"/api/product/**","/api/recipe/**","/api/profile/**").hasAnyRole("ADMIN","USER")
 //                .antMatchers(HttpMethod.POST,"/api/product/**").hasAnyRole("ADMIN", "USER")
 //                .antMatchers(HttpMethod.PUT,"/api/product/**").hasAnyRole("ADMIN", "USER")
@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers(HttpMethod.POST,"/api/recipe/**").hasAnyRole("ADMIN","USER")
 //                .antMatchers(HttpMethod.PUT,"/api/recipe/**","/api/user/**").hasAnyRole("ADMIN","USER")
 //                .antMatchers(HttpMethod.DELETE,"/api/recipe/**").hasAnyRole("ADMIN")
-                .antMatchers("/api/users/register", "/api/users/auth").anonymous()
+                .antMatchers("/api/register", "/api/auth").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

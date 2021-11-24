@@ -1,0 +1,13 @@
+INSERT INTO users (login, name, password, role, status,date_create, date_update) VALUES ('admin@mail.ru', 'Администратор Администратович', 111, 0, 0,current_timestamp(0), current_timestamp(0));
+
+INSERT INTO products (name, brand, calories, proteins, fats, carbohydrates, weight, user_id, date_create, date_update) VALUES ('Абрикосы', 'Африка', 45, 1, 0, 10, 100, 1, current_timestamp(0), current_timestamp(0));
+INSERT INTO products (name, brand, calories, proteins, fats, carbohydrates, weight, user_id, date_create, date_update) VALUES ('Банан', 'Африка', 97, 3, 3, 22, 100, 1, current_timestamp(0), current_timestamp(0));
+INSERT INTO products (name, brand, calories, proteins, fats, carbohydrates, weight, user_id, date_create, date_update) VALUES ('Батон', 'Хлебозавод', 264, 8, 3, 49, 100, 1, current_timestamp(0), current_timestamp(0));
+INSERT INTO products (name, brand, calories, proteins, fats, carbohydrates, weight, user_id, date_create, date_update) VALUES ('Вареная колбаса', 'Мясокомбинат', 253, 12, 22, 1, 100, 1, current_timestamp(0), current_timestamp(0));
+INSERT INTO products (name, brand, calories, proteins, fats, carbohydrates, weight, user_id, date_create, date_update) VALUES ('Геркулес', 'РБ', 327, 12, 6, 56, 100, 1, current_timestamp(0), current_timestamp(0));
+INSERT INTO products (name, brand, calories, proteins, fats, carbohydrates, weight, user_id, date_create, date_update) VALUES ('Зефир бело-розовый', 'Красный пищевик', 304, 1, 0, 80, 100, 1, current_timestamp(0), current_timestamp(0));
+INSERT INTO products (name, brand, calories, proteins, fats, carbohydrates, weight, user_id, date_create, date_update) VALUES ('Индейка (грудка)', 'Мясокомбинат', 94, 19, 2, 0, 100, 1, current_timestamp(0), current_timestamp(0));
+INSERT INTO products (name, brand, calories, proteins, fats, carbohydrates, weight, user_id, date_create, date_update) VALUES ('Картофель', 'РБ', 84, 2, 1, 20, 100, 1, current_timestamp(0), current_timestamp(0));
+INSERT INTO products (name, brand, calories, proteins, fats, carbohydrates, weight, user_id, date_create, date_update) VALUES ('Кофе молотый Арабика', 'Lavazzo', 193, 12, 14, 3, 100, 1, current_timestamp(0), current_timestamp(0));
+INSERT INTO products (name, brand, calories, proteins, fats, carbohydrates, weight, user_id, date_create, date_update) VALUES ('Курица', 'Птицефабрика', 186, 21, 11, 1, 100, 1, current_timestamp(0), current_timestamp(0));
+INSERT INTO products (name, brand, calories, proteins, fats, carbohydrates, weight, user_id, date_create, date_update) VALUES ('Молоко 3,2%', 'ММЗ', 67, 3, 3, 8, 100, 1, current_timestamp(0), current_timestamp(0));

@@ -13,6 +13,8 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Aspect
 @Service
 public class RecipeAuditService {
@@ -73,16 +75,16 @@ public class RecipeAuditService {
         try {
             Object[] args = joinPoint.getArgs();
 
-            Recipe recipe = (Recipe) args[0];
+            Long recipeId = (Long) args[0];
 
             Audit audit = new Audit();
-            audit.setDateCreate(recipe.getDateUpdate());
-            audit.setDescription("Delete Recipe " + recipe.getId());
+            audit.setDateCreate(LocalDateTime.now());
+            audit.setDescription("Delete Recipe " + recipeId);
             String login = userHolder.getAuthentication().getName();
             User userByLogin = userService.findUserByLogin(login);
             audit.setUser(userByLogin);
             audit.setEssenceName(EEssenceName.RECIPE);
-            audit.setEssenceId(recipe.getId());
+            audit.setEssenceId(recipeId);
             auditService.save(audit);
         } catch (Throwable e) {
             e.printStackTrace();
